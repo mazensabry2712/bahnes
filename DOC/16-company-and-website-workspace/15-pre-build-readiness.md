@@ -33,7 +33,8 @@ Resolve each point or record a safe temporary assumption:
 - [ ] **Storage/mail assumptions:** Define development defaults and safe configuration points. Keep secrets outside Git.
 - [ ] **CMS boundary:** Confirm the manageable content types and fields listed in the content-model document. Use predefined homepage section types with order/visibility controls; do not build a universal page builder.
 - [x] **Initial service publication rules:** Services default to draft; locale queries require published status, a complete locale title/slug, an active service line, and a reached publication time. Apply the same tests to future content types.
-- [x] **Admin-access milestone acceptance:** Admin-only sign-in, regular-user denial, guest redirect, logout/session invalidation, CLI creation/reset and existing scaffold checks pass in CI. The full CMS milestone remains in progress; inquiry handling and safe uploads are not implemented yet.
+- [x] **Admin-access milestone acceptance:** Admin-only sign-in, regular-user denial, guest redirect, logout/session invalidation, CLI creation/reset and scaffold checks pass in CI.
+- [x] **First service CMS milestone:** Service list/search/status filters, create/edit, localized fields, publish validation, archive state and feature tests are implemented. [CI run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204) passed: 23 tests, 83 assertions, TypeScript checking and Vite build. Inquiry handling and safe uploads remain pending.
 
 **Important distinction:** The data model can support the full planned service taxonomy now. Individual services must be marked unavailable/draft until delivery capability, supplier dependencies, warranty, and support terms are confirmed. Those commercial confirmations are required before publishing/selling offers, not a reason to block the initial schema design.
 
@@ -63,11 +64,12 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 1. [x] Audit the scaffold and establish a passing CI baseline on PHP 8.4 / Node 24.
 2. [x] Implement and test the secure admin access/provisioning foundation.
 3. [x] Add and test the first ServiceLine/Service models and English/Arabic publication scopes.
-4. Continue the **backend first** with service CRUD screens, then remaining CMS content types, media and inquiry handling.
-5. Verify each backend milestone and record its results before relying on it.
-6. Build the public Blade frontend section by section using tested backend workflows.
-7. Show public portfolio/catalog sections only when accurate content and terms are ready.
-8. Run release checks before deployment.
+4. [x] Add and test service CRUD screens with status/locale validation.
+5. Continue the **backend first** with remaining CMS content types, media and inquiry handling.
+6. Verify each backend milestone and record its results before relying on it.
+7. Build the public Blade frontend section by section using tested backend workflows.
+8. Show public portfolio/catalog sections only when accurate content and terms are ready.
+9. Run release checks before deployment.
 
 This is a staged build, not a demand to implement payments, customer accounts, a full CRM, or an advanced page builder.
 

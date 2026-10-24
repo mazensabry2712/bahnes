@@ -21,7 +21,8 @@ Finish and test the backend foundation before building the public frontend. Then
 Build the backend capabilities needed to support the agreed website content types before starting the public frontend:
 
 - [x] Secure admin access, protected dashboard, CLI provisioning (`admin:create`) and password recovery (`admin:password-reset`); no public admin registration. Tested in CI.
-- [x] First service-line/service migrations and Eloquent models with English/Arabic fields, locale-aware publish filtering, and tests. Service CRUD workflows remain next.
+- [x] First service-line/service migrations and Eloquent models with English/Arabic fields, locale-aware publish filtering, and tests.
+- [x] Initial Blade admin service list, search/status filters, create/edit, and draft/published/archived workflows with validation and feature tests. Verified in [CI run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204): 23 tests passed (83 assertions), TypeScript check and Vite build passed.
 - Migrations and maintainable content models for pages/predefined homepage sections, service lines/services, projects/case studies, products, website templates, Insights/articles and categories, media metadata as needed, inquiries, locale content, and SEO fields.
 - Admin create/edit/preview/publish/archive workflows for the agreed content types.
 - Predefined homepage section ordering/visibility rather than a universal drag-and-drop page builder.
