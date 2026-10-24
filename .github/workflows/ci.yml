@@ -3,6 +3,14 @@ name: CI
 on:
   push:
     branches: [main]
+    # Dependency manifests are resolved by dependency-lock.yml, which runs the
+    # full test/audit/build suite before committing the refreshed lockfiles.
+    paths-ignore:
+      - 'composer.json'
+      - 'package.json'
+      - '.github/workflows/dependency-lock.yml'
+      - 'README.md'
+      - 'DOC/**'
   pull_request:
     branches: [main]
 
