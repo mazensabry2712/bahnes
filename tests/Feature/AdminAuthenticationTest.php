@@ -30,7 +30,7 @@ it('allows an administrator with valid credentials to sign in', function () {
 
     $this->get(route('admin.dashboard'))
         ->assertOk()
-        ->assertSee('Secure access is ready');
+        ->assertSee('Content management');
 });
 
 it('does not allow a regular user to sign in through the admin endpoint', function () {
