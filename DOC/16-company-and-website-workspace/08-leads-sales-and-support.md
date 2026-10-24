@@ -13,6 +13,13 @@ Keep a short general contact form and offer a guided brief for substantial proje
 
 Ask only what helps qualify the inquiry. Never ask for passwords or confidential production data in a public form.
 
+## Implementation status
+
+- **Implemented and CI-verified:** public `POST /contact` submission endpoint with server-side validation, a five-per-minute throttle, accepted inquiry types, lowercased email, preferred-language storage and a generated reference shown only after storing.
+- **Implemented and CI-verified:** protected admin inbox with search/type/status filters, inquiry review, follow-up status updates and private internal notes.
+- **Not yet implemented:** public contact page/form UI, the guided Project Brief form, a confirmed notification recipient/provider, outbound email delivery/retry/failure handling, and a more detailed next-action/date pipeline.
+- **Privacy boundary:** the public request cannot write admin notes or choose its own source/status. Email notifications remain disabled until the company confirms a real recipient and mail configuration.
+
 ## Inquiry pipeline
 
 A lightweight admin workflow or spreadsheet is enough at first: New → Reviewed → Qualified → Discovery → Proposal sent → Won/Lost → Delivery → Support/follow-up.

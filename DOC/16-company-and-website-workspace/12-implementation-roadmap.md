@@ -28,11 +28,12 @@ Build the backend capabilities needed to support the agreed website content type
 - Predefined homepage section ordering/visibility rather than a universal drag-and-drop page builder.
 - Separate Projects, Products, and Website Templates in the data model and admin navigation.
 - Validated uploads, safe storage paths, authorization, input validation, and safe output handling.
-- Backend inquiry capture, inquiry type/status, protected internal notes where needed, and clear notification failure handling.
+- [x] Backend inquiry capture, type/status, protected internal notes, server-side validation, and a rate-limited contact submission endpoint.
+- [ ] Confirm notification destination/provider and implement safe email delivery/failure handling after the recipient is approved.
 - Localization foundations for Arabic/English, plus per-locale slug and SEO metadata as appropriate.
 - Automated tests for access control, content visibility, validation, locale behavior, uploads, and inquiry submission.
 
-**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. Empty catalogs can stay unpublished until real items exist.
+**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. The current CI evidence is [run 40099285127](https://github.com/mazensabry2712/bahnes/actions/runs/40099285127): 36 tests passed (138 assertions), TypeScript and Vite build passed. Empty catalogs can stay unpublished until real items exist.
 
 ## Phase 2 — Shared public frontend foundation
 

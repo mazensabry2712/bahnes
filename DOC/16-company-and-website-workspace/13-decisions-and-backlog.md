@@ -26,8 +26,8 @@ This document separates the established planning direction from proposals and de
 | Work portfolio | Projects/case studies separate from products | Initial admin CRUD implemented; publication requires permissions for real work and excludes confidential cases |
 | Digital catalog | Products and website templates are separate types | Planned requirement |
 | Editorial | Insights/articles | Planned content section |
-| CMS | Manage core content, media, locales, SEO, and inquiries | Services and Projects/Case Studies admin modules implemented; media, product/template/article types and inquiries pending |
-| Sales flow | General contact plus guided project brief and simple pipeline | Planned scope |
+| CMS | Manage core content, media, locales, SEO, and inquiries | Services, Projects/Case Studies and inquiry inbox/submission backend implemented; media, product/template/article types and public forms pending |
+| Sales flow | General contact plus guided project brief and simple pipeline | Contact submission/inbox/status/notes implemented; public contact UI, email recipient and guided brief pending |
 | Company profile PDF | Bilingual, after company facts and identity are approved | Later deliverable |
 | Interactive system showcase | Lightweight, clearly illustrative | Optional after core site |
 | Client portal/full CRM | Defer until need is demonstrated | Deferred |

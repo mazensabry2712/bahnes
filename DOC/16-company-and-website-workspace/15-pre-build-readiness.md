@@ -28,13 +28,16 @@ Resolve each point or record a safe temporary assumption:
 - [x] **Repository scaffold and CI baseline:** Reviewed manifests/lockfiles, routes, views, models, migrations and sample tests. GitHub Actions passed Composer validation/install, Laravel tests, `npm ci`, TypeScript checking and Vite build on PHP 8.4 / Node 24 ([baseline run](https://github.com/mazensabry2712/bahnes/actions/runs/40097226745); [TypeScript run](https://github.com/mazensabry2712/bahnes/actions/runs/40097563846)).
 - [x] **Admin access:** Implemented protected admin login/dashboard, CLI account creation and password reset; feature tests pass in [CI](https://github.com/mazensabry2712/bahnes/actions/runs/40097754107). No public admin registration.
 - [ ] **Local/hosting runtime and storage:** Confirm the selected PHP executable in Herd, local Node/npm, MySQL connection, media-storage path/permissions, and target-host compatibility. CI success does not verify the user's local machine or deployment host.
-- [ ] **Inquiry handling:** Decide which inquiry types are captured and record the initial notification/recipient assumption. Real mail secrets and live recipient details may remain environment-specific.
+- [x] **Inquiry types and storage:** Defined inquiry categories, input validation, default status/source and admin-only notes; public submissions are rate-limited and stored in the database.
+- [ ] **Notification destination:** Confirm the real inbox/owner before enabling email notifications. Mail credentials and provider settings remain environment-specific.
 - [x] **Translation storage:** The first content models use explicit `_en` and `_ar` columns with locale-aware publication scopes. Route prefixes/default locale will be confirmed before public page routing.
 - [ ] **Storage/mail assumptions:** Define development defaults and safe configuration points. Keep secrets outside Git.
 - [ ] **CMS boundary:** Confirm the manageable content types and fields listed in the content-model document. Use predefined homepage section types with order/visibility controls; do not build a universal page builder.
 - [x] **Initial service publication rules:** Services default to draft; locale queries require published status, a complete locale title/slug, an active service line, and a reached publication time. Apply the same tests to future content types.
 - [x] **Admin-access milestone acceptance:** Admin-only sign-in, regular-user denial, guest redirect, logout/session invalidation, CLI creation/reset and scaffold checks pass in CI.
-- [x] **First service CMS milestone:** Service list/search/status filters, create/edit, localized fields, publish validation, archive state and feature tests are implemented. [CI run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204) passed: 23 tests, 83 assertions, TypeScript checking and Vite build. Inquiry handling and safe uploads remain pending.
+- [x] **First service CMS milestone:** Service list/search/status filters, create/edit, localized fields, publish validation and archive state passed CI ([run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204)).
+- [x] **Projects / Case Studies:** Admin CRUD and permission-aware publication rules passed CI ([run 40098999954](https://github.com/mazensabry2712/bahnes/actions/runs/40098999954)).
+- [x] **Inquiry backend milestone:** Rate-limited contact POST, database storage, admin inbox, status and protected notes passed CI ([run 40099285127](https://github.com/mazensabry2712/bahnes/actions/runs/40099285127)): 36 tests, 138 assertions, TypeScript check and Vite build.
 
 **Important distinction:** The data model can support the full planned service taxonomy now. Individual services must be marked unavailable/draft until delivery capability, supplier dependencies, warranty, and support terms are confirmed. Those commercial confirmations are required before publishing/selling offers, not a reason to block the initial schema design.
 
@@ -66,7 +69,7 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 3. [x] Add and test the first ServiceLine/Service models and English/Arabic publication scopes.
 4. [x] Add and test service CRUD screens with status/locale validation.
 5. [x] Add and test project/case-study CRUD with project-stage labels and authorization checks.
-6. Continue the **backend first** with product/template/article content types, media and inquiry handling.
+6. Continue the **backend first** with product/template/article content types and media; finish the public contact form and email notification settings after the recipient is confirmed.
 6. Verify each backend milestone and record its results before relying on it.
 7. Build the public Blade frontend section by section using tested backend workflows.
 8. Show public portfolio/catalog sections only when accurate content and terms are ready.

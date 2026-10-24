@@ -32,4 +32,4 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 - Never commit secrets, production credentials, or private customer data.
 - Do not claim features are implemented or tested unless they actually are.
 
-The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service management, and project/case-study management are implemented and CI-tested. The latest CI run passed 30 tests (109 assertions), TypeScript checking and the Vite production build. Next, continue with the remaining CMS types, media and inquiry handling before building the public site section by section.
+The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service management, project/case-study management, and the first inquiry inbox/submission workflow are implemented and CI-tested. The latest CI run passed 36 tests (138 assertions), TypeScript checking and the Vite production build. Product/template/article CMS, uploads, public pages and notification email remain separate milestones.
