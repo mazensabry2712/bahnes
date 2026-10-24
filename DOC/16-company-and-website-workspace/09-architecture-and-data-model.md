@@ -16,10 +16,10 @@ Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-te
 
 - **Application:** PHP `^8.3` and Laravel `^13.17` are declared by Composer; verify runtime and lockfiles in Phase 0.
 - **Rendering:** server-rendered Blade for public pages and custom admin in one Laravel application.
-- **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, native JavaScript and Vite `^8.0` through Laravel Vite.
+- **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
 - **Quality tools:** Pest and Laravel Pint are declared dependencies; baseline tests/format/build checks remain pending.
-- **Not selected:** Inertia, React/Vue SPA, TypeScript, Livewire, Alpine.js, required GSAP, packaged admin panel, separate public API, microservices or universal page builder.
+- **Not selected:** Inertia, React/Vue SPA, Livewire, Alpine.js, required GSAP, packaged admin panel, separate public API, microservices or universal page builder. TypeScript is selected only for browser-side code.
 
 ## Suggested records
 

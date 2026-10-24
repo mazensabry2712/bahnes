@@ -38,6 +38,6 @@ This directory is the source of truth for planning, launching, operating, and gr
 - **Company presentation:** one BAHNES IT SOLUTIONS brand with two service lines: IT Infrastructure & Security and Software & Digital Solutions.
 - **Business model:** services/support first; validate demand before investing heavily in products/templates.
 - **Website direction:** Laravel + Blade server-rendered pages, Arabic and English, complete light/dark themes, responsive/accessibility/performance/SEO requirements.
-- **Technology baseline:** Laravel 13 + Blade + Tailwind CSS 4 + native JavaScript + Vite, with MySQL preferred; see the [canonical stack decision](./09-technology-and-engineering/website-tech-stack.md). Planning decision only, not verified implementation.
+- **Technology baseline:** Laravel 13 + Blade + Tailwind CSS 4 + TypeScript + Vite, with MySQL preferred; browser-side TypeScript must pass `tsc --noEmit`; see the [canonical stack decision](./09-technology-and-engineering/website-tech-stack.md). Planning decision only, not verified implementation.
 - **Project status:** an early Laravel scaffold and planning documentation exist. A completed production website, registered entity, approved final brand, or launched products must not be assumed.
 - Start at the [Company & Website Workspace](./16-company-and-website-workspace/README.md), then review its [Pre-Build Readiness Gate](./16-company-and-website-workspace/15-pre-build-readiness.md).

@@ -10,8 +10,8 @@ These are agreed directions for planning, not evidence that the features or cont
 - [x] Two service lines: IT Infrastructure & Security, and Software & Digital Solutions.
 - [x] One website serving both audiences with clearly separated service content.
 - [x] Laravel + Blade server-rendered pages; no separate SPA requirement.
-- [x] Technology baseline documented: Laravel 13 + Blade + Tailwind CSS 4 + native JavaScript + Vite; MySQL is preferred.
-- [x] Inertia, React/Vue SPA, TypeScript and nonessential interaction frameworks are excluded from the initial stack unless a real requirement changes.
+- [x] Technology baseline documented: Laravel 13 + PHP backend + Blade + Tailwind CSS 4 + TypeScript browser modules + Vite; MySQL is preferred.
+- [x] Inertia, React/Vue SPA and nonessential interaction frameworks are excluded from the initial stack unless a real requirement changes. TypeScript is used only for browser-side modules, not as backend runtime.
 - [x] Arabic and English with correct RTL/LTR behavior.
 - [x] Properly designed light and dark themes.
 - [x] Projects/case studies, Products, and Website Templates remain separate content types.
@@ -26,7 +26,7 @@ These are agreed directions for planning, not evidence that the features or cont
 Resolve each point or record a safe temporary assumption:
 
 - [ ] **Repository baseline:** Inspect PHP/Composer/Node versions, lockfiles, routes, views, models, migrations, tests, config, and available storage. Record current test results before changing anything.
-- [ ] **Technology/runtime compatibility:** Verify PHP and Node/npm versions, PHP extensions, Composer/npm lockfiles, installed Laravel/Tailwind/Vite/Pest/Pint versions, `npm run build`, and DB/hosting compatibility. Manifest declarations do not prove these checks pass; see the [canonical stack decision](../09-technology-and-engineering/website-tech-stack.md).
+- [ ] **Technology/runtime compatibility:** Verify PHP and Node/npm versions, PHP extensions, Composer/npm lockfiles, installed Laravel/Tailwind/Vite/TypeScript/Pest/Pint versions, `tsc --noEmit`, `npm run build`, and DB/hosting compatibility. Manifest declarations do not prove these checks pass; see the [canonical stack decision](../09-technology-and-engineering/website-tech-stack.md).
 - [ ] **Admin access:** Decide how the first administrator is created and recovered. No public admin registration by default.
 - [ ] **Inquiry handling:** Decide which inquiry types are captured and record the initial notification/recipient assumption. Real mail secrets and live recipient details may remain environment-specific.
 - [ ] **Locale approach:** Choose route/default-locale and translation storage after auditing the existing scaffold.

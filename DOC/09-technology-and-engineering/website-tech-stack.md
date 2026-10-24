@@ -38,7 +38,8 @@ CMS content includes pages/predefined homepage sections, services, projects/case
 
 - Blade renders public and admin pages. Core navigation and contact flows should work without a JavaScript application.
 - Use Tailwind CSS 4 for consistent responsive styling and custom CSS for design tokens, theme variables and exceptions.
-- Add only focused native JavaScript for interactions such as mobile navigation, theme toggling and small accordions.
+- Write browser-side modules in TypeScript for interactions such as mobile navigation, theme toggling and small accordions. Keep the code focused; TypeScript does not imply React, Inertia, a SPA or a large client-side application.
+- Include a strict-enough `tsconfig.json` and run `tsc --noEmit` so type errors fail the relevant build/check command. Vite transpiles TypeScript but does not type-check it by itself; a Vite build alone is not sufficient verification.
 - Do not preselect Alpine.js or Livewire; consider them only for a specific interaction with a clear benefit.
 - Use consistent tokens for color, spacing, typography, radii, shadows and motion.
 - Support mobile, tablet and desktop without horizontal overflow.
@@ -71,7 +72,7 @@ Before the first code change, record PHP/Composer/Node/npm versions, PHP extensi
 For each relevant milestone:
 - Run Laravel/Pest tests and add tests for new behavior.
 - Run Pint on changed PHP code.
-- Run `npm run build` after asset changes.
+- Run `tsc --noEmit` for TypeScript type-checking and `npm run build` for Vite/Tailwind asset compilation after asset changes; both must pass.
 - Browser-check key public/admin flows on desktop/mobile, Arabic/English and light/dark themes.
 - Verify RTL/LTR, keyboard/focus, reduced motion, validation, authorization, draft privacy, uploads, SEO and social previews.
 - Record actual commands/results. A manifest or commit is not evidence that a check passed.
@@ -82,7 +83,7 @@ For each relevant milestone:
 |---|---|
 | Inertia.js | Not selected; Blade meets the current requirement. |
 | React/Vue SPA | Not selected; no separate frontend app is needed. |
-| TypeScript | Not selected for the small planned JavaScript layer; reconsider only if a typed client app becomes necessary. |
+| TypeScript | Selected for the small frontend asset layer, with explicit `tsc --noEmit` checks. It does not change the Laravel/PHP backend or require an SPA. |
 | Livewire/Alpine.js | Not preselected; revisit for a concrete interaction only. |
 | GSAP | Optional after a specific motion review, not a baseline dependency. |
 | Filament/packaged admin | Not selected at planning time; intended admin is custom Blade. Revisit only if the tested maintenance/time trade-off is clearly better. |

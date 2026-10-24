@@ -8,7 +8,7 @@ Finish and test the backend foundation before building the public frontend. Then
 
 - Audit the existing Laravel scaffold, Composer dependencies/lockfile, PHP/Node runtimes, routes, views, assets, configuration, storage assumptions, and tests.
 - Verify `composer.json`, `composer.lock`, `package.json`, any npm lockfile, PHP extensions, Vite/Tailwind integration and declared Laravel/Pest/Pint versions in the actual environment.
-- Follow the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md); do not add SPA, TypeScript or additional frontend/animation/admin frameworks without a documented trigger.
+- Follow the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md); do not add a SPA or additional frontend/animation/admin frameworks without a documented trigger; use TypeScript for browser-side code and add explicit type-checking.
 - Run the existing test suite and record the baseline before making changes.
 - Confirm how the first administrator will be provisioned and how inquiries will be handled.
 - Document unresolved assumptions for locale routing, storage, mail, and initial content.
@@ -36,7 +36,7 @@ Build the backend capabilities needed to support the agreed website content type
 
 - Build the shared Blade layout, navigation, footer, typography, spacing, and reusable section views.
 - Use Tailwind CSS 4 and limited custom CSS compiled through Laravel Vite.
-- Add only focused native JavaScript; use CSS/native browser features for ordinary motion and honor reduced-motion settings.
+- Add focused TypeScript modules for browser interactions, with `tsc --noEmit` included in verification. Use CSS/native browser features for ordinary motion and honor reduced-motion settings.
 - Implement English/Arabic routes, RTL/LTR, language switching, light/dark themes, and preference persistence.
 - Implement baseline metadata, canonical/locale alternates, social sharing metadata, sitemap, robots, and useful error states.
 - Verify keyboard accessibility, reduced motion, responsive behavior, and media performance.

@@ -16,7 +16,7 @@ The canonical stack and exclusions for the company website are in the [Website T
 
 Planning baseline: PHP `^8.3`, Laravel `^13.17`, Blade, preferred MySQL database, Tailwind CSS `^4.0`, native JavaScript, Vite `^8.0`, Pest and Laravel Pint. Manifest-declared versions do not prove successful installation, runtime compatibility or tests.
 
-Inertia, React/Vue SPA, TypeScript, Livewire, Alpine.js, GSAP, a packaged admin panel and a separate API are not baseline requirements. Do not add them without a documented need.
+Inertia, React/Vue SPA, Livewire, Alpine.js, GSAP, a packaged admin panel and a separate API are not baseline requirements. Do not add them without a documented need.
 
 ## Engineering principles
 

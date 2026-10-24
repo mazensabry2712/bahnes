@@ -14,10 +14,10 @@ This document separates the established planning direction from proposals and de
 | Backend/runtime | PHP `^8.3` + Laravel `^13.17` | Declared in Composer; runtime audit pending |
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
 | CSS/build | Tailwind CSS `^4.0` + Vite `^8.0` + Laravel Vite plugin | Declared in package.json; install/build audit pending |
-| Client-side behavior | Native JavaScript for small interactions | Planned; minimize JavaScript |
+| Client-side behavior | TypeScript modules for small browser interactions | Planned; type-check with `tsc --noEmit`; minimize client code |
 | PHP tests/format | Pest + Laravel Pint | Declared dependencies; baseline run pending |
 | Admin UI | Custom Blade admin with session auth and server-side authorization | Planned; audit existing auth first |
-| Inertia / React / Vue / TypeScript | Not selected for initial website | Revisit only if requirements change |
+| Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP not baseline | Optional only after a concrete need is approved |
 | Separate SPA | Not required by current plan | Out of initial scope |
 | Languages | Arabic and English | Planned requirement |
