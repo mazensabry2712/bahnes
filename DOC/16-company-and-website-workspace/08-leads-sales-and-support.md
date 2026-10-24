@@ -17,7 +17,7 @@ Ask only what helps qualify the inquiry. Never ask for passwords or confidential
 
 - **Implemented and CI-verified:** `POST /contact` and localized `POST /en/contact` / `POST /ar/contact` submission endpoints with server-side validation, a five-per-minute throttle, Spatie Honeypot middleware, accepted inquiry types, lowercased email, preferred-language storage and a generated reference shown only after storing.
 - **Implemented and CI-verified:** protected admin inbox with search/type/status filters, inquiry review, follow-up status updates and private internal notes.
-- **Implemented:** bilingual `/en/contact` and `/ar/contact` Blade form, RTL/LTR layout, real `<x-honeypot />` component, per-field validation messages and stored inquiry reference. **Not yet implemented:** guided Project Brief form, confirmed notification recipient/provider, outbound email delivery/retry/failure handling, and a more detailed next-action/date pipeline.
+- **Implemented and tested:** bilingual `/en/contact` and `/ar/contact` Blade form, RTL/LTR layout, real `<x-honeypot />` component, per-field validation messages, and stored inquiry reference. The current recipient/provider, outbound email delivery/retry/failure handling, and more detailed next-action/date pipeline are not yet implemented.
 - **Privacy boundary:** the public request cannot write admin notes or choose its own source/status. Email notifications remain disabled until the company confirms a real recipient and mail configuration.
 
 ## Inquiry pipeline

@@ -32,11 +32,11 @@ Test mobile/desktop, navigation, form errors/success, themes, RTL/LTR, keyboard/
 
 ## Release checklist
 
-- [ ] Dependencies install from lockfile and automated tests pass.
+- [x] Dependencies install from lockfiles; latest checks passed **59 tests (234 assertions)**, Composer/npm audits, Larastan, TypeScript and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
 - [ ] Migrations are reviewed and tested on the target environment.
 - [ ] Asset build succeeds.
 - [ ] Production debug mode is off and required environment configuration exists.
-- [ ] HTTPS, DNS, `storage:link` and storage permissions/persistence, PHP `gd`/`exif`/`fileinfo`, mail delivery, backups, and monitoring are checked.
+- [ ] HTTPS, DNS, `storage:link` and storage permissions/persistence, PHP `gd`/`exif`/`fileinfo`, mail delivery, backups, and monitoring are checked on the actual target host.
 - [ ] Public pages, admin login, forms, and content publishing pass smoke tests.
 - [ ] Deployment and rollback steps are documented.
 

@@ -25,7 +25,7 @@ These are agreed directions for planning, not evidence that the features or cont
 
 - [x] Package-first rule: prefer a maintained compatible package for non-trivial shared capabilities, but avoid packages for trivial helpers or where complexity exceeds value.
 - [x] Selected: custom Blade admin, Spatie Media Library for media, Spatie Sitemap for public URLs, Spatie Honeypot for public forms, Larastan for PHP analysis, GSAP/Lucide and self-hostable fonts for the frontend layer.
-- [x] Removed the rejected third-party admin-panel packages. Composer regenerated `composer.lock`; the updated package set passed Composer/npm audits, Larastan, 51 tests (193 assertions), TypeScript checking and Vite production build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). No third-party admin-panel packages remain in `composer.json` or `composer.lock`.
+- [x] Removed the rejected third-party admin-panel packages. The latest package/feature verification passed **59 tests (234 assertions)**, Larastan (no errors), Composer audit, npm audit (0 reported vulnerabilities) and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)). No third-party admin-panel packages remain in `composer.json` or `composer.lock`.
 
 
 ## B. Required before the first backend coding milestone
@@ -60,7 +60,7 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 - [ ] Confirm which service offers can be sold and their scope, supplier dependencies, warranty, and support terms.
 - [ ] Review Arabic and English content.
 - [ ] Test inquiry forms, mail notifications, rate limits, validation, and privacy wording.
-- [ ] Validate responsive behavior, themes, RTL/LTR, keyboard use, reduced motion, SEO metadata, sitemap content URLs, robots, canonical/hreflang, social previews, and performance.
+- [ ] Validate responsive behavior, themes, RTL/LTR, keyboard use, reduced motion, SEO metadata, sitemap coverage as public content routes are added, robots, canonical/hreflang, social previews, and performance.
 - [ ] Publish only authorized projects and substantiated customer claims.
 - [ ] Keep empty or unready product/template catalogs unpublished rather than filling them with fabricated content.
 
@@ -80,7 +80,7 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 5. [x] Add and test project/case-study CRUD with project-stage labels and authorization checks.
 6. [x] Add Products and Website Templates admin catalogs with explicit commercial publication gates.
 7. [x] Add Insights/category admin with bilingual content and publication guards.
-8. [x] Add and test media cover uploads, bilingual contact form with honeypot/rate limits, and dynamic sitemap/robots endpoints (public content URLs remain pending until public pages exist).
+8. [x] Add and test media cover uploads, bilingual contact form with Honeypot/rate limits, and dynamic sitemap/robots endpoints. Public content-detail pages and their sitemap URLs remain pending.
 9. Continue the **backend first** with email notification settings after the recipient is confirmed.
 9. Verify each backend milestone and record its results before relying on it.
 10. Build the public Blade frontend section by section using tested backend workflows.

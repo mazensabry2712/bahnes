@@ -1,6 +1,6 @@
 # BAHNES Website — Technology Stack & Frontend Architecture
 
-**Status:** Approved stack and package policy. The custom Laravel Blade admin remains the chosen approach. The package-removal lock refresh and all CI quality gates passed in [run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453); local and production environments remain unverified.
+**Status:** Approved stack and package policy. The custom Laravel Blade admin remains the chosen approach. The media/contact/SEO feature CI and dependency-lock refresh both passed ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)); local and production environments remain unverified.
 **Scope:** Public BAHNES IT SOLUTIONS company website and its Laravel-based admin.
 
 ## 1. Selected stack
@@ -83,7 +83,7 @@ Prefer short CSS transitions using transform/opacity. Use Intersection Observer 
 
 Use Laravel routes and server-rendered locale pages, planned as `/en/...` and `/ar/...`. Locale controls content, direction and metadata. Do not create language alternates for translations that do not exist.
 
-Provide per-language titles/descriptions, canonical URLs, reciprocal hreflang for existing variants, XML sitemap, correct robots rules, clean 404/redirect handling and relevant Open Graph metadata. Implemented now: dynamic `/sitemap.xml` and `/robots.txt` endpoints; the sitemap includes only routes that currently exist. Add published content URLs after their public pages are implemented. The default social preview must use the approved BAHNES logo/brand asset, not an unrelated image.
+Provide per-language titles/descriptions, canonical URLs, reciprocal hreflang for existing variants, XML sitemap, correct robots rules, clean 404/redirect handling and relevant Open Graph metadata. Implemented now: dynamic `/sitemap.xml` and `/robots.txt` endpoints; the sitemap currently includes only the homepage and existing English/Arabic contact routes. Add content URLs when public detail/list routes are implemented. The default social preview must use the approved BAHNES logo/brand asset, not an unrelated image.
 
 ## 6. Data, files, mail and hosting
 

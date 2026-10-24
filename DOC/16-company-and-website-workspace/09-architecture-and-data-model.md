@@ -18,7 +18,7 @@ Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-te
 - **Rendering:** server-rendered Blade for both public pages and the custom admin. Keep current controllers/views and improve them using reusable Blade layouts/components.
 - **Frontend:** semantic HTML, Tailwind CSS `^4.1`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
-- **Quality tools:** Pest, Pint and Larastan are dependencies; the current package-removal refresh passed 51 tests (193 assertions), Larastan, Composer/npm audits and Vite build ([CI run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)).
+- **Quality tools:** Pest, Pint and Larastan are dependencies; the latest feature/dependency CI runs passed **59 tests (234 assertions)**, Larastan, Composer/npm audits and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
 - **Not selected:** Inertia/React/Vue SPA, Livewire/Alpine.js, third-party admin panels, separate public API, microservices or universal page builder. TypeScript is only for browser assets.
 
 ## Suggested records
@@ -46,7 +46,7 @@ Use the selected storage driver, safe generated names, content/size validation, 
 
 ## Package-first decision
 
-Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure, but keep the admin CMS custom Blade. Spatie Media Library handles uploaded images/conversions; Spatie Sitemap handles XML sitemap generation; Spatie Honeypot complements rate limits on public forms; Larastan runs static analysis. Keep one admin workflow by reusing existing controllers/views and extracting common Blade components where that removes duplication.
+Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure, but keep the admin CMS custom Blade. Spatie Media Library now stores one validated cover per service, project, product, website template, or Insight, with localized alt text and a generated preview. Spatie Sitemap powers `/sitemap.xml`; Spatie Honeypot protects the bilingual contact form alongside rate limiting; Larastan runs static analysis. Public content URLs should be added to the sitemap only after their actual public routes exist.
 
 The public site remains custom server-rendered Blade with Tailwind and TypeScript. GSAP/Lucide/Fontsource are available for the public visual layer, with package bundles limited to the actual features used.
 
