@@ -9,7 +9,7 @@ BAHNES is being planned as one company brand with two clear service lines:
 
 The longer-term plan includes validated software products and website templates. They should be sold only when scope, licensing, support, and buyer demand are understood.
 
-> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, bilingual Services management, and initial Projects / Case Studies management, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
+> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, bilingual Services and Projects / Case Studies management, Products and Website Templates catalogs, and customer inquiry follow-up, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
 
 ## Documentation
 
@@ -32,4 +32,4 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 - Never commit secrets, production credentials, or private customer data.
 - Do not claim features are implemented or tested unless they actually are.
 
-The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service management, project/case-study management, and the first inquiry inbox/submission workflow are implemented and CI-tested. The latest CI run passed 36 tests (138 assertions), TypeScript checking and the Vite production build. Product/template/article CMS, uploads, public pages and notification email remain separate milestones.
+The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service and project/case-study management, Products and Website Templates admin catalogs, and customer inquiry follow-up are implemented and CI-tested. The latest catalog CI run passed 43 tests (165 assertions), TypeScript checking and the Vite production build ([run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157)). Insights, media uploads, public pages and email notification delivery remain separate milestones.
