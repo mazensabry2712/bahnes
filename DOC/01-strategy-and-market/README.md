@@ -1,58 +1,67 @@
 # Strategy & Market
 
-## Initial strategic focus
+## Strategic model
 
-Target organizations that have operational problems valuable enough to pay to solve, but do not need a large enterprise transformation to get started.
+BAHNES IT SOLUTIONS is planned as one customer-facing brand with two service lines: **IT Infrastructure & Security** and **Software & Digital Solutions**. The website and sales process should make both easy to understand without making the company sound like an unstructured “we do everything” provider.
 
-### Starting customer segments to test
+The near-term objective is to validate which customer problems and offers generate qualified conversations and paid work. This is a working strategy, not a claim about proven market demand.
 
-1. **Trading and distribution:** inventory, orders, sales workflows, reporting, integrations.
-2. **Service businesses:** booking, customer records, internal workflows, dashboards.
-3. **Established businesses with existing software:** maintenance, modernization, integrations, performance and reliability work.
+## Customer segments to test
 
-These are hypotheses to validate—not proof that these segments are the most profitable.
+### IT Infrastructure & Security
+- Offices and small/medium businesses setting up or expanding their network.
+- Shops, clinics, and workplaces evaluating CCTV or surveillance upgrades.
+- Businesses that need PC/workstation setup, connectivity troubleshooting, or ongoing IT maintenance.
+- Organizations that may need related access-control/attendance systems, subject to verified capability and requirements.
+
+### Software & Digital Solutions
+- Trading/distribution businesses with inventory, orders, sales, and reporting problems.
+- Service businesses needing booking, customer records, or workflow systems.
+- Businesses needing a credible company website, e-commerce, or managed content.
+- Organizations needing custom applications, integrations, modernization, or maintenance.
+
+These segments are hypotheses to validate, not proof of profitability. Start with a manageable subset rather than targeting every industry at once.
+
+## Cross-service opportunity
+
+A business may need both physical IT and software—for example, a retail operation may need network setup and cameras as well as POS and inventory software. Cross-selling is useful when it solves a real need, but the proposal must separate scope, equipment, software, vendors, timing, and support responsibilities.
 
 ## Ideal customer profile
 
-A promising customer usually has:
-- A clearly identified business owner or decision-maker.
-- A painful, recurring workflow problem.
-- A measurable impact from delay, errors, rework, or poor visibility.
-- A budget and a realistic decision process.
-- Someone available to provide requirements and test the result.
+A promising prospect has:
+- A clear decision-maker and someone responsible for access/approval.
+- A recurring problem or defined installation outcome.
+- A meaningful impact from errors, downtime, visibility gaps, risk, or manual work.
+- A realistic budget and buying process.
+- The ability to provide requirements, site access, content, or test/acceptance feedback.
 
-Avoid large, undefined projects with no decision-maker, no budget, no access to users, or no agreement on acceptance.
+Avoid undefined commitments with no decision-maker, no budget, unclear ownership, or no acceptance criteria.
 
 ## Differentiation
 
-Do not position the company as “we do everything.” Differentiate through:
-- Understanding the business process before coding.
-- Written deliverables, scope, assumptions, and exclusions.
-- Milestone-based delivery and visible progress.
-- Maintainable implementation and practical handover.
-- Reliable post-launch support with agreed response boundaries.
+Differentiate through:
+- Understanding the site or business workflow before quoting.
+- Written scope, deliverables, exclusions, and assumptions.
+- Clear equipment/software/third-party cost breakdowns.
+- Secure configuration, documentation, handover, and support boundaries.
+- Honest proof of capability rather than broad unsupported claims.
+- Maintainable implementations and practical customer guidance.
 
 ## Market validation routine
 
-For the first 30–60 days:
-1. Build a list of relevant businesses and warm contacts.
-2. Conduct short discovery conversations; ask about current workflow, cost of the problem, current workaround, urgency, and buying process.
-3. Record exact customer language and recurring needs.
-4. Offer a small paid discovery/audit where appropriate.
-5. Track which problems produce qualified conversations and paid commitments.
-6. Review the evidence monthly before changing the primary offer.
+For the first market-validation cycle:
+1. List target businesses by service line and relationship/source.
+2. Ask short discovery questions about current setup, pain, impact, workaround, urgency, and buying process.
+3. For physical IT requests, identify when a site survey is needed before estimating.
+4. For software requests, define workflow, users, existing systems, data, integrations, and acceptance.
+5. Record exact customer language and recurring needs.
+6. Track qualified conversations, proposals, accepted work, collected cash, delivery effort, and follow-on support.
+7. Review evidence before changing the primary offer or investing in a product.
 
 ## Competitor research
 
-Research local agencies, ERP implementers, freelancers, product vendors, and international providers. Compare:
-- Target segment and problem solved.
-- Proof of work and case studies.
-- Delivery model and support.
-- Pricing signals, where publicly available.
-- Strengths, customer complaints, and underserved needs.
-
-Do not copy competitors' positioning blindly or treat marketing claims as independent evidence.
+Compare local IT installers/providers, repair and support businesses, web/software agencies, ERP implementers, product vendors, and relevant international providers. Evaluate their audiences, scope clarity, proof, delivery/support model, public pricing signals, customer complaints, and underserved needs. Do not copy a competitor's claims or assume marketing pages provide independent evidence.
 
 ## Decision rule
 
-Prioritize a niche when repeated conversations, proposals, and paid work support it. If outreach generates attention but no qualified conversations, change the audience or message. If conversations do not convert, examine urgency, proof, offer, price, and trust before building more features.
+Choose initial offers based on observed demand, delivery ability, reasonable margins, supplier reliability, and capacity. If attention does not become qualified conversations, revisit the audience or message. If proposals do not convert, investigate trust, urgency, proof, scope, and price before building more features.

@@ -2,58 +2,67 @@
 
 ## Early-stage objective
 
-Create a repeatable flow from relevant prospects to discovery, paid work, successful delivery, referrals, and follow-on support. Do not optimize vanity metrics before qualified conversations and cash collection are working.
+Build a repeatable flow from suitable prospects to discovery/site assessment, paid work, successful delivery, collection, referrals, and support. Optimize for qualified conversations and collected cash—not vanity metrics.
 
-## Primary channels to test
+## Two service lines, one brand
 
-1. **Warm network and referrals:** Former colleagues, business owners, professional contacts, and trusted service providers.
-2. **Targeted LinkedIn outreach:** Short, personalized messages tied to a relevant business problem; avoid mass spam.
-3. **Proof-led content:** Practical explanations, architecture notes, workflow examples, short demos, and honest lessons from completed work.
-4. **Partnerships:** Accountants, consultants, design studios, IT providers, and agencies whose customers need software work.
-5. **Website and inbound:** Clear services, examples, contact paths, and useful articles targeting actual customer questions.
+Sales materials should clearly distinguish:
+- **IT Infrastructure & Security:** CCTV/surveillance, networking, business IT setup, troubleshooting, and maintenance where capability is confirmed.
+- **Software & Digital Solutions:** websites, e-commerce, applications, business systems, integrations, automation, and product/template inquiries.
 
-Start with a small number of channels and measure them before spreading effort across every platform.
+Do not sell every category at once. Choose a small number of ready-to-deliver offers, then validate demand.
 
-## Sales pipeline
+## Initial channels to test
 
-Use a spreadsheet or lightweight CRM with these stages:
-- New prospect
-- Contacted
-- Replied
-- Discovery booked
+1. **Warm network and referrals:** business owners, professional contacts, and trusted providers.
+2. **Local targeted outreach:** relevant offices, shops, clinics, trading businesses, and service companies; personalize the message and respect opt-outs.
+3. **Proof-led content:** practical IT/security checklists, software walkthroughs, diagrams, maintenance guidance, and honest lessons from completed work.
+4. **Partnerships:** IT/equipment suppliers, installers, accountants, consultants, design studios, and agencies where scope and referral terms are clear.
+5. **Website and inbound:** clear service-line pages, genuine work examples, useful Insights, and a simple inquiry path.
+6. **Targeted professional outreach:** relevant LinkedIn/email messages; avoid mass spam and unsupported claims.
+
+Start with a manageable set of channels and measure before adding more.
+
+## Lightweight sales pipeline
+
+Use a spreadsheet or simple board at first:
+- New inquiry/prospect
+- Contacted / awaiting reply
 - Qualified
+- Site survey or discovery scheduled
 - Proposal sent
-- Negotiation
+- Negotiation / clarification
 - Won / lost
 - Delivery
 - Support / referral
 
-Track next action and date for every active opportunity. Include a reason when a deal is lost.
+Record the service line, next action/date, stage, source, estimated scope/value, and lost reason where useful. A full CRM is deferred until volume justifies it.
 
-## Discovery call outline
+## Qualification
 
-- Context and business goal.
-- Current workflow and pain.
-- Business impact and urgency.
-- Users, decision-maker, budget, and timing.
-- Constraints, systems, data, and integrations.
-- Definition of a successful first release.
-- Agreed next step.
+### For IT installation/support
+Clarify site/location, goal, existing equipment/network, approximate number of devices/coverage needs, power/network/cabling constraints, site-survey need, access permissions, deadline, warranty expectations, and who approves the quote. Avoid firm equipment/install promises before enough information is available.
 
-Listen more than you pitch. Do not offer a fixed quote until uncertainty is understood.
+### For software/projects
+Clarify business outcome, current workflow, users, integrations/data, existing systems, decision-maker, budget, constraints, timing, and a testable first-release outcome.
+
+## Discovery / site assessment
+
+Listen before proposing. A physical installation may require a site visit and equipment list; a software build may require workflow discovery. Keep the findings and assumptions in writing. Do not issue a fixed quote while material unknowns remain hidden.
 
 ## Content pillars
 
-- Common operational problems and how to diagnose them.
-- Practical guides for choosing/building business software.
-- Demonstrations of real capabilities using approved or synthetic data.
+- CCTV/network/IT planning and maintenance.
+- Common operational problems and choosing business software.
+- Practical website, SEO, integration, automation, and security guidance.
+- Real demos using approved or synthetic data.
 - Case studies with customer permission and verified outcomes.
-- Maintenance, security, and lifecycle lessons.
+- Clear explanations of service scope, support, and lifecycle.
 
-## Weekly sales rhythm
+## Weekly rhythm and measurement
 
-Reserve fixed time for prospect research, personalized outreach, follow-ups, discovery calls, proposals, and reviewing conversion. Measure qualified conversations, proposals, wins, sales cycle, and collected cash—not just followers or impressions.
+Reserve time for prospect research, outreach, follow-ups, discovery/site visits, proposals, delivery review, and collection. Track qualified inquiries by service line, site surveys/discovery completed, proposals/wins, average collection delay, delivery effort, recurring support, and referrals.
 
 ## Ethical rules
 
-Do not invent customers, testimonials, credentials, certifications, or results. Clearly distinguish demo projects from paid client work. Respect privacy, platform rules, opt-outs, and applicable direct-marketing requirements.
+Never invent clients, testimonials, certifications, licenses, results, equipment partnerships, or service availability. Separate demo work from paid client work. Respect privacy and data-handling duties, platform rules, opt-outs, and applicable marketing requirements.

@@ -1,42 +1,55 @@
 # 13 — Decisions & Backlog
 
-## Current working direction
+This document separates the established planning direction from proposals and details that must still be confirmed. “Planned” does not mean implemented.
+
+## Working direction to preserve
 
 | Topic | Direction | Status |
 |---|---|---|
-| Brand model | One BAHNES IT SOLUTIONS brand with two service lines | Working direction |
-| Service lines | IT Infrastructure & Security; Software & Digital Solutions | Working taxonomy |
-| Framework | Laravel scaffold | Exists; audit required |
-| Public rendering | Blade/server-rendered | Planned baseline |
-| Separate SPA | Not required by current plan | Not planned |
+| Company presentation | One BAHNES IT SOLUTIONS brand with two clear service lines | Agreed planning direction |
+| Service line A | IT Infrastructure & Security: cameras, networking, business IT, support | Portfolio direction; capability needs validation |
+| Service line B | Software & Digital Solutions: websites, systems, apps, integration | Portfolio direction; capability needs validation |
+| App framework | Existing Laravel scaffold | Exists; must be audited |
+| Public rendering | Laravel Blade / server-rendered | Planned baseline |
+| Separate SPA | Not required by current plan | Out of initial scope |
 | Languages | Arabic and English | Planned requirement |
-| Themes | Designed light and dark; persist user choice | Planned requirement |
-| Portfolio | Projects/case studies separate from catalogs | Planned requirement |
-| Catalog | Products and templates separate types | Planned requirement |
-| Editorial | Insights rather than only a generic Blog | Proposed direction |
-| Admin | Core content, media, translations, SEO, inquiries | Planned scope |
-| Sales flow | Guided project brief and lightweight pipeline | Planned scope |
-| Company profile PDF | Create after identity and facts are approved | Later deliverable |
-| Interactive system showcase | Lightweight, useful and clearly illustrative | Optional |
+| Themes | Proper light and dark themes with user preference | Planned requirement |
+| Public service pages | Both service lines, with detailed pages for approved offers | Planned scope |
+| Work portfolio | Projects/case studies separate from products | Planned requirement |
+| Digital catalog | Products and website templates are separate types | Planned requirement |
+| Editorial | Insights/articles | Planned content section |
+| CMS | Manage core content, media, locales, SEO, and inquiries | Planned scope |
+| Sales flow | General contact plus guided project brief and simple pipeline | Planned scope |
+| Company profile PDF | Bilingual, after company facts and identity are approved | Later deliverable |
+| Interactive system showcase | Lightweight, clearly illustrative | Optional after core site |
 | Client portal/full CRM | Defer until need is demonstrated | Deferred |
-| Automated checkout/subscriptions | Defer until commercial flow is defined/tested | Deferred |
-| Logo/colors/fonts | Design proposals requiring approval | Needs confirmation |
+| Automated checkout/subscriptions | Defer until commercial flow is defined and tested | Deferred |
+| Logo/colors/fonts/tagline | Proposed identity direction | Needs review/approval |
 
-## Open decisions
+## Decisions required before backend implementation
 
-- Which service offers can be delivered directly, and which require suppliers/partners?
-- Legal form, registration, tax, permissions, privacy obligations, and professional advice.
-- Final logo, palette, typography, tagline, domain, contact details, and official social profiles.
-- Initial target segment and primary offer based on real conversations.
-- Portfolio items that can be published, with customer permissions.
-- Actual product/template inventory, licenses, prices, updates, and support.
-- Whether initial sales are quote-led or require online checkout.
-- Hosting/runtime, mail provider, storage, backups, and analytics after scaffold audit.
-- Locale default/fallback and translation review ownership.
-- Privacy text and retention period.
+1. Confirm the service categories that can be delivered directly versus via suppliers/partners.
+2. Confirm the initial contact destination/owner and required inquiry types.
+3. Audit the scaffold and confirm PHP/Composer/Node runtime, current tests, existing routes, and storage/database assumptions.
+4. Choose a simple, testable approach for locale URLs and translated content.
+5. Define the first admin account/provisioning method and authorization boundaries.
+6. Confirm how inquiries are notified and stored, plus privacy/retention assumptions.
+7. Select the initial CMS sections and models from the documented content types; defer anything not needed for launch.
+
+## Decisions that can wait until public launch or catalog release
+
+- Final logo and all production brand assets.
+- Public domain, final company contacts, and approved company profile copy.
+- Final prices and detailed service packages.
+- Actual product/template inventory, licenses, prices, delivery/update/support policy.
+- Portfolio assets and client permissions.
+- Exact privacy/legal copy reviewed by qualified advisers.
+- Production hosting, mail provider, backups, analytics, monitoring, and DNS details.
+
+A visual concept can be drafted before the final logo, but launch must use approved assets and accurate company information.
 
 ## Prioritization
 
-Prioritize correctness/security, business-critical flows, accessibility/usability, content quality, performance, and then optional polish. Each implementation item needs a reason, acceptance criteria, dependencies, and a test.
+Prioritize correctness and security, core business flows, accessibility/usability, content truthfulness, performance, then optional polish. Every feature should have a user/business reason, scope, acceptance criteria, dependencies, and a test.
 
-Do not make every idea a launch blocker. The interactive system showcase is optional; reliable pages and inquiries come first.
+The interactive showcase is optional. A reliable contact flow, clear service pages, proper content management, and correct metadata are more important for the first release.
