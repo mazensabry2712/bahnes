@@ -20,6 +20,7 @@
         <div class="mt-5 flex flex-wrap gap-3">
             <a class="admin-button" href="{{ route('admin.services.index') }}">Manage services</a>
             <a class="admin-button" href="{{ route('admin.projects.index') }}">Manage projects</a>
+            <a class="admin-button" href="{{ route('admin.inquiries.index') }}">Customer inquiries</a>
         </div>
     </section>
 @endsection
