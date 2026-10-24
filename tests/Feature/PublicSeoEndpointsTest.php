@@ -28,12 +28,14 @@ it('renders a localized contact form with the package honeypot fields', function
         ->assertOk()
         ->assertSee('lang="ar"', false)
         ->assertSee('dir="rtl"', false)
-        ->assertSee('name="my_name"', false)
-        ->assertSee('name="valid_from_timestamp"', false);
+        ->assertSee('name="my_name_', false)
+        ->assertSee('name="valid_from"', false);
 });
 
 it('does not store an inquiry when the honeypot is filled', function () {
     config()->set('honeypot.enabled', true);
+    config()->set('honeypot.randomize_name_field_name', false);
+    config()->set('honeypot.valid_from_timestamp', false);
 
     $this->post(route('localized.contact.store', ['locale' => 'en']), [
         'name' => 'Spam Bot',
