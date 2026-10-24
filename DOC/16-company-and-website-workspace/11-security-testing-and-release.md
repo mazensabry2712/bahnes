@@ -32,7 +32,7 @@ Test mobile/desktop, navigation, form errors/success, themes, RTL/LTR, keyboard/
 
 ## Release checklist
 
-- [x] Dependencies install from lockfiles; latest checks passed **59 tests (234 assertions)**, Composer/npm audits, Larastan, TypeScript and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
+- [x] Dependencies install from lockfiles; latest CI passed **59 tests (234 assertions)**, Composer/npm audits, Larastan, TypeScript and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
 - [ ] Migrations are reviewed and tested on the target environment.
 - [ ] Asset build succeeds.
 - [ ] Production debug mode is off and required environment configuration exists.

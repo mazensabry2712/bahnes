@@ -40,7 +40,7 @@ Build the backend capabilities needed to support the agreed website content type
 - Localization foundations for Arabic/English, plus per-locale slug and SEO metadata as appropriate.
 - Automated tests for access control, content visibility, validation, locale behavior, uploads, and inquiry submission.
 
-**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. The latest evidence is [feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081) plus [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812): 59 tests (234 assertions), Larastan, Composer/npm audits and Vite build passed. Empty catalogs can stay unpublished until real items exist.
+**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. Latest evidence: [feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639) plus [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)—59 tests (234 assertions), Larastan, Composer/npm audits, TypeScript and Vite build passed. Media, contact and public SEO integrations are now covered by tests; public content-detail pages remain pending.
 
 ## Phase 2 — Shared public frontend foundation
 

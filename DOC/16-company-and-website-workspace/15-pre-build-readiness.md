@@ -25,7 +25,7 @@ These are agreed directions for planning, not evidence that the features or cont
 
 - [x] Package-first rule: prefer a maintained compatible package for non-trivial shared capabilities, but avoid packages for trivial helpers or where complexity exceeds value.
 - [x] Selected: custom Blade admin, Spatie Media Library for media, Spatie Sitemap for public URLs, Spatie Honeypot for public forms, Larastan for PHP analysis, GSAP/Lucide and self-hostable fonts for the frontend layer.
-- [x] Removed the rejected third-party admin-panel packages. The latest package/feature verification passed **59 tests (234 assertions)**, Larastan (no errors), Composer audit, npm audit (0 reported vulnerabilities) and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)). No third-party admin-panel packages remain in `composer.json` or `composer.lock`.
+- [x] Removed the rejected third-party admin-panel packages. Latest verification passed **59 tests (234 assertions)**, Larastan (no errors), Composer audit, npm audit (0 reported vulnerabilities), TypeScript and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)). No third-party admin-panel packages remain in `composer.json` or `composer.lock`.
 
 
 ## B. Required before the first backend coding milestone

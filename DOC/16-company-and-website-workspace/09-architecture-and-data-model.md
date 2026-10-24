@@ -18,7 +18,7 @@ Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-te
 - **Rendering:** server-rendered Blade for both public pages and the custom admin. Keep current controllers/views and improve them using reusable Blade layouts/components.
 - **Frontend:** semantic HTML, Tailwind CSS `^4.1`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
-- **Quality tools:** Pest, Pint and Larastan are dependencies; the latest feature/dependency CI runs passed **59 tests (234 assertions)**, Larastan, Composer/npm audits and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
+- **Quality tools:** Pest, Pint and Larastan are dependencies; the latest feature CI passed **59 tests (234 assertions)**, Larastan, Composer/npm audits, TypeScript and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)).
 - **Not selected:** Inertia/React/Vue SPA, Livewire/Alpine.js, third-party admin panels, separate public API, microservices or universal page builder. TypeScript is only for browser assets.
 
 ## Suggested records
@@ -48,7 +48,7 @@ Use the selected storage driver, safe generated names, content/size validation, 
 
 Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure, but keep the admin CMS custom Blade. Spatie Media Library now stores one validated cover per service, project, product, website template, or Insight, with localized alt text and a generated preview. Spatie Sitemap powers `/sitemap.xml`; Spatie Honeypot protects the bilingual contact form alongside rate limiting; Larastan runs static analysis. Public content URLs should be added to the sitemap only after their actual public routes exist.
 
-The public site remains custom server-rendered Blade with Tailwind and TypeScript. GSAP/Lucide/Fontsource are available for the public visual layer, with package bundles limited to the actual features used.
+The public site remains custom server-rendered Blade with Tailwind and TypeScript. GSAP is available for future complex approved animations; Lucide is wired into TypeScript for tree-shaken inline SVGs, and Fontsource fonts are self-hosted through Vite. Do not bundle assets that a page does not use.
 
 ## Current implementation slice
 

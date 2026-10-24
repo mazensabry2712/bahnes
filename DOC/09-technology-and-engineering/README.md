@@ -14,7 +14,7 @@ These are dependency constraints in the repository, not confirmation of the inst
 
 The canonical stack and exclusions for the company website are in the [Website Tech Stack & Frontend Architecture decision](./website-tech-stack.md).
 
-Planning baseline: PHP `^8.4`, Laravel `^13.17`, custom Blade admin and public pages, MySQL, Tailwind CSS `^4.1`, TypeScript, Vite `^8.0`, Pest, Pint and Larastan. Supporting packages cover media uploads/conversions, XML sitemaps and honeypot spam protection. The latest feature and dependency CI runs passed **59 tests (234 assertions)**, security audits, static analysis and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)); local/hosting configuration still requires a separate check.
+Planning baseline: PHP `^8.4`, Laravel `^13.17`, custom Blade admin and public pages, MySQL, Tailwind CSS `^4.1`, TypeScript, Vite `^8.0`, Pest, Pint and Larastan. Supporting packages cover media uploads/conversions, XML sitemaps, honeypot spam protection, self-hosted fonts and tree-shaken icons. The latest feature CI passed **59 tests (234 assertions)**, security audits, static analysis, type-checking and Vite build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)); local/hosting configuration still needs a separate check.
 
 Inertia, React/Vue SPA, Livewire, Alpine.js and third-party admin-panel packages are excluded from the baseline. Custom Laravel Blade handles the admin; GSAP is available for complex motion only.
 
