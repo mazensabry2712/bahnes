@@ -6,7 +6,7 @@ createIcons({
         Send,
     },
     attrs: {
-        class: ['ui-icon'],
+        class: 'ui-icon',
         'stroke-width': 1.8,
     },
 });
