@@ -19,6 +19,13 @@ This checklist does not itself establish legal compliance or security certificat
 
 Test admin access and authorization, content create/edit/publish/archive, upload validation, draft privacy, inquiry validation/throttling/notification errors, locale fallback, and SEO metadata/sitemap/hreflang.
 
+## Tooling checks
+
+- Use declared Pest dependencies for Laravel tests and Laravel Pint for PHP formatting after confirming installed versions and the baseline.
+- Run `npm run build` after frontend changes to verify Vite/Tailwind compilation.
+- Browser-check responsive behavior, keyboard navigation, RTL/LTR and both themes. Add browser automation only if its maintenance cost is justified; do not assume Playwright is installed.
+- Record actual commands/results; a manifest declaration does not prove a tool works.
+
 ## Frontend tests
 
 Test mobile/desktop, navigation, form errors/success, themes, RTL/LTR, keyboard/focus, reduced motion, images/social previews, and broken links.

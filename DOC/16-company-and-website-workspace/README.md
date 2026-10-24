@@ -23,6 +23,7 @@ The website has three commercial jobs: generate service inquiries, establish tru
 | [06 — Projects, Products & Templates](./06-projects-products-and-templates.md) | Separate catalogs, licensing, sales readiness |
 | [07 — Insights & Editorial](./07-insights-and-editorial.md) | Articles, bilingual content, editorial quality |
 | [08 — Leads, Sales & Support](./08-leads-sales-and-support.md) | Brief form, pipeline, maintenance, company profile |
+| [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md) | Technology choices, rendering strategy, exclusions and quality gates |
 | [09 — Architecture & Data Model](./09-architecture-and-data-model.md) | Laravel/Blade baseline and content records |
 | [10 — Localization, SEO & Performance](./10-localization-seo-performance.md) | Arabic/English, RTL/LTR, SEO, speed |
 | [11 — Security, Testing & Release](./11-security-testing-and-release.md) | Security, tests, launch checks |
@@ -38,6 +39,7 @@ The website has three commercial jobs: generate service inquiries, establish tru
 - Never invent clients, testimonials, metrics, certifications, prices, supplier capability, or legal status.
 - Validate service capability and support boundaries before publishing an offer.
 - Audit the current Laravel scaffold before implementation and preserve Blade server-rendered pages as the planned baseline.
+- Follow the canonical stack decision; do not add Inertia, SPA frameworks, TypeScript or extra animation/admin packages without a documented requirement.
 - Build the smallest robust content system that supports the real requirements; avoid over-engineering.
 - Every major implementation item needs acceptance criteria and test evidence before it is marked complete.
 

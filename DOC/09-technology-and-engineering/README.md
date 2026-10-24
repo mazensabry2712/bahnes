@@ -10,6 +10,14 @@ The initial repository contains a Laravel application scaffold. The current `com
 
 These are dependency constraints in the repository, not confirmation of the installed runtime, deployed version, or production infrastructure. Verify those independently before deployment or architecture decisions.
 
+## Website stack decision
+
+The canonical stack and exclusions for the company website are in the [Website Tech Stack & Frontend Architecture decision](./website-tech-stack.md).
+
+Planning baseline: PHP `^8.3`, Laravel `^13.17`, Blade, preferred MySQL database, Tailwind CSS `^4.0`, native JavaScript, Vite `^8.0`, Pest and Laravel Pint. Manifest-declared versions do not prove successful installation, runtime compatibility or tests.
+
+Inertia, React/Vue SPA, TypeScript, Livewire, Alpine.js, GSAP, a packaged admin panel and a separate API are not baseline requirements. Do not add them without a documented need.
+
 ## Engineering principles
 
 - Prefer Laravel's established conventions and server-rendered Blade where they meet the requirements.

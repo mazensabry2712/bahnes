@@ -11,6 +11,14 @@ This document separates the established planning direction from proposals and de
 | Service line B | Software & Digital Solutions: websites, systems, apps, integration | Portfolio direction; capability needs validation |
 | App framework | Existing Laravel scaffold | Exists; must be audited |
 | Public rendering | Laravel Blade / server-rendered | Planned baseline |
+| Backend/runtime | PHP `^8.3` + Laravel `^13.17` | Declared in Composer; runtime audit pending |
+| Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
+| CSS/build | Tailwind CSS `^4.0` + Vite `^8.0` + Laravel Vite plugin | Declared in package.json; install/build audit pending |
+| Client-side behavior | Native JavaScript for small interactions | Planned; minimize JavaScript |
+| PHP tests/format | Pest + Laravel Pint | Declared dependencies; baseline run pending |
+| Admin UI | Custom Blade admin with session auth and server-side authorization | Planned; audit existing auth first |
+| Inertia / React / Vue / TypeScript | Not selected for initial website | Revisit only if requirements change |
+| Motion libraries | CSS/native features first; GSAP not baseline | Optional only after a concrete need is approved |
 | Separate SPA | Not required by current plan | Out of initial scope |
 | Languages | Arabic and English | Planned requirement |
 | Themes | Proper light and dark themes with user preference | Planned requirement |
@@ -25,6 +33,12 @@ This document separates the established planning direction from proposals and de
 | Client portal/full CRM | Defer until need is demonstrated | Deferred |
 | Automated checkout/subscriptions | Defer until commercial flow is defined and tested | Deferred |
 | Logo/colors/fonts/tagline | Proposed identity direction | Needs review/approval |
+
+## Technology decision and review rule
+
+The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app, Blade server rendering, Tailwind CSS 4, native JavaScript and Vite; MySQL is preferred. Do not add Inertia, a SPA, TypeScript, Livewire, Alpine.js, GSAP or a packaged admin merely because they are available.
+
+This is a planning decision, not a verification claim. Phase 0 must confirm runtime versions, installed packages, lockfiles, database compatibility, baseline tests and asset build. Update the docs before any technology change.
 
 ## Decisions required before backend implementation
 

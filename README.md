@@ -17,9 +17,9 @@ Start at the [DOC index](./DOC/README.md). The [Company & Website Workspace](./D
 
 ## Technology baseline
 
-The scaffold declares PHP ^8.3, Laravel Framework ^13.17, Laravel Tinker ^3.0, and Pest dependencies. These are repository constraints, not confirmation of the installed runtime or deployment environment.
+The chosen planning baseline is **Laravel 13 + Blade + Tailwind CSS 4 + native JavaScript + Vite**, with MySQL as the preferred relational database. Public pages and the custom admin use Blade server rendering; a separate SPA is not required. The repository declares PHP `^8.3`, Laravel `^13.17`, Tailwind CSS `^4.0` and Vite `^8.0`, along with Pest and Laravel Pint dependencies. These constraints do not confirm local runtime, installed dependencies, test results or hosting compatibility.
 
-The planned company website uses Laravel + Blade server-rendered pages with a relational database. A separate SPA is not required by the current plan. Review [Technology & Engineering](./DOC/09-technology-and-engineering/README.md) and the [architecture workspace](./DOC/16-company-and-website-workspace/09-architecture-and-data-model.md) before implementation.
+See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09-technology-and-engineering/website-tech-stack.md) and [architecture workspace](./DOC/16-company-and-website-workspace/09-architecture-and-data-model.md). Inertia, React/Vue SPA, TypeScript and unnecessary frontend frameworks are not part of the initial plan.
 
 ## Working principles
 

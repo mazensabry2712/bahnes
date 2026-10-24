@@ -13,6 +13,10 @@ Create a premium, smooth feeling through useful transitions, clear interaction f
 - Avoid scroll hijacking, stacked parallax, animated cursors, autoplay media, and heavy 3D that adds cost without helping users.
 - Do not add a large animation framework unless implementation needs justify it.
 
+## Implementation baseline
+
+Follow the [canonical stack decision](../09-technology-and-engineering/website-tech-stack.md). Use CSS and native browser features first; no large animation library is required. Use Intersection Observer sparingly; core content and controls must not depend on it. GSAP is optional only for a reviewed effect that cannot be implemented cleanly otherwise.
+
 ## Accessibility
 
 - Respect reduced-motion preferences.

@@ -10,6 +10,17 @@
 
 The repository declares PHP ^8.3 and Laravel ^13.17. Verify actual local runtime, installed dependencies, and target hosting compatibility before implementation/deployment.
 
+## Technology implementation baseline
+
+Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md).
+
+- **Application:** PHP `^8.3` and Laravel `^13.17` are declared by Composer; verify runtime and lockfiles in Phase 0.
+- **Rendering:** server-rendered Blade for public pages and custom admin in one Laravel application.
+- **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, native JavaScript and Vite `^8.0` through Laravel Vite.
+- **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
+- **Quality tools:** Pest and Laravel Pint are declared dependencies; baseline tests/format/build checks remain pending.
+- **Not selected:** Inertia, React/Vue SPA, TypeScript, Livewire, Alpine.js, required GSAP, packaged admin panel, separate public API, microservices or universal page builder.
+
 ## Suggested records
 
 - Page and predefined page-section content.

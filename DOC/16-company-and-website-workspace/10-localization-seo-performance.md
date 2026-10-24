@@ -1,5 +1,9 @@
 # 10 — Localization, SEO & Performance
 
+## Rendering baseline
+
+Use Laravel Blade server-rendered HTML. Do not introduce SPA routing for the current content website. Use Laravel routes and the Arabic/English locale strategy; see the [canonical stack decision](../09-technology-and-engineering/website-tech-stack.md).
+
 ## Languages and URLs
 
 Plan Arabic and English at launch with consistent locale URLs, for example /en/services and /ar/services. Decide the default-locale rule during implementation. Language switching should preserve the equivalent page when its translation exists; otherwise show a sensible fallback. Use proper RTL/LTR layout for navigation, forms, breadcrumbs, pagination, and mixed technical terms.
