@@ -1,6 +1,6 @@
 # BAHNES Website — Technology Stack & Frontend Architecture
 
-**Status:** Approved stack and package policy; selected dependencies are being added and lockfiles/CI are being verified. Local and production environments remain unverified.
+**Status:** Approved stack and package policy; selected dependency lockfiles and CI verification have passed. Local and production environments remain unverified; migration from existing admin screens to Filament is pending.
 **Scope:** Public BAHNES IT SOLUTIONS company website and its Laravel-based admin.
 
 ## 1. Selected stack
@@ -21,7 +21,7 @@
 | Motion | CSS first; GSAP `^3.15` for complex, approved sequences | Use GSAP when timelines or scroll-linked motion justify it; respect reduced motion and avoid heavy animation by default. |
 | Fonts | Self-hostable Fontsource packages for Manrope and IBM Plex Sans Arabic | Packages are being added as candidates; final font, weights and use remain subject to design approval and license review. |
 
-Manifest constraints do not prove the runtime, installed dependencies, test suite or hosting compatibility have been verified.
+GitHub Actions verified the current lockfiles, 51 tests (193 assertions), Composer and npm audits, Larastan analysis and Vite build in [run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829). This does not verify local Herd or the eventual production host.
 
 ## 2. Package-selection policy
 

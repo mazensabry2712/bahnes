@@ -8,17 +8,17 @@
 - No SPA or public mobile API is required by the current website plan.
 - Separate validation, authorization, business rules, and presentation appropriately without unnecessary layers.
 
-The repository declares PHP ^8.3 and Laravel ^13.17. Verify actual local runtime, installed dependencies, and target hosting compatibility before implementation/deployment.
+The repository declares PHP ^8.4 and Laravel ^13.17. GitHub Actions has verified the lockfiles and selected packages; actual local and target-host runtimes still need confirmation.
 
 ## Technology implementation baseline
 
 Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md).
 
-- **Application:** PHP `^8.3` and Laravel `^13.17` are declared by Composer; verify runtime and lockfiles in Phase 0.
-- **Rendering:** server-rendered Blade for public pages and custom admin in one Laravel application.
-- **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
+- **Application:** PHP `^8.4` and Laravel `^13.17`; lockfile resolution and dependency health are CI-verified, while local/hosting PHP and extensions remain to be checked.
+- **Rendering:** server-rendered Blade for public pages; Filament is the selected admin package. Existing custom admin screens remain transitional until module-by-module Filament migration.
+- **Frontend:** semantic HTML, Tailwind CSS `^4.1`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
-- **Quality tools:** Pest and Laravel Pint are declared dependencies; baseline tests/format/build checks remain pending.
+- **Quality tools:** Pest, Pint and Larastan are dependencies; the current set passes 51 tests (193 assertions), Larastan, Composer/npm audits and Vite build ([CI run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829)).
 - **Not selected:** Inertia/React/Vue SPA for the public website, separate public API, microservices or universal page builder. Filament 5 is now selected for admin CMS resources; its internal Livewire/Alpine runtime stays inside the admin panel. TypeScript is only for browser assets.
 
 ## Suggested records

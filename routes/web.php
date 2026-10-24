@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])
-    ->middleware('throttle:5,1')
+    ->middleware(['throttle:5,1', ProtectAgainstSpam::class])
     ->name('contact.store');
 
 Route::prefix('admin-panel')->name('admin.')->group(function (): void {

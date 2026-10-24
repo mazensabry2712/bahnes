@@ -15,8 +15,8 @@ This document separates the established planning direction from proposals and de
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
 | CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Tailwind 4.1+ satisfies Filament 5's requirement |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
-| PHP tests/format | Pest + Laravel Pint | CI passes on PHP 8.4; latest service CRUD milestone: 23 tests / 83 assertions |
-| Admin UI | Filament 5 for CMS resources; public site remains Blade | Filament selected to reduce bespoke CRUD maintenance; existing custom admin routes are transitional and must be migrated module by module with tests |
+| PHP quality gates | Pest + Laravel Pint + Larastan | Dependency workflow passes 51 tests / 193 assertions, static analysis, Composer audit, npm audit and Vite build |
+| Admin UI | Filament 5 for CMS resources; public site remains Blade | Filament selected and locked; existing custom admin routes remain transitional until equivalent resources and tests replace them |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
 | Separate SPA | Not required by current plan | Out of initial scope |
