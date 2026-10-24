@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasContentMedia;
+use Spatie\MediaLibrary\HasMedia;
 use InvalidArgumentException;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasContentMedia;
 
     public const STATUSES = ['draft', 'published', 'archived'];
 

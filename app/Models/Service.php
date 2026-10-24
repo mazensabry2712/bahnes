@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasContentMedia;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use InvalidArgumentException;
 
-class Service extends Model
+class Service extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasContentMedia;
 
     public const STATUSES = ['draft', 'published', 'archived'];
 
@@ -28,7 +30,6 @@ class Service extends Model
         'meta_title_ar',
         'meta_description_en',
         'meta_description_ar',
-        'cover_image',
         'status',
         'sort_order',
         'published_at',

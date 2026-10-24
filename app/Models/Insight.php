@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasContentMedia;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use InvalidArgumentException;
 
-class Insight extends Model
+class Insight extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasContentMedia;
 
     public const STATUSES = ['draft', 'published', 'archived'];
 
