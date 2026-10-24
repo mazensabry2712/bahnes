@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\WebsiteTemplate;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Response;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
@@ -44,9 +45,9 @@ class SitemapController extends Controller
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, \Illuminate\Database\Eloquent\Model>
+     * @return EloquentCollection<int, Service|Project|Product|WebsiteTemplate|Insight>
      */
-    private function publishedRecords(string $section, string $locale): \Illuminate\Support\Collection
+    private function publishedRecords(string $section, string $locale): EloquentCollection
     {
         $query = match ($section) {
             'services' => Service::query()->publishedForLocale($locale),

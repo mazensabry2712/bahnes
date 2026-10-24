@@ -143,6 +143,7 @@ class PublicWebsiteController extends Controller
         ]));
     }
 
+    /** @return Builder<Service>|Builder<Project>|Builder<Product>|Builder<WebsiteTemplate>|Builder<Insight> */
     private function contentQuery(string $section, string $locale): Builder
     {
         $this->assertLocale($locale);
@@ -158,7 +159,7 @@ class PublicWebsiteController extends Controller
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     private function layoutData(
         string $locale,
