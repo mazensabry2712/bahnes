@@ -1,0 +1,57 @@
+# 09 — Architecture & Data Model
+
+## Baseline
+
+- Laravel with server-rendered Blade views.
+- Relational database, Laravel migrations, and Eloquent where appropriate.
+- Existing scaffold is the starting point and must be audited before changing dependencies.
+- No SPA or public mobile API is required by the current website plan.
+- Separate validation, authorization, business rules, and presentation appropriately without unnecessary layers.
+
+The repository declares PHP ^8.3 and Laravel ^13.17. Verify actual local runtime, installed dependencies, and target hosting compatibility before implementation/deployment.
+
+## Technology implementation baseline
+
+Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md).
+
+- **Application:** PHP `^8.3` and Laravel `^13.17` are declared by Composer; verify runtime and lockfiles in Phase 0.
+- **Rendering:** server-rendered Blade for public pages and custom admin in one Laravel application.
+- **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, native JavaScript and Vite `^8.0` through Laravel Vite.
+- **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
+- **Quality tools:** Pest and Laravel Pint are declared dependencies; baseline tests/format/build checks remain pending.
+- **Not selected:** Inertia, React/Vue SPA, TypeScript, Livewire, Alpine.js, required GSAP, packaged admin panel, separate public API, microservices or universal page builder.
+
+## Suggested records
+
+- Page and predefined page-section content.
+- Service line and service.
+- Project/case study.
+- Product.
+- Website template.
+- Insight article, category, and optional tag.
+- Media metadata if required by the chosen storage setup.
+- Contact message/inquiry with type, status, source, and next action.
+- FAQ if recurring questions justify reusable records.
+- Per-locale content and SEO fields in a consistent structure.
+
+Products/templates must stay separate content types; portfolio proof must stay distinct from commercial catalog items. Do not put every type into one giant JSON record simply to reduce table count.
+
+## Admin and translations
+
+Use admin authentication and server-side authorization; safe uploads; consistent publication states; and pagination/filtering where needed. Decide translation representation after auditing existing conventions. Keep slugs, content, SEO metadata, and publication status coherent per language.
+
+## Media
+
+Use the selected storage driver, safe generated names, content/size validation, and protected storage paths. Prevent executable uploads, optimize public images, and document backups/deletion. Keep private files outside public access.
+
+## Implementation sequence
+
+1. Audit routes, models, dependencies, tests, config, views, and assets.
+2. Choose the smallest schema that supports the requirements.
+3. Add migrations, authorization, validation, and tests.
+4. Implement admin workflows.
+5. Build shared Blade layouts/section views.
+6. Add public pages and catalogs incrementally.
+7. Test changes before deployment.
+
+This is a proposed architecture, not a claim that these models or features already exist.
