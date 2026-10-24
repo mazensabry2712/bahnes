@@ -27,5 +27,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class)->except(['show', 'destroy']);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show', 'destroy']);
         Route::resource('templates', \App\Http\Controllers\Admin\WebsiteTemplateController::class)->except(['show', 'destroy']);
+        Route::resource('insights', \App\Http\Controllers\Admin\InsightController::class)->except(['show', 'destroy']);
+        Route::resource('insight-categories', \App\Http\Controllers\Admin\InsightCategoryController::class)->except(['show', 'destroy']);
     });
 });

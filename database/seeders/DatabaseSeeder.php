@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ServiceLineSeeder::class);
+        $this->call([
+            ServiceLineSeeder::class,
+            InsightCategorySeeder::class,
+        ]);
     }
 }
