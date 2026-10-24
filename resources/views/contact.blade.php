@@ -62,7 +62,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.ts'])
     @endif
     <style>
-        :root{font-family:Arial,ui-sans-serif,system-ui,sans-serif;color:#101c35;background:#f5f4ef}
+        :root{font-family:'Manrope','IBM Plex Sans Arabic',ui-sans-serif,system-ui,sans-serif;color:#101c35;background:#f5f4ef}
         *{box-sizing:border-box}
         body{margin:0;min-height:100vh}
         a{color:inherit}
@@ -83,7 +83,8 @@
         .contact-field input,.contact-field select,.contact-field textarea{width:100%;border:1px solid #d4d8d5;border-radius:.7rem;background:#fff;padding:.9rem;font:inherit;color:#101c35}
         .contact-field textarea{min-height:10rem;resize:vertical}
         .contact-field input:focus-visible,.contact-field select:focus-visible,.contact-field textarea:focus-visible,.contact-button:focus-visible{outline:3px solid #55d6be;outline-offset:2px}
-        .contact-button{border:0;border-radius:.7rem;background:#101c35;color:#fff;font-weight:750;padding:1rem 1.2rem;min-height:3.2rem;cursor:pointer;width:100%}
+        .contact-button{display:flex;align-items:center;justify-content:center;gap:.65rem;border:0;border-radius:.7rem;background:#101c35;color:#fff;font-weight:750;padding:1rem 1.2rem;min-height:3.2rem;cursor:pointer;width:100%}
+        .contact-button .ui-icon{width:1.1rem;height:1.1rem;flex:none}
         .contact-muted{color:#667085;font-size:.88rem;line-height:1.7}
         .contact-flash{border-radius:.7rem;padding:.9rem 1rem;margin-bottom:1rem;background:#e8f8f2;border:1px solid #a5dfcc;color:#075e4f}
         .contact-error{color:#b42318;font-size:.875rem}
@@ -166,7 +167,7 @@
                             @error('message') <span class="contact-error">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <button class="contact-button" type="submit">{{ $labels['send'] }}</button>
+                    <button class="contact-button" type="submit"><span>{{ $labels['send'] }}</span><i data-lucide="send" aria-hidden="true"></i></button>
                     <p class="contact-muted" style="margin-top:.8rem">{{ $isArabic ? 'تُستخدم البيانات للرد على استفسارك فقط وفق إعدادات الاحتفاظ المعتمدة.' : 'Your details are used to follow up on this inquiry. Review company privacy information before launch.' }}</p>
                 </form>
             </section>

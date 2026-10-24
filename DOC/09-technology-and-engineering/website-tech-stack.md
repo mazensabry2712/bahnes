@@ -19,7 +19,7 @@
 | PHP tests | Pest `^5.3` | Existing tests remain the acceptance gate for every module. |
 | PHP formatting | Laravel Pint (declared `^1.27`) | Verify install; run on changed PHP files. |
 | Motion | CSS first; GSAP `^3.15` for complex, approved sequences | Use GSAP when timelines or scroll-linked motion justify it; respect reduced motion and avoid heavy animation by default. |
-| Fonts | Self-hostable Fontsource packages for Manrope and IBM Plex Sans Arabic | Packages are being added as candidates; final font, weights and use remain subject to design approval and license review. |
+| Fonts | Self-hosted Manrope and IBM Plex Sans Arabic via Fontsource | Both families and weights 400/500/600/700 are imported into the Vite stylesheet; any final brand typography change should update these imports and font tokens. |
 
 The package-removal dependency refresh passed Composer/npm audits, Larastan, 51 existing tests (193 assertions), TypeScript and Vite build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). The current media/contact/SEO milestone has additional upload, honeypot, sitemap and robots tests; inspect its [current CI run](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081) for the final result.
 
@@ -46,7 +46,7 @@ Keep the lockfiles committed. Run dependency audits, tests, static analysis and 
 | Contact anti-spam | `spatie/laravel-honeypot ^4.7.3` | The localized Blade contact form already renders `<x-honeypot />`; its POST routes use the package middleware and a five-per-minute rate limit. Email notifications remain separate. |
 | PHP static analysis | `larastan/larastan ^3.13` | Catch type and Laravel-specific issues before release; run it in CI. |
 | Frontend motion | `gsap ^3.15` | Available for purposeful animation timelines; CSS remains the default for simple transitions. |
-| Icons | `lucide ^1.61` | Consistent SVG icon source with tree-shaking; import only required icons. |
+| Icons | `lucide ^1.61` | Wired to the TypeScript entry through `createIcons`; the contact submit button uses an imported `Send` icon and the entry only bundles the icon(s) it uses. |
 | Fonts | `@fontsource/manrope ^5.3`, `@fontsource/ibm-plex-sans-arabic ^5.3` | Self-host font assets rather than depending on a remote font CDN; final font choice still needs approval. |
 
 Not selected: a separate role/permission package (until multiple admin roles are required), a universal page builder, an SPA, a rich-text editor package, a full CRM/activity log, browser-test tooling before public pages exist, and packages that duplicate Laravel's built-in mail/auth/validation. The custom admin remains Blade-based. Reassess against the actual feature, not by habit.

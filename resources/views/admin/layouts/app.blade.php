@@ -11,7 +11,7 @@
     @endif
 
     <style>
-        :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #172033; background: #f5f6f8; }
+        :root { color-scheme: light; font-family: 'Manrope', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif; color: #172033; background: #f5f6f8; }
         * { box-sizing: border-box; }
         body { margin: 0; min-height: 100vh; }
         input, button, select, textarea { font: inherit; }
