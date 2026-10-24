@@ -1,7 +1,9 @@
 <?php
 
-test('the application returns a successful response', function () {
-    $response = $this->get('/');
+test('the root route redirects to the default English homepage', function () {
+    $this->get('/')
+        ->assertRedirect(route('localized.home', ['locale' => 'en']));
 
-    $response->assertStatus(200);
+    $this->get(route('localized.home', ['locale' => 'en']))
+        ->assertOk();
 });
