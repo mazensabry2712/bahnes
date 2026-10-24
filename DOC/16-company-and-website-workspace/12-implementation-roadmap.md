@@ -31,10 +31,11 @@ Build the backend capabilities needed to support the agreed website content type
 - Admin create/edit/preview/publish/archive workflows for the agreed content types.
 - Predefined homepage section ordering/visibility rather than a universal drag-and-drop page builder.
 - Separate Projects, Products, and Website Templates in the data model and admin navigation.
-- Validated uploads, safe storage paths, authorization, input validation, and safe output handling.
+- [x] Validated cover upload fields, safe generated filenames, media-library records, localized alt text and synchronous preview conversions for Services, Projects, Products, Website Templates and Insights. The public storage link is added to Composer setup; test and verify storage permissions on each environment.
 - [x] Backend inquiry capture, type/status, protected internal notes, server-side validation, and a rate-limited contact submission endpoint.
 - [x] Product and Website Template admin catalogs with separate models, bilingual content, unique slugs, draft/published/archived state, and license/delivery/support publication gates. Verified in [CI run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157): 43 tests / 165 assertions, TypeScript and Vite build passed.
 - [x] Insights and category admin with bilingual content/SEO fields, category CRUD, scheduled publishing and complete-translation/category-active gates. Verified in [CI run 40099826855](https://github.com/mazensabry2712/bahnes/actions/runs/40099826855): 51 tests / 193 assertions, TypeScript and Vite build passed.
+- [x] Bilingual public contact form, Spatie Honeypot middleware, and dynamic sitemap/robots endpoints are implemented and included in the current CI run.
 - [ ] Confirm notification destination/provider and implement safe email delivery/failure handling after the recipient is approved.
 - Localization foundations for Arabic/English, plus per-locale slug and SEO metadata as appropriate.
 - Automated tests for access control, content visibility, validation, locale behavior, uploads, and inquiry submission.

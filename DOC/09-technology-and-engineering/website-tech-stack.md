@@ -21,7 +21,7 @@
 | Motion | CSS first; GSAP `^3.15` for complex, approved sequences | Use GSAP when timelines or scroll-linked motion justify it; respect reduced motion and avoid heavy animation by default. |
 | Fonts | Self-hostable Fontsource packages for Manrope and IBM Plex Sans Arabic | Packages are being added as candidates; final font, weights and use remain subject to design approval and license review. |
 
-The latest dependency refresh passed Composer validation/install/audit, Larastan, 51 Laravel tests (193 assertions), npm audit, TypeScript checking and the Vite production build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). The workflow regenerates lockfiles from the manifest; it does not verify local Herd or the eventual production host.
+The package-removal dependency refresh passed Composer/npm audits, Larastan, 51 existing tests (193 assertions), TypeScript and Vite build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). The current media/contact/SEO milestone has additional upload, honeypot, sitemap and robots tests; inspect its [current CI run](https://github.com/mazensabry2712/bahnes/actions/runs/40104057081) for the final result.
 
 ## 2. Package-selection policy
 
@@ -40,10 +40,10 @@ Keep the lockfiles committed. Run dependency audits, tests, static analysis and 
 | Need | Selected package | Why / boundary |
 |---|---|---|
 | Admin CMS | Custom Laravel Blade controllers and views | Keep the existing admin, reuse Blade layouts/components, and apply Laravel-native validation and authorization. Do not add a third-party admin panel. |
-| Media attached to Eloquent content | `spatie/laravel-medialibrary ^11.23` | Store/manage multiple images and conversions for services, projects, products, templates and Insights. Do not accept user-controlled remote URLs for imports. |
+| Media attached to Eloquent content | `spatie/laravel-medialibrary ^11.23` | Cover uploads are connected to Services, Projects, Products, Website Templates and Insights, with JPG/PNG/WebP validation, a 5 MiB limit, UUID filenames, one cover per record, localized alt text and a generated preview. |
 
-| XML sitemap | `spatie/laravel-sitemap ^8.2` | Generate sitemap URLs for public, published content only. Never list drafts, confidential projects or unavailable locale variants. |
-| Contact anti-spam | `spatie/laravel-honeypot ^4.7.3` | Add `<x-honeypot />` to the eventual Blade contact/project-brief forms and protect only their submit routes. Keep rate limiting too. |
+| XML sitemap | `spatie/laravel-sitemap ^8.2` | A dynamic `/sitemap.xml` endpoint currently lists only implemented public routes (home and English/Arabic contact). Add content URLs when public detail/list routes exist; never list drafts or confidential work. |
+| Contact anti-spam | `spatie/laravel-honeypot ^4.7.3` | The localized Blade contact form already renders `<x-honeypot />`; its POST routes use the package middleware and a five-per-minute rate limit. Email notifications remain separate. |
 | PHP static analysis | `larastan/larastan ^3.13` | Catch type and Laravel-specific issues before release; run it in CI. |
 | Frontend motion | `gsap ^3.15` | Available for purposeful animation timelines; CSS remains the default for simple transitions. |
 | Icons | `lucide ^1.61` | Consistent SVG icon source with tree-shaking; import only required icons. |
@@ -83,13 +83,13 @@ Prefer short CSS transitions using transform/opacity. Use Intersection Observer 
 
 Use Laravel routes and server-rendered locale pages, planned as `/en/...` and `/ar/...`. Locale controls content, direction and metadata. Do not create language alternates for translations that do not exist.
 
-Provide per-language titles/descriptions, canonical URLs, reciprocal hreflang for existing variants, XML sitemap, correct robots rules, clean 404/redirect handling and relevant Open Graph metadata. The default social preview must use the approved BAHNES logo/brand asset, not an unrelated image. A client-rendered SPA or separate SEO service is not required.
+Provide per-language titles/descriptions, canonical URLs, reciprocal hreflang for existing variants, XML sitemap, correct robots rules, clean 404/redirect handling and relevant Open Graph metadata. Implemented now: dynamic `/sitemap.xml` and `/robots.txt` endpoints; the sitemap includes only routes that currently exist. Add published content URLs after their public pages are implemented. The default social preview must use the approved BAHNES logo/brand asset, not an unrelated image.
 
 ## 6. Data, files, mail and hosting
 
 - MySQL is the preferred plan; exact local/production configuration and hosting limits must be verified.
 - Use reviewed migrations; do not alter a live schema manually without a recovery plan.
-- Generate upload filenames; validate content/MIME and size; prevent executable uploads; keep private files outside public access.
+- Generate upload filenames; validate content/MIME and size; prevent executable uploads; keep private files outside public access. Content covers are stored through the media library on the Laravel public disk, and local setup runs `storage:link --force` so `/storage/...` URLs resolve. Confirm persistent disk/backups and PHP `gd`, `exif`, and `fileinfo` on production.
 - Media disk, mail provider/recipient, queue strategy, backup destination, analytics and hosting remain environment decisions. Never hard-code secrets.
 - Do not add Redis, queues, search infrastructure, public API, microservices or multi-tenancy without a demonstrated requirement.
 

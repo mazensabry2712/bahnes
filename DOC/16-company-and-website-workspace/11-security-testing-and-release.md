@@ -6,7 +6,7 @@
 - Protect admin actions with authentication and server-side authorization.
 - Validate and normalize inputs server-side; follow Laravel CSRF/session conventions.
 - Rate-limit inquiry forms and sensitive actions.
-- Validate file content/type/size and storage paths; prevent executable uploads.
+- Validate file content/type/size and storage paths; prevent executable uploads. Current content cover uploads accept JPG/PNG/WebP up to 5 MiB, use generated filenames, keep one cover per record and attach localized alt text. Configure the public storage link, persistent storage/backups and PHP image extensions on the host.
 - Escape output and sanitize any permitted rich text.
 - Protect inquiry records and keep personal/confidential information out of logs.
 - Avoid exposing stack traces, secret values, private paths, or admin content publicly.
@@ -17,7 +17,7 @@ This checklist does not itself establish legal compliance or security certificat
 
 ## Backend tests
 
-Test admin access and authorization, content create/edit/publish/archive, upload validation, draft privacy, inquiry validation/throttling/notification errors, locale fallback, and SEO metadata/sitemap/hreflang.
+Test admin access and authorization, content create/edit/publish/archive, upload type/size validation and cover removal, draft privacy, inquiry validation/throttling/honeypot rejection, notification failures, locale behavior, and sitemap/robots exclusions.
 
 ## Tooling checks
 
@@ -36,7 +36,7 @@ Test mobile/desktop, navigation, form errors/success, themes, RTL/LTR, keyboard/
 - [ ] Migrations are reviewed and tested on the target environment.
 - [ ] Asset build succeeds.
 - [ ] Production debug mode is off and required environment configuration exists.
-- [ ] HTTPS, DNS, storage permissions, mail delivery, backups, and monitoring are checked.
+- [ ] HTTPS, DNS, `storage:link` and storage permissions/persistence, PHP `gd`/`exif`/`fileinfo`, mail delivery, backups, and monitoring are checked.
 - [ ] Public pages, admin login, forms, and content publishing pass smoke tests.
 - [ ] Deployment and rollback steps are documented.
 

@@ -15,9 +15,9 @@ Ask only what helps qualify the inquiry. Never ask for passwords or confidential
 
 ## Implementation status
 
-- **Implemented and CI-verified:** public `POST /contact` submission endpoint with server-side validation, a five-per-minute throttle, accepted inquiry types, lowercased email, preferred-language storage and a generated reference shown only after storing.
+- **Implemented and CI-verified:** `POST /contact` and localized `POST /en/contact` / `POST /ar/contact` submission endpoints with server-side validation, a five-per-minute throttle, Spatie Honeypot middleware, accepted inquiry types, lowercased email, preferred-language storage and a generated reference shown only after storing.
 - **Implemented and CI-verified:** protected admin inbox with search/type/status filters, inquiry review, follow-up status updates and private internal notes.
-- **Not yet implemented:** public contact page/form UI, the guided Project Brief form, a confirmed notification recipient/provider, outbound email delivery/retry/failure handling, and a more detailed next-action/date pipeline.
+- **Implemented:** bilingual `/en/contact` and `/ar/contact` Blade form, RTL/LTR layout, real `<x-honeypot />` component, per-field validation messages and stored inquiry reference. **Not yet implemented:** guided Project Brief form, confirmed notification recipient/provider, outbound email delivery/retry/failure handling, and a more detailed next-action/date pipeline.
 - **Privacy boundary:** the public request cannot write admin notes or choose its own source/status. Email notifications remain disabled until the company confirms a real recipient and mail configuration.
 
 ## Inquiry pipeline
@@ -28,7 +28,7 @@ Track next action/date and inquiry source; protect internal notes. Do not build 
 
 ## Notifications and anti-spam
 
-Validate on the server, rate-limit/anti-spam protect, confirm receipt to the visitor, and notify the responsible company contact. Handle mail failure for admins; do not claim delivery when sending failed. Do not leak form content in URLs, error messages, or logs.
+Validate on the server, rate-limit and use the Spatie Honeypot component/middleware, confirm receipt to the visitor, and notify the responsible company contact only after a real recipient and mail configuration are approved. The Honeypot check and rate limit do not themselves send email.
 
 ## Care & Maintenance
 

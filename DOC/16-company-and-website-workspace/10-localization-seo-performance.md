@@ -16,8 +16,8 @@ Each locale requires reviewed copy, slug policy, title/description, canonical, s
 - Unique titles and useful descriptions for indexable pages.
 - Stable URLs, canonical handling, and redirects for changed slugs.
 - Reciprocal hreflang links for existing language variants.
-- XML sitemap with only intended public/indexable URLs.
-- Correct robots rules; no accidental blocking of important pages or exposure of private/admin paths.
+- Dynamic `/sitemap.xml` endpoint uses Spatie Sitemap and currently lists the implemented home plus English and Arabic contact pages only. Add public service/project/product/template/Insight URLs when their matching public routes exist; exclude drafts, archived records, confidential projects and missing translations.
+- Dynamic `/robots.txt` endpoint allows public crawling, disallows `/admin-panel/`, and points to the absolute sitemap URL. Keep it synchronized with route access rules.
 - Open Graph previews with the approved logo/brand asset and relevant page image.
 - Accurate structured data only where appropriate.
 - Useful internal links, descriptive link text, useful alt text, and clean 404 handling.
@@ -33,4 +33,4 @@ Track qualified inquiries, service-line interest, demo/template requests, useful
 
 ## Review gate
 
-Test locales, RTL/LTR, canonical, hreflang, sitemap, robots, social previews, redirects, forms, and mobile performance before launch.
+Test locales, RTL/LTR, canonical, hreflang, sitemap contents, robots exclusions, social previews, redirects, forms, and mobile performance before launch.

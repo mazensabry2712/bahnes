@@ -34,11 +34,11 @@ Resolve each point or record a safe temporary assumption:
 
 - [x] **Repository scaffold and CI baseline:** Reviewed manifests/lockfiles, routes, views, models, migrations and sample tests. GitHub Actions passed Composer validation/install, Laravel tests, `npm ci`, TypeScript checking and Vite build on PHP 8.4 / Node 24 ([baseline run](https://github.com/mazensabry2712/bahnes/actions/runs/40097226745); [TypeScript run](https://github.com/mazensabry2712/bahnes/actions/runs/40097563846)).
 - [x] **Admin access:** Implemented protected admin login/dashboard, CLI account creation and password reset; feature tests pass in [CI](https://github.com/mazensabry2712/bahnes/actions/runs/40097754107). No public admin registration.
-- [ ] **Local/hosting runtime and storage:** Confirm the selected PHP executable in Herd, local Node/npm, MySQL connection, media-storage path/permissions, and target-host compatibility. CI success does not verify the user's local machine or deployment host.
-- [x] **Inquiry types and storage:** Defined inquiry categories, input validation, default status/source and admin-only notes; public submissions are rate-limited and stored in the database.
+- [ ] **Local/hosting runtime and storage:** Confirm the selected PHP executable in Herd, PHP `gd`/`exif`/`fileinfo`, local Node/npm, MySQL connection, media-storage path/permissions, `storage:link`, and target-host compatibility. CI success does not verify the user's local machine or deployment host.
+- [x] **Inquiry types and storage:** Defined inquiry categories, input validation, default status/source and admin-only notes; localized public contact forms use Spatie Honeypot plus rate limits, and submissions are stored in the database.
 - [ ] **Notification destination:** Confirm the real inbox/owner before enabling email notifications. Mail credentials and provider settings remain environment-specific.
 - [x] **Translation storage:** The first content models use explicit `_en` and `_ar` columns with locale-aware publication scopes. Route prefixes/default locale will be confirmed before public page routing.
-- [ ] **Storage/mail assumptions:** Define development defaults and safe configuration points. Keep secrets outside Git.
+- [ ] **Storage/mail assumptions:** The media library now stores one validated cover image per content record on the public disk with preview conversion and localized alt text. Confirm production storage persistence/backups and the real mail recipient/provider; never commit secrets.
 - [ ] **CMS boundary:** Confirm the manageable content types and fields listed in the content-model document. Use predefined homepage section types with order/visibility controls; do not build a universal page builder.
 - [x] **Initial service publication rules:** Services default to draft; locale queries require published status, a complete locale title/slug, an active service line, and a reached publication time. Apply the same tests to future content types.
 - [x] **Admin-access milestone acceptance:** Admin-only sign-in, regular-user denial, guest redirect, logout/session invalidation, CLI creation/reset and scaffold checks pass in CI.
@@ -60,7 +60,7 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 - [ ] Confirm which service offers can be sold and their scope, supplier dependencies, warranty, and support terms.
 - [ ] Review Arabic and English content.
 - [ ] Test inquiry forms, mail notifications, rate limits, validation, and privacy wording.
-- [ ] Validate responsive behavior, themes, RTL/LTR, keyboard use, reduced motion, SEO metadata, sitemap, robots, canonical/hreflang, social previews, and performance.
+- [ ] Validate responsive behavior, themes, RTL/LTR, keyboard use, reduced motion, SEO metadata, sitemap content URLs, robots, canonical/hreflang, social previews, and performance.
 - [ ] Publish only authorized projects and substantiated customer claims.
 - [ ] Keep empty or unready product/template catalogs unpublished rather than filling them with fabricated content.
 
@@ -80,7 +80,8 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 5. [x] Add and test project/case-study CRUD with project-stage labels and authorization checks.
 6. [x] Add Products and Website Templates admin catalogs with explicit commercial publication gates.
 7. [x] Add Insights/category admin with bilingual content and publication guards.
-8. Continue the **backend first** with safe media handling; finish the public contact form and email notification settings after the recipient is confirmed.
+8. [x] Add and test media cover uploads, bilingual contact form with honeypot/rate limits, and dynamic sitemap/robots endpoints (public content URLs remain pending until public pages exist).
+9. Continue the **backend first** with email notification settings after the recipient is confirmed.
 9. Verify each backend milestone and record its results before relying on it.
 10. Build the public Blade frontend section by section using tested backend workflows.
 11. Show public portfolio/catalog/editorial sections only when accurate content and terms are ready.
