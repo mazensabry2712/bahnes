@@ -1,68 +1,71 @@
 # 15 — Pre-Build Readiness Gate
 
-This is the planning checkpoint before implementation. It is not a demand to finalize every business detail before writing any code. It separates what must be clear to start the backend from what can be finalized nearer public launch.
+This is the planning checkpoint before implementation. It separates the decisions required to start coding from details that can be completed closer to public launch. It is not a requirement to perfect every business detail in advance.
 
-## A. Direction established for planning
+## A. Planning direction established
 
-These items describe the agreed working direction; implementation details still need review:
+These are agreed directions for planning, not evidence that the features or content already exist:
+
 - [x] One BAHNES IT SOLUTIONS customer-facing brand.
 - [x] Two service lines: IT Infrastructure & Security, and Software & Digital Solutions.
-- [x] One website intended to serve both audiences without mixing their service content.
-- [x] Laravel + Blade server-rendered pages as the baseline; no SPA requirement.
-- [x] Arabic and English; correct RTL/LTR layout.
-- [x] Light and dark themes designed as complete experiences.
-- [x] Projects/case studies separated from Products and Website Templates.
-- [x] Insights/articles as a useful content section.
-- [x] Admin management for core content, media, translations, metadata, and inquiries.
-- [x] Security, accessibility, performance, SEO, and test coverage are part of the plan.
-- [x] Build in stages; keep client portal, full CRM, automated checkout, and heavy 3D out of the initial scope unless justified.
+- [x] One website serving both audiences with clearly separated service content.
+- [x] Laravel + Blade server-rendered pages; no separate SPA requirement.
+- [x] Arabic and English with correct RTL/LTR behavior.
+- [x] Properly designed light and dark themes.
+- [x] Projects/case studies, Products, and Website Templates remain separate content types.
+- [x] Insights/articles as an editorial section.
+- [x] Admin management for content, media, locales, SEO, and inquiries.
+- [x] Security, accessibility, performance, SEO, and tests are requirements from the start.
+- [x] Backend is prepared first; the public frontend is then built section by section.
+- [x] Client portal, full CRM, automated checkout/subscriptions, and heavy 3D are outside the initial scope unless justified later.
 
-These checkmarks mean the planning direction is established, not that code or content exists.
+## B. Required before the first backend coding milestone
 
-## B. Required before starting backend implementation
+Resolve each point or record a safe temporary assumption:
 
-Resolve or document the initial assumption for each:
-- [ ] **Service availability:** Which IT and software offers can be delivered now, and which are future/partner-dependent? The backend can support future services, but public status must reflect reality.
-- [ ] **Inquiry ownership:** Where new inquiries should be sent, who receives them, and which inquiry types need to be distinguished.
-- [ ] **Runtime baseline:** Audit current PHP/Composer/Node versions, lockfiles, configuration, routes, views, models, migrations, and tests before changing architecture.
-- [ ] **Admin access:** Decide how the first administrator is provisioned. No public admin registration by default.
-- [ ] **Localization approach:** Decide route/default-locale and content-translation structure after checking the scaffold.
-- [ ] **Storage and mail assumptions:** Record local/development storage and email delivery assumptions; keep real secrets outside Git.
-- [ ] **Initial content types:** Confirm the minimal first schema for services, pages/sections, projects, products, templates, Insights, media, inquiries, and locale/SEO fields. Keep future capabilities as backlog, not required tables without a use case.
-- [ ] **Acceptance plan:** Establish baseline tests and define the first backend milestone's pass criteria.
+- [ ] **Repository baseline:** Inspect PHP/Composer/Node versions, lockfiles, routes, views, models, migrations, tests, config, and available storage. Record current test results before changing anything.
+- [ ] **Admin access:** Decide how the first administrator is created and recovered. No public admin registration by default.
+- [ ] **Inquiry handling:** Decide which inquiry types are captured and record the initial notification/recipient assumption. Real mail secrets and live recipient details may remain environment-specific.
+- [ ] **Locale approach:** Choose route/default-locale and translation storage after auditing the existing scaffold.
+- [ ] **Storage/mail assumptions:** Define development defaults and safe configuration points. Keep secrets outside Git.
+- [ ] **CMS boundary:** Confirm the manageable content types and fields listed in the content-model document. Use predefined homepage section types with order/visibility controls; do not build a universal page builder.
+- [ ] **Publication rules:** Define Draft/Published/Archived behavior and ensure unpublished content never appears publicly.
+- [ ] **First milestone acceptance:** Agree to observable pass/fail criteria, including admin authorization, validation, publishing, inquiry submission, safe uploads, locale handling, and automated tests.
 
-If an item is unknown, record a safe temporary assumption and its impact rather than silently pretending it is settled.
+**Important distinction:** The data model can support the full planned service taxonomy now. Individual services must be marked unavailable/draft until delivery capability, supplier dependencies, warranty, and support terms are confirmed. Those commercial confirmations are required before publishing/selling offers, not a reason to block the initial schema design.
 
-## C. Required before public launch
+If an item is unknown, record the assumption, its risk, and when it must be resolved. Do not silently treat an assumption as a verified fact.
 
-- [ ] Verify company name/legal and contact information; obtain suitable professional advice on Egyptian registration, tax, and privacy obligations.
-- [ ] Approve logo, color/typography system, and final public copy.
-- [ ] Confirm the domain, hosting, DNS, mail, storage, backups, and deployment/rollback process.
-- [ ] Confirm which services are available and finalize scope, supplier dependencies, warranty, and support terms.
+## C. Required before the public website launches
+
+- [ ] Verify company/legal and public contact information; obtain appropriate professional advice on Egyptian registration, tax, privacy, and any relevant permissions.
+- [ ] Approve logo, final color/typography system, and public copy.
+- [ ] Confirm domain, hosting, DNS, mail, storage, backups, monitoring, and deployment/rollback process.
+- [ ] Confirm which service offers can be sold and their scope, supplier dependencies, warranty, and support terms.
 - [ ] Review Arabic and English content.
-- [ ] Test contact/project forms, notification delivery, rate limits, and privacy wording.
-- [ ] Validate mobile/responsive behavior, themes, RTL/LTR, keyboard access, reduced motion, SEO metadata, sitemap, robots, canonical/hreflang, social previews, and performance.
-- [ ] Publish only authorized projects and verified customer claims.
-- [ ] Ensure every page and catalog item shown as available is real and current.
+- [ ] Test inquiry forms, mail notifications, rate limits, validation, and privacy wording.
+- [ ] Validate responsive behavior, themes, RTL/LTR, keyboard use, reduced motion, SEO metadata, sitemap, robots, canonical/hreflang, social previews, and performance.
+- [ ] Publish only authorized projects and substantiated customer claims.
+- [ ] Keep empty or unready product/template catalogs unpublished rather than filling them with fabricated content.
 
-## D. Additional gate before selling a product/template online
+## D. Additional gate before selling a product or template online
 
-- [ ] Confirm the actual item exists and is supported.
-- [ ] Define license, pricing, delivery, update policy, prerequisites, support boundaries, refunds/cancellation, and ownership of third-party assets.
-- [ ] Test the customer journey and delivery process.
-- [ ] Add online payment only after provider, accounting/tax treatment, security, failure handling, and refund flows are defined and tested.
+- [ ] Confirm the actual item exists and can be supported.
+- [ ] Define license, price, delivery, updates, prerequisites, support limits, refunds/cancellation, and rights to included third-party assets.
+- [ ] Test the full buyer journey and delivery.
+- [ ] Add online payment only after provider configuration, accounting/tax treatment, failure handling, security, refunds, and support processes are defined and tested.
 
-## E. First implementation sequence after Gate B
+## E. Agreed build order
 
-1. Audit and record the actual Laravel scaffold/test baseline.
-2. Implement and test admin access, content models, validation, and permissions.
-3. Implement content publishing and media handling safely.
-4. Implement locale/SEO foundations.
-5. Build the shared Blade layout and core pages.
-6. Add projects and Insights when real content is available.
-7. Add product/template catalogs when real items and terms exist.
-8. Run release checks before deployment.
+1. Audit the scaffold and record the test baseline.
+2. Build and test the **backend first**: admin access, content models, validation, authorization, media handling, publishing, localization/SEO fields, and inquiry handling for the agreed CMS content types.
+3. Verify backend behavior and record the test results before relying on it.
+4. Build the Blade frontend section by section using the backend.
+5. Show public portfolio/catalog sections only when accurate content and terms are ready.
+6. Run release checks before deployment.
+
+This is a staged build, not a demand to implement payments, customer accounts, a full CRM, or an advanced page builder.
 
 ## Definition of “planning complete enough to start”
 
-Planning is ready for the first backend milestone when sections A and B are reviewed, unresolved assumptions are explicit, the first milestone has a bounded scope, and its acceptance criteria are testable. Sections C and D are launch/sales gates and do not all need to be finalized before the first backend work.
+Planning is ready for the first backend milestone when section A is accepted, section B is reviewed, unknowns are written down, the first milestone has a bounded scope, and its acceptance criteria are testable. Sections C and D are launch/sales gates; they do not all need to be finalized before coding begins.
