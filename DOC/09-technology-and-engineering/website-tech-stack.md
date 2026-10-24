@@ -1,6 +1,6 @@
 # BAHNES Website — Technology Stack & Frontend Architecture
 
-**Status:** Approved stack and package policy; selected dependency lockfiles and CI verification have passed. Local and production environments remain unverified; migration from existing admin screens to Filament is pending.
+**Status:** Approved stack and package policy. The custom Laravel Blade admin remains the chosen approach. Lockfiles are regenerated and verified by CI after dependency-manifest changes; local and production environments remain unverified.
 **Scope:** Public BAHNES IT SOLUTIONS company website and its Laravel-based admin.
 
 ## 1. Selected stack
@@ -10,10 +10,10 @@
 | Runtime | PHP `^8.4` | Required by the selected sitemap package and aligned with the PHP test/tooling baseline; verify CLI/web PHP and image extensions. |
 | Backend | Laravel `^13.17` | Declared in `composer.json`; do not change without a verified compatibility reason. |
 | Rendering | Laravel Blade, server-rendered HTML | Public website and admin stay in one Laravel application; no separate SPA required. |
-| Admin CMS | Filament 5 panel builder | Prefer package-provided tables, forms, resources and editor over handwritten CRUD. Existing custom admin screens are transitional and will be migrated module by module. |
+| Admin CMS | Custom Laravel Blade controllers and views | Keep the existing admin, reuse Blade layouts/components, and apply Laravel-native validation and authorization. Do not add a third-party admin panel. |
 | Database | MySQL as preferred relational database | Planned choice; verify local/hosting compatibility, configuration, charset and backups during Phase 0. |
 | Markup | Semantic HTML | Content, navigation and forms must not depend on a client-side app. |
-| CSS | Tailwind CSS `^4.1` plus purposeful custom CSS | Filament 5 requires Tailwind 4.1+; keep the direct constraints compatible. |
+| CSS | Tailwind CSS `^4.1` plus purposeful custom CSS | Use the existing Tailwind 4.1+ and Vite integration; keep the manifest and lockfile in sync. |
 | Client-side language | TypeScript / ES modules | Frontend-only, for small browser interactions; the backend remains Laravel/PHP. |
 | Asset build | Vite `^8.0` + `laravel-vite-plugin ^3.1` | Declared in `package.json`; actual installation/build still needs verification. |
 | PHP tests | Pest `^5.3` | Existing tests remain the acceptance gate for every module. |
@@ -21,11 +21,11 @@
 | Motion | CSS first; GSAP `^3.15` for complex, approved sequences | Use GSAP when timelines or scroll-linked motion justify it; respect reduced motion and avoid heavy animation by default. |
 | Fonts | Self-hostable Fontsource packages for Manrope and IBM Plex Sans Arabic | Packages are being added as candidates; final font, weights and use remain subject to design approval and license review. |
 
-GitHub Actions verified the current lockfiles, 51 tests (193 assertions), Composer and npm audits, Larastan analysis and Vite build in [run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829). This does not verify local Herd or the eventual production host.
+The dependency-refresh workflow verifies Composer validation/install/audit, Larastan, Laravel tests, npm audit, TypeScript checking and the Vite build after manifest changes. Check the corresponding Actions run for the actual result of each dependency change; GitHub CI does not verify the local Herd or production host.
 
 ## 2. Package-selection policy
 
-**Package-first is the default for non-trivial, reusable capabilities.** Before writing a custom implementation, first look for a maintained package with a suitable license and direct support for the selected Laravel/PHP/Node/Tailwind versions. Prefer the package when it materially reduces code and maintenance, especially for admin CRUD, rich editing, media uploads/conversions, sitemaps, spam protection, icons, animations and code analysis.
+**Package-first is the default for non-trivial, reusable capabilities, except the admin panel, which is deliberately custom Blade.** Before writing a custom implementation, look for a maintained package with a suitable license and direct support for the selected Laravel/PHP/Node/Tailwind versions. Prefer a package when it materially reduces code and maintenance for media uploads/conversions, sitemaps, spam protection, icons, animations and code analysis. Do not replace the existing admin with a packaged panel.
 
 Do not install a package solely because it exists. For each addition, verify:
 - official version compatibility with PHP, Laravel, Tailwind/Vite and the target Node version;
@@ -39,9 +39,9 @@ Keep the lockfiles committed. Run dependency audits, tests, static analysis and 
 
 | Need | Selected package | Why / boundary |
 |---|---|---|
-| Admin CMS | `filament/filament ^5.0` | Reuse resources, tables, forms, authentication and rich editor instead of maintaining duplicate CRUD views. Filament is for the admin panel only; the public site stays Blade-rendered. |
+| Admin CMS | Custom Laravel Blade controllers and views | Keep the existing admin, reuse Blade layouts/components, and apply Laravel-native validation and authorization. Do not add a third-party admin panel. |
 | Media attached to Eloquent content | `spatie/laravel-medialibrary ^11.23` | Store/manage multiple images and conversions for services, projects, products, templates and Insights. Do not accept user-controlled remote URLs for imports. |
-| Media fields in Filament | `filament/spatie-laravel-media-library-plugin ^5.0` | Reuse official Filament integration for media uploads/collections. |
+
 | XML sitemap | `spatie/laravel-sitemap ^8.2` | Generate sitemap URLs for public, published content only. Never list drafts, confidential projects or unavailable locale variants. |
 | Contact anti-spam | `spatie/laravel-honeypot ^4.7.3` | Add `<x-honeypot />` to the eventual Blade contact/project-brief forms and protect only their submit routes. Keep rate limiting too. |
 | PHP static analysis | `larastan/larastan ^3.13` | Catch type and Laravel-specific issues before release; run it in CI. |
@@ -49,7 +49,7 @@ Keep the lockfiles committed. Run dependency audits, tests, static analysis and 
 | Icons | `lucide ^1.61` | Consistent SVG icon source with tree-shaking; import only required icons. |
 | Fonts | `@fontsource/manrope ^5.3`, `@fontsource/ibm-plex-sans-arabic ^5.3` | Self-host font assets rather than depending on a remote font CDN; final font choice still needs approval. |
 
-Not selected yet: a separate role/permission package (until editor/admin role requirements are confirmed), a page builder, an SPA, an extra rich-text library outside Filament's editor, a full CRM/activity log, browser-test tooling before public pages exist, and packages that duplicate Laravel's built-in mail/auth/validation. Reassess against the actual feature, not by habit.
+Not selected: a separate role/permission package (until multiple admin roles are required), a universal page builder, an SPA, a rich-text editor package, a full CRM/activity log, browser-test tooling before public pages exist, and packages that duplicate Laravel's built-in mail/auth/validation. The custom admin remains Blade-based. Reassess against the actual feature, not by habit.
 
 ## 3. Application structure
 
@@ -68,7 +68,7 @@ CMS content includes pages/predefined homepage sections, services, projects/case
 - Use Tailwind CSS 4 for consistent responsive styling and custom CSS for design tokens, theme variables and exceptions.
 - Write browser-side modules in TypeScript for interactions such as mobile navigation, theme toggling and small accordions. Keep the code focused; TypeScript does not imply React, Inertia, a SPA or a large client-side application.
 - Include a strict-enough `tsconfig.json` and run `tsc --noEmit` so type errors fail the relevant build/check command. Vite transpiles TypeScript but does not type-check it by itself; a Vite build alone is not sufficient verification.
-- Do not preselect Alpine.js or Livewire; consider them only for a specific interaction with a clear benefit.
+- Do not add Alpine.js or Livewire to the baseline. Use small TypeScript modules for browser interactions and consider another runtime only if a concrete requirement justifies it.
 - Use consistent tokens for color, spacing, typography, radii, shadows and motion.
 - Support mobile, tablet and desktop without horizontal overflow.
 - Build designed light/dark themes, use system preference initially, persist explicit user choice and prevent theme flash where practical.
@@ -112,9 +112,9 @@ For each relevant milestone:
 | Inertia.js | Not selected; Blade meets the current requirement. |
 | React/Vue SPA | Not selected; no separate frontend app is needed. |
 | TypeScript | Selected for the small frontend asset layer, with explicit `tsc --noEmit` checks. It does not change the Laravel/PHP backend or require an SPA. |
-| Livewire/Alpine.js | Not preselected; revisit for a concrete interaction only. |
+| Livewire/Alpine.js | Excluded from the baseline; browser interactions use focused TypeScript modules. |
 | GSAP | Optional after a specific motion review, not a baseline dependency. |
-| Filament/packaged admin | Not selected at planning time; intended admin is custom Blade. Revisit only if the tested maintenance/time trade-off is clearly better. |
+| Packaged admin panel | Not selected; custom Laravel Blade admin is the agreed direction. Revisit only if a measured maintenance/time trade-off justifies a change. |
 | Universal page builder, full CRM, client portal, payments, microservices | Deferred; see roadmap and decisions/backlog. |
 
 ## 8. Review triggers

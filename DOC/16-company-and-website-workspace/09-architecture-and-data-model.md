@@ -15,11 +15,11 @@ The repository declares PHP ^8.4 and Laravel ^13.17. GitHub Actions has verified
 Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-technology-and-engineering/website-tech-stack.md).
 
 - **Application:** PHP `^8.4` and Laravel `^13.17`; lockfile resolution and dependency health are CI-verified, while local/hosting PHP and extensions remain to be checked.
-- **Rendering:** server-rendered Blade for public pages; Filament is the selected admin package. Existing custom admin screens remain transitional until module-by-module Filament migration.
+- **Rendering:** server-rendered Blade for both public pages and the custom admin. Keep current controllers/views and improve them using reusable Blade layouts/components.
 - **Frontend:** semantic HTML, Tailwind CSS `^4.1`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
 - **Quality tools:** Pest, Pint and Larastan are dependencies; the current set passes 51 tests (193 assertions), Larastan, Composer/npm audits and Vite build ([CI run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829)).
-- **Not selected:** Inertia/React/Vue SPA for the public website, separate public API, microservices or universal page builder. Filament 5 is now selected for admin CMS resources; its internal Livewire/Alpine runtime stays inside the admin panel. TypeScript is only for browser assets.
+- **Not selected:** Inertia/React/Vue SPA, Livewire/Alpine.js, third-party admin panels, separate public API, microservices or universal page builder. TypeScript is only for browser assets.
 
 ## Suggested records
 
@@ -46,7 +46,7 @@ Use the selected storage driver, safe generated names, content/size validation, 
 
 ## Package-first decision
 
-Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure. Filament 5 is selected for admin resources and forms; Spatie Media Library plus its Filament plugin is selected for uploaded images/conversions; Spatie Sitemap handles XML sitemap generation; Spatie Honeypot complements rate limits on public forms; Larastan runs static analysis. Existing custom admin screens are transitional: migrate each module to Filament only after equivalent permissions, validation and tests exist. Do not create duplicate parallel CMS workflows in the final application.
+Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure, but keep the admin CMS custom Blade. Spatie Media Library handles uploaded images/conversions; Spatie Sitemap handles XML sitemap generation; Spatie Honeypot complements rate limits on public forms; Larastan runs static analysis. Keep one admin workflow by reusing existing controllers/views and extracting common Blade components where that removes duplication.
 
 The public site remains custom server-rendered Blade with Tailwind and TypeScript. GSAP/Lucide/Fontsource are available for the public visual layer, with package bundles limited to the actual features used.
 

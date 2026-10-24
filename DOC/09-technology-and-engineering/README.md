@@ -14,9 +14,9 @@ These are dependency constraints in the repository, not confirmation of the inst
 
 The canonical stack and exclusions for the company website are in the [Website Tech Stack & Frontend Architecture decision](./website-tech-stack.md).
 
-Planning baseline: PHP `^8.4`, Laravel `^13.17`, public Blade, Filament 5 admin CMS, MySQL, Tailwind CSS `^4.1`, TypeScript, Vite `^8.0`, Pest, Pint and Larastan. Selected supporting packages include Spatie Media Library, Sitemap and Honeypot. The dependency refresh CI run passed Composer validation/install/audit, Larastan, 51 Pest tests (193 assertions), npm audit and Vite build ([run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829)); local/host configuration remains unverified.
+Planning baseline: PHP `^8.4`, Laravel `^13.17`, custom Blade admin and public pages, MySQL, Tailwind CSS `^4.1`, TypeScript, Vite `^8.0`, Pest, Pint and Larastan. Supporting packages cover media management, XML sitemaps and honeypot spam protection. The dependency-refresh workflow regenerates lockfiles and runs security audits, static analysis, tests and the asset build; local/hosting configuration remains unverified until checked.
 
-Inertia and React/Vue SPA remain excluded for the public website. Filament (with its internal Livewire/Alpine runtime) is selected for CMS administration; GSAP is available for complex motion only.
+Inertia, React/Vue SPA, Livewire, Alpine.js and third-party admin-panel packages are excluded from the baseline. Custom Laravel Blade handles the admin; GSAP is available for complex motion only.
 
 ## Engineering principles
 

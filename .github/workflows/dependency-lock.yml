@@ -38,8 +38,8 @@ jobs:
           node-version: '24'
           cache: npm
 
-      - name: Resolve Composer lockfile for selected packages
-        run: composer update filament/filament filament/spatie-laravel-media-library-plugin spatie/laravel-medialibrary spatie/laravel-sitemap spatie/laravel-honeypot larastan/larastan --with-all-dependencies --no-interaction --prefer-dist --no-progress --no-scripts
+      - name: Resolve Composer lockfile from the approved manifest
+        run: composer update --with-all-dependencies --no-interaction --prefer-dist --no-progress --no-scripts
 
       - name: Resolve npm lockfile
         run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund

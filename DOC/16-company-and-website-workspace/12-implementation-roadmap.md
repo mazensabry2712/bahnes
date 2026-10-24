@@ -6,7 +6,7 @@ Finish and test the backend foundation before building the public frontend. Then
 
 ## Package-first CMS
 
-Use Filament for admin resources rather than building duplicate CRUD screens by hand. Migrate existing modules one at a time, preserving authorization, validation and publication tests. Use Spatie Media Library for media, Sitemap for public URL discovery, Honeypot plus rate limits for contact forms, and Larastan in CI.
+Keep the custom Blade admin and avoid adding a third-party admin panel. Reuse Laravel validation/authorization and shared Blade components rather than cloning similar forms. Use Spatie Media Library for media, Sitemap for public URL discovery, Honeypot plus rate limits for contact forms, and Larastan in CI.
 
 ## Phase 0 — Planning handoff and scaffold audit
 

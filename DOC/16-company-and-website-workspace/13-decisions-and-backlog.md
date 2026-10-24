@@ -13,10 +13,10 @@ This document separates the established planning direction from proposals and de
 | Public rendering | Laravel Blade / server-rendered | Planned baseline |
 | Backend/runtime | PHP `^8.4` + Laravel `^13.17` | PHP 8.4 is required by the selected sitemap dependency and aligned with the CI baseline; target hosting still needs verification |
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
-| CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Tailwind 4.1+ satisfies Filament 5's requirement |
+| CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Selected CSS/build constraints; lockfile and Vite build are verified by CI after manifest changes |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
 | PHP quality gates | Pest + Laravel Pint + Larastan | Dependency workflow passes 51 tests / 193 assertions, static analysis, Composer audit, npm audit and Vite build |
-| Admin UI | Filament 5 for CMS resources; public site remains Blade | Filament selected and locked; existing custom admin routes remain transitional until equivalent resources and tests replace them |
+| Admin UI | Custom Laravel Blade admin and public site | Existing controllers, views, authentication and server-side authorization remain the baseline; improve through shared Blade components and tested features |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
 | Separate SPA | Not required by current plan | Out of initial scope |
@@ -36,13 +36,13 @@ This document separates the established planning direction from proposals and de
 
 ## Package-first rule
 
-When a maintained package is a strong fit for a non-trivial requirement, prefer it over a custom replacement. Filament is selected for admin CRUD/forms; Spatie packages for media, sitemaps and anti-spam; Larastan for static analysis; GSAP/Lucide/Fontsource for the frontend layer. Check official framework compatibility, maintenance, security advisories, license, bundle size and long-term cost before adoption. Keep custom code for BAHNES-specific business rules and UI only where the package does not solve the need.
+When a maintained package is a strong fit for a non-trivial requirement, prefer it over a custom replacement. The admin is an explicit exception: keep it in custom Blade because it already exists and should stay simple. Use Spatie packages for media, sitemaps and anti-spam; Larastan for static analysis; GSAP/Lucide/Fontsource for the frontend layer. Check compatibility, maintenance, security advisories, license, bundle size and long-term cost before adoption.
 
 ## Technology decision and review rule
 
-The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, Blade server rendering for the public site, Filament 5 for CMS administration, Tailwind CSS 4.1+, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js, GSAP or a packaged admin merely because they are available.
+The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, custom Blade admin and public pages, Tailwind CSS 4.1+, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js or a packaged admin panel. Use GSAP only for motion that materially benefits from it.
 
-The checked-in manifests and lockfiles were validated, and CI passed on PHP 8.4 / Node 24, including 23 Pest tests (83 assertions), TypeScript checking and Vite build for the current service management milestone ([run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204)). This verifies the GitHub CI environment, not the user's local Herd or deployment host. Update the docs before any technology change.
+The dependency-refresh workflow resolves lockfiles and verifies Composer/npm security audits, Larastan, Pest tests, TypeScript checking and Vite production build on PHP 8.4 / Node 24. Check the corresponding Actions run for the actual result after each dependency change. CI does not verify local Herd or the deployment host.
 
 ## Decisions required before backend implementation
 

@@ -17,9 +17,9 @@ Start at the [DOC index](./DOC/README.md). The [Company & Website Workspace](./D
 
 ## Technology baseline
 
-The chosen planning baseline is **Laravel 13 + Blade + Tailwind CSS 4 + TypeScript + Vite**, with MySQL as the preferred relational database. Public pages and the custom admin use Blade server rendering; a separate SPA is not required. The repository baseline is PHP `^8.4`, Laravel `^13.17`, Blade for the public website, Filament 5 selected for CMS administration, Tailwind CSS `^4.1`, TypeScript and Vite `^8.0`. Supporting packages cover media management, dynamic sitemaps, contact-form spam protection and Laravel static analysis. Lockfiles were regenerated and verified by CI; local/hosting runtime still needs independent verification.
+The selected baseline is **PHP 8.4+ + Laravel 13 + Blade + Tailwind CSS 4.1+ + TypeScript + Vite**, with MySQL preferred. Both public pages and the custom admin stay in one Laravel application; no SPA or third-party admin panel is planned. Supporting packages cover media management, XML sitemaps, contact-form spam protection, PHP static analysis and focused frontend needs.
 
-See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09-technology-and-engineering/website-tech-stack.md) and [architecture workspace](./DOC/16-company-and-website-workspace/09-architecture-and-data-model.md). The public site remains server-rendered Laravel Blade; Filament is limited to the admin CMS and uses Livewire internally. TypeScript is limited to browser-side asset modules and does not change the PHP/Laravel backend.
+See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09-technology-and-engineering/website-tech-stack.md) and [architecture workspace](./DOC/16-company-and-website-workspace/09-architecture-and-data-model.md). Laravel Blade remains responsible for public pages and the custom admin UI. TypeScript is limited to browser-side asset modules and does not change the PHP/Laravel backend.
 
 ## Working principles
 
@@ -32,8 +32,8 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 - Never commit secrets, production credentials, or private customer data.
 - Do not claim features are implemented or tested unless they actually are.
 
-The initial scaffold audit and first CMS modules are tested. The dependency refresh run passed 51 tests (193 assertions), Larastan, Composer/npm security audits and the Vite production build ([run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829)). Media upload workflows, Filament resource migration, public pages and email notification delivery remain separate milestones.
+The initial scaffold audit and first CMS modules are tested. Dependency-manifest changes trigger lockfile regeneration and the full CI checks: Composer/npm security audits, Larastan, Pest tests, TypeScript checking and the Vite production build. Media workflows, public pages and email notification delivery remain separate milestones.
 
 ## Package-first engineering
 
-Prefer a maintained, compatible package over writing a homegrown replacement for non-trivial shared capabilities. The project has selected and installed Filament for CMS administration, Spatie Media Library for content media, Spatie Sitemap for XML sitemaps, Spatie Honeypot for contact spam protection, Larastan for static analysis, and GSAP/Lucide plus self-hostable font packages for the public frontend. The existing custom admin screens remain active until their equivalent Filament resources are migrated and tested. Every dependency must pass compatibility, maintenance, license, security and bundle/runtime checks. Avoid a package for trivial one-off code or where it would add more complexity than it removes. See the [canonical package-selection policy](./DOC/09-technology-and-engineering/website-tech-stack.md).
+Prefer a maintained, compatible package over writing a homegrown replacement for non-trivial shared capabilities. The admin CMS is deliberately custom Laravel Blade. Supporting packages cover media management, XML sitemaps, spam protection, static analysis, motion, icons and self-hosted fonts. Every dependency must pass compatibility, maintenance, license, security and bundle/runtime checks. Avoid packages for trivial one-off code or where they add more complexity than they remove. See the [canonical package-selection policy](./DOC/09-technology-and-engineering/website-tech-stack.md).
