@@ -1,48 +1,33 @@
-# Products & SaaS
+# Products, SaaS & Website Templates
 
-## Product strategy
+## Keep three content types separate
 
-The company may own products in the future, but client services and customer discovery come first. A product should emerge from a repeated problem and evidence that a defined buyer will pay—not simply from an interesting technical idea.
+1. **Projects / Case Studies:** evidence of work performed, with honest status and disclosure.
+2. **Products:** software BAHNES offers as a repeatable solution.
+3. **Website Templates:** reusable website designs or implementations offered under explicit license terms.
 
-## Discovery process
+Services remain the near-term foundation. Product investment should follow evidence of repeated customer needs and buyer demand.
 
-1. Record repeated problems encountered in client work and sales conversations.
-2. Interview people in the target role about their current workflow and workaround.
-3. Identify the buyer, user, frequency, cost of the problem, and existing alternatives.
-4. Test willingness to pay with a specific offer or pilot.
-5. Compare demand across multiple independent customers.
-6. Define a narrow minimum viable product (MVP) with a clear success measure.
-7. Run a paid pilot or obtain another meaningful commitment before broadening scope.
-8. Review retention, usage, support effort, and unit economics before scaling.
+## Product discovery
 
-## Product hypothesis brief
+Record recurring problems; interview target users and economic buyers; assess alternatives, urgency, and willingness to pay; define a narrow MVP and success measure; seek a paid pilot or meaningful commitment; estimate development, onboarding, hosting, support, updates, and sales cost; then decide to build, defer, or stop.
 
-For every candidate, document:
-- Target user and economic buyer.
-- Problem and current workaround.
-- Evidence and interview dates.
-- Competing tools/alternatives.
-- Reason the current options are inadequate.
-- Proposed smallest solution.
-- Pricing and acquisition hypothesis.
-- Data sensitivity and compliance considerations.
-- Build, support, and infrastructure cost.
-- Validation metric and stop condition.
+## Product page specification
 
-## Product vs. custom project
+Include the problem and target buyer, features and limitations, accurate screenshots/demo, prerequisites and supported environments, integrations, license/pricing only when approved, setup and support boundaries, update policy, data/security considerations, and a clear CTA. Use Request a Demo, Request a Quote, or Buy Now only when the corresponding process actually exists.
 
-A custom project solves one customer's contract scope. A product needs repeated use across customers, onboarding, documentation, support, roadmap, secure configuration, billing, upgrades, and reliable operations. Do not confuse a reusable codebase with a validated SaaS business.
+Do not add payment processing for appearance. Define purchase terms, licensing, delivery, refunds, tax/accounting, and support before automated checkout.
 
-## Build gate
+## Website template catalog
 
-Do not approve a substantial product build until:
-- The problem appears repeatedly in a meaningful target segment.
-- A buyer and budget are identifiable.
-- The smallest solution is understood.
-- A credible route to initial customers exists.
-- Support and data responsibilities are known.
-- The work will not jeopardize customer commitments or essential cash reserves.
+Each template should include intended use, desktop/mobile screenshots, safe live preview if available, included pages/files/components, dependencies, customization scope, license and permitted uses, price when approved, update/support policy, delivery format, version, and known limitations. Do not imply ownership of third-party assets without rights.
 
-## Stop or pivot signals
+## Projects and case studies
 
-Reassess when target buyers do not recognize the problem, existing alternatives are sufficient, willingness to pay is absent, acquisition cost is unrealistic, or the product requires an uneconomical level of custom work per customer.
+Use explicit statuses such as Completed, In Progress, Concept, and Confidential. Publish customer names/logos/screenshots only with permission. Concepts must be labelled as concepts; confidential work may be anonymized only with permission. Never invent customers, testimonials, metrics, or outcomes.
+
+A useful case study explains context, problem, constraints, BAHNES's role, approach, trade-offs, verified deliverables, and substantiated results.
+
+## Readiness gate
+
+Before sale, define versioning, onboarding, documentation, supported environments, security maintenance, issue reporting, license, updates, delivery, and discontinuation. Keep projects, products, and templates as separate content types rather than one overloaded catalog.

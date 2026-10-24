@@ -1,67 +1,62 @@
 # Roadmap & KPIs
 
-## Planning horizon
+## Planning principle
 
-Use the following as an initial sequence, not a promise that every phase will occur on schedule.
+This is a sequence for learning and delivery, not a promise that every phase ships on a fixed date. The priority is a coherent service business and a reliable website—not a large platform built before demand exists.
 
-### First 30 days — foundations
+## Phase 0 — Confirm the baseline
 
-- [ ] Validate name, identity direction, and necessary legal next steps.
-- [ ] Select one primary service offer and one secondary offer to test.
-- [ ] Prepare discovery questions, proposal structure, and lead tracker.
-- [ ] Publish a credible minimum company website or landing page.
-- [ ] Start targeted outreach and collect market feedback.
-- [ ] Set up basic cash/invoice tracking and delivery checklists.
+- [ ] Audit the Laravel scaffold, dependencies, routes, assets, tests, and configuration.
+- [ ] Confirm brand direction and which service offers are ready to sell.
+- [ ] Validate suppliers, scope, warranty/support boundaries, and service capability.
+- [ ] Review legal, tax, registration, and privacy questions with qualified professionals.
+- [ ] Confirm public contact channels and who handles inquiries.
 
-### Months 2–3 — early sales evidence
+## Phase 1 — Foundation
 
-- Conduct discovery conversations with target customers.
-- Send tailored proposals to qualified leads.
-- Deliver small, clearly scoped work where appropriate.
-- Capture effort, collection timing, customer feedback, and delivery lessons.
-- Refine the message and price based on evidence.
+- [ ] Keep one company brand with two visible service lines.
+- [ ] Implement simple content models, admin authorization, and translations.
+- [ ] Build Blade layout, navigation, light/dark themes, and RTL/LTR behavior.
+- [ ] Publish Home, Services, About, Contact, and required privacy/legal content after review.
+- [ ] Test forms, notifications, metadata, accessibility, mobile, and performance.
 
-### Months 4–6 — repeatability
+## Phase 2 — Proof and inbound
 
-- Improve the strongest acquisition channel.
-- Standardize estimation, delivery, handover, and care plans.
-- Seek recurring support relationships where there is genuine need.
-- Build approved case studies.
-- Record repeated customer problems for product discovery.
+- [ ] Add genuine case studies with accurate labels and approvals.
+- [ ] Publish useful Insights based on expertise and actual customer questions.
+- [ ] Implement a project brief form and privacy-aware inquiry-source tracking.
+- [ ] Prepare the company profile PDF after identity/contact details are approved.
+- [ ] Define a credible maintenance/support offer and its boundaries.
 
-### Months 7–9 — focused growth
+## Phase 3 — Digital catalog
 
-- Deepen the best-performing segment or offer.
-- Improve referrals and partnerships.
-- Test a product hypothesis only if customer evidence supports it.
-- Use vetted contractors for bounded needs where financially sensible.
+- [ ] Add Products and Website Templates as separate content types.
+- [ ] Provide real screenshots, demos/previews, licensing, price, and support details when available.
+- [ ] Validate customer interest before automated checkout or subscriptions.
 
-### Months 10–12 — review and decide
+## Phase 4 — Improve from evidence
 
-- Evaluate profitability, cash flow, delivery quality, and demand concentration.
-- Decide whether to stay solo, use contractors, or make a justified hire.
-- Decide whether any product deserves a paid MVP.
-- Stop offers and channels that consume time without producing meaningful results.
+- [ ] Review inquiry quality, conversion, cash collection, delivery effort, support load, and feedback.
+- [ ] Improve the strongest sales channels.
+- [ ] Add only enhancements that solve a real user/business problem.
+- [ ] Consider a paid product MVP only when buyer evidence supports it.
+
+## Deferred until justified
+
+Client portal, full CRM, automated payments/licensing/subscriptions, complex page builder, multi-tenant or microservice architecture, heavy 3D, and excessive animation.
 
 ## Core KPIs
 
-| KPI | What it tells us |
+| KPI | Purpose |
 |---|---|
-| Qualified opportunities | Whether the company reaches potential buyers with real need and budget |
-| Discovery-to-proposal rate | Whether conversations identify actionable opportunities |
-| Proposal win rate | Whether offer, proof, timing, and pricing are competitive |
-| Average contract value | Whether deal sizes support the required delivery effort |
-| Cash collected and days to collect | Whether signed work becomes usable cash |
-| Estimated vs actual effort | Whether estimation and scope control are improving |
-| Delivery reliability | Whether commitments are met with acceptable quality |
-| Recurring revenue and support load | Whether continuity is sustainable and properly priced |
-| Customer satisfaction/referrals | Whether customers value the work enough to return or refer |
-| Product validation evidence | Whether a product merits further investment |
+| Qualified opportunities by service line | Shows which audience has a real need and budget |
+| Inquiry source and quality | Identifies channels worth continuing |
+| Discovery-to-proposal and proposal win rate | Improves qualification and offer clarity |
+| Cash collected and collection delay | Measures financial reality |
+| Estimated vs actual effort | Improves scope and pricing |
+| Delivery reliability and rework | Monitors quality |
+| Maintenance revenue and support load | Checks whether support is sustainable |
+| Product/template demo-to-inquiry rate | Tests catalog interest |
+| Product validation evidence | Guides build/defer/stop decisions |
 
-## Target-setting rule
-
-Measure an initial baseline for the first month before setting hard targets. Then set realistic monthly goals based on available capacity and actual conversion data. Do not use made-up targets as evidence of progress.
-
-## Monthly decision review
-
-Ask: What produced qualified demand? What work was profitable after real effort? What delayed collection? What caused rework? What should be stopped, standardized, or tested next?
+Set numerical targets after a baseline exists. Do not use invented targets as evidence of progress.

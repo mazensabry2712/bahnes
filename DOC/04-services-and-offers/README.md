@@ -1,50 +1,64 @@
 # Services & Offers
 
-## Principle
+## Portfolio structure
 
-Start with a small number of understandable offers. Each offer should define the buyer, problem, deliverables, timeline assumptions, exclusions, and next step. Tailor scope after discovery instead of promising a fixed result for an undefined project.
+Present BAHNES as one company with two service lines, not two unrelated brands. The following is a planned service taxonomy. Publish only offers whose delivery capability, supplier arrangements, scope, terms, and support boundaries have been validated.
 
-## Offer 1 — Business Systems Audit
+## Service line A — IT Infrastructure & Security
 
-**For:** A business whose workflow or existing software is difficult to manage.  
-**Possible deliverables:** Discovery meeting, workflow map, risk/opportunity list, prioritized recommendations, rough implementation plan.  
-**Boundaries:** Does not include production changes or a full technical audit unless explicitly included.  
-**Next step:** A scoped implementation proposal.
+### CCTV & surveillance
+- Requirement consultation and site survey.
+- Camera, DVR/NVR, storage, recording, and viewing setup.
+- Secure remote viewing where supported.
+- Troubleshooting, upgrades, maintenance, and handover documentation.
+- Define power/network dependencies, equipment ownership, warranty, recording access, and privacy responsibilities.
 
-## Offer 2 — Custom Business System
+### Networking & infrastructure
+- Wired/wireless network setup and Wi-Fi.
+- Router, switch, access point, and structured cabling configuration.
+- Network planning for offices and business sites.
+- Connectivity troubleshooting, documentation, and maintenance.
 
-**For:** Businesses with a validated workflow that off-the-shelf tools cannot cover well enough.  
-**Possible deliverables:** Requirements, role/permission model, selected workflows, reporting, integrations, tests, deployment plan, documentation and handover.  
-**Boundaries:** Build only the agreed minimum scope; define third-party dependencies and data migration separately.
+### Business IT equipment & support
+- Computer/workstation and peripheral setup.
+- Software configuration, upgrades, diagnosis, and maintenance.
+- Backup planning where included.
+- On-demand or recurring support with defined hours and response boundaries.
 
-## Offer 3 — Website & E-commerce
+### Related systems to validate
+Access control, attendance devices, and other security integrations may be added after capability, supplier compatibility, installation requirements, and lawful use are confirmed.
 
-**For:** Businesses that need a credible online presence or a clearly scoped commerce workflow.  
-**Possible deliverables:** Content structure, responsive pages, forms, catalog or checkout scope, analytics/SEO basics, launch checklist and handover.  
-**Boundaries:** Content production, product data entry, payment-provider approval, hosting, and ongoing marketing must be explicit line items.
+## Service line B — Software & Digital Solutions
 
-## Offer 4 — Care & Improvement
+### Websites and e-commerce
+Company websites, service sites, landing pages, online stores, catalogs, CMS content, forms, technical SEO, and ongoing improvement.
 
-**For:** Clients needing ongoing maintenance after delivery or for an existing application.  
-**Possible deliverables:** A defined monthly time allowance, updates, backups/health checks where access permits, small improvements, and a short activity report.  
-**Boundaries:** Define response hours, included time, exclusions, emergency rates, unused-hour treatment, and third-party costs.
+### Business systems
+Inventory, sales, booking, CRM, ERP modules, POS, reporting, integrations, and automation. Confirm accounting or other regulated requirements with the customer and qualified providers where applicable.
 
-## Additional services
+### Applications and integrations
+Web/mobile applications, APIs, third-party integrations, data import/migration, automation, modernization, and deployment support.
 
-- Mobile applications, after confirming platform and support requirements.
-- IT consulting and technical support, with clear service hours.
-- System integration and modernization.
-- ERP/CRM implementation or customization where the team has the required expertise.
+### Hosting and technical care
+Hosting coordination, domain/DNS guidance, backups and health checks where access permits, updates, and maintenance. Define account ownership, vendor fees, backup responsibility, and incident handling.
+
+### Products and templates
+Own software products and website templates belong in separate catalog sections. Do not present an internal experiment as a supported commercial product before license, updates, onboarding, and support are defined.
+
+## Candidate standard offers
+
+1. **IT Site Assessment:** site/requirements review, dependencies, recommended scope, and estimate; installation is excluded unless stated.
+2. **Business Systems Discovery:** workflow review, prioritized requirements, risks, and bounded proposal.
+3. **Website Launch:** agreed pages, content responsibilities, responsive implementation, forms, SEO baseline, tests, and handover.
+4. **Custom System MVP:** defined roles/workflows, integrations, reports, tests, deployment, and documentation.
+5. **Care & Maintenance:** explicit allowance/scope, response hours, exclusions, escalation, and renewal terms.
+
+These are candidates, not final packages or approved prices.
 
 ## Qualification questions
 
-1. What business problem is the customer trying to solve?
-2. How is it handled today, and what does it cost in time/errors/rework?
-3. Who decides, who uses it, and who approves acceptance?
-4. What is the budget and target date?
-5. What existing software, data, and integrations are involved?
-6. What does a successful first release look like?
+What business problem or installation outcome is needed? What equipment, site constraints, systems, and integrations already exist? Is a site survey/discovery needed before pricing? Who approves the work? What budget/timeline is realistic? What support or warranty is expected after handover?
 
 ## Service readiness gate
 
-Do not publish an offer as standard until the scope, delivery process, estimate method, quality checks, proposal template, and support boundaries are understood. Keep project-specific exceptions visible in the quote.
+Before publishing an offer, document capability, supplier dependencies, deliverables, exclusions, estimate method, warranty/support boundaries, acceptance criteria, security/safety considerations, and handover process. See [Client Delivery](../07-client-delivery/README.md).

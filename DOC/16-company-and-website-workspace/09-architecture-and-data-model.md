@@ -1,0 +1,46 @@
+# 09 — Architecture & Data Model
+
+## Baseline
+
+- Laravel with server-rendered Blade views.
+- Relational database, Laravel migrations, and Eloquent where appropriate.
+- Existing scaffold is the starting point and must be audited before changing dependencies.
+- No SPA or public mobile API is required by the current website plan.
+- Separate validation, authorization, business rules, and presentation appropriately without unnecessary layers.
+
+The repository declares PHP ^8.3 and Laravel ^13.17. Verify actual local runtime, installed dependencies, and target hosting compatibility before implementation/deployment.
+
+## Suggested records
+
+- Page and predefined page-section content.
+- Service line and service.
+- Project/case study.
+- Product.
+- Website template.
+- Insight article, category, and optional tag.
+- Media metadata if required by the chosen storage setup.
+- Contact message/inquiry with type, status, source, and next action.
+- FAQ if recurring questions justify reusable records.
+- Per-locale content and SEO fields in a consistent structure.
+
+Products/templates must stay separate content types; portfolio proof must stay distinct from commercial catalog items. Do not put every type into one giant JSON record simply to reduce table count.
+
+## Admin and translations
+
+Use admin authentication and server-side authorization; safe uploads; consistent publication states; and pagination/filtering where needed. Decide translation representation after auditing existing conventions. Keep slugs, content, SEO metadata, and publication status coherent per language.
+
+## Media
+
+Use the selected storage driver, safe generated names, content/size validation, and protected storage paths. Prevent executable uploads, optimize public images, and document backups/deletion. Keep private files outside public access.
+
+## Implementation sequence
+
+1. Audit routes, models, dependencies, tests, config, views, and assets.
+2. Choose the smallest schema that supports the requirements.
+3. Add migrations, authorization, validation, and tests.
+4. Implement admin workflows.
+5. Build shared Blade layouts/section views.
+6. Add public pages and catalogs incrementally.
+7. Test changes before deployment.
+
+This is a proposed architecture, not a claim that these models or features already exist.
