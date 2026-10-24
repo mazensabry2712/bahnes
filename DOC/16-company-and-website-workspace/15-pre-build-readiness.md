@@ -10,7 +10,7 @@ These are agreed directions for planning, not evidence that the features or cont
 - [x] Two service lines: IT Infrastructure & Security, and Software & Digital Solutions.
 - [x] One website serving both audiences with clearly separated service content.
 - [x] Laravel + Blade server-rendered pages; no separate SPA requirement.
-- [x] Technology baseline documented: Laravel 13 + PHP backend + Blade + Tailwind CSS 4 + TypeScript browser modules + Vite; MySQL is preferred.
+- [x] Technology baseline documented: Laravel 13 + PHP 8.4+ + public Blade + Filament 5 CMS admin + Tailwind CSS 4.1+ + TypeScript browser modules + Vite; MySQL is preferred.
 - [x] Inertia, React/Vue SPA and nonessential interaction frameworks are excluded from the initial stack unless a real requirement changes. TypeScript is used only for browser-side modules, not as backend runtime.
 - [x] Arabic and English with correct RTL/LTR behavior.
 - [x] Properly designed light and dark themes.
@@ -20,6 +20,12 @@ These are agreed directions for planning, not evidence that the features or cont
 - [x] Security, accessibility, performance, SEO, and tests are requirements from the start.
 - [x] Backend is prepared first; the public frontend is then built section by section.
 - [x] Client portal, full CRM, automated checkout/subscriptions, and heavy 3D are outside the initial scope unless justified later.
+
+## Package selection
+
+- [x] Package-first rule: prefer a maintained compatible package for non-trivial shared capabilities, but avoid packages for trivial helpers or where complexity exceeds value.
+- [x] Selected: Filament 5 for CMS admin, Spatie Media Library (+ Filament plugin) for media, Spatie Sitemap for public URLs, Spatie Honeypot for public forms, Larastan for PHP analysis, GSAP/Lucide and self-hostable fonts for the frontend layer.
+- [ ] Lockfile refresh, dependency audits, tests, static analysis and Vite build must pass after the packages are added. Existing custom admin screens remain transitional until module-by-module migration is tested.
 
 ## B. Required before the first backend coding milestone
 

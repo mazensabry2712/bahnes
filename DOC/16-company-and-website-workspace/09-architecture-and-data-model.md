@@ -19,7 +19,7 @@ Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-te
 - **Frontend:** semantic HTML, Tailwind CSS `^4.0`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
 - **Quality tools:** Pest and Laravel Pint are declared dependencies; baseline tests/format/build checks remain pending.
-- **Not selected:** Inertia, React/Vue SPA, Livewire, Alpine.js, required GSAP, packaged admin panel, separate public API, microservices or universal page builder. TypeScript is selected only for browser-side code.
+- **Not selected:** Inertia/React/Vue SPA for the public website, separate public API, microservices or universal page builder. Filament 5 is now selected for admin CMS resources; its internal Livewire/Alpine runtime stays inside the admin panel. TypeScript is only for browser assets.
 
 ## Suggested records
 
@@ -43,6 +43,12 @@ Use admin authentication and server-side authorization; safe uploads; consistent
 ## Media
 
 Use the selected storage driver, safe generated names, content/size validation, and protected storage paths. Prevent executable uploads, optimize public images, and document backups/deletion. Keep private files outside public access.
+
+## Package-first decision
+
+Use maintained packages for non-trivial shared capabilities rather than expanding bespoke infrastructure. Filament 5 is selected for admin resources and forms; Spatie Media Library plus its Filament plugin is selected for uploaded images/conversions; Spatie Sitemap handles XML sitemap generation; Spatie Honeypot complements rate limits on public forms; Larastan runs static analysis. Existing custom admin screens are transitional: migrate each module to Filament only after equivalent permissions, validation and tests exist. Do not create duplicate parallel CMS workflows in the final application.
+
+The public site remains custom server-rendered Blade with Tailwind and TypeScript. GSAP/Lucide/Fontsource are available for the public visual layer, with package bundles limited to the actual features used.
 
 ## Current implementation slice
 

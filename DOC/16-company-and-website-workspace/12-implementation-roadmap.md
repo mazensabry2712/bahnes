@@ -4,6 +4,10 @@
 
 Finish and test the backend foundation before building the public frontend. Then implement the frontend section by section. Work in small, testable milestones and do not turn every future idea into a launch requirement.
 
+## Package-first CMS
+
+Use Filament for admin resources rather than building duplicate CRUD screens by hand. Migrate existing modules one at a time, preserving authorization, validation and publication tests. Use Spatie Media Library for media, Sitemap for public URL discovery, Honeypot plus rate limits for contact forms, and Larastan in CI.
+
 ## Phase 0 — Planning handoff and scaffold audit
 
 - Audit the existing Laravel scaffold, Composer dependencies/lockfile, PHP/Node runtimes, routes, views, assets, configuration, storage assumptions, and tests.

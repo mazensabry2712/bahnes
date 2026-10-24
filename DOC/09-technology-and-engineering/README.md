@@ -3,7 +3,7 @@
 ## Repository baseline
 
 The initial repository contains a Laravel application scaffold. The current `composer.json` declares:
-- PHP constraint: `^8.3`
+- PHP constraint: `^8.4`
 - Laravel framework constraint: `^13.17`
 - Laravel Tinker constraint: `^3.0`
 - Pest-based test dependencies
@@ -14,14 +14,14 @@ These are dependency constraints in the repository, not confirmation of the inst
 
 The canonical stack and exclusions for the company website are in the [Website Tech Stack & Frontend Architecture decision](./website-tech-stack.md).
 
-Planning baseline: PHP `^8.3`, Laravel `^13.17`, Blade, preferred MySQL database, Tailwind CSS `^4.0`, native JavaScript, Vite `^8.0`, Pest and Laravel Pint. Manifest-declared versions do not prove successful installation, runtime compatibility or tests.
+Planning baseline: PHP `^8.4`, Laravel `^13.17`, public Blade, Filament 5 admin CMS, MySQL, Tailwind CSS `^4.1`, TypeScript, Vite `^8.0`, Pest, Pint and Larastan. Selected supporting packages include Spatie Media Library, Sitemap and Honeypot. Manifest declarations do not prove successful installation or environment compatibility.
 
-Inertia, React/Vue SPA, Livewire, Alpine.js, GSAP, a packaged admin panel and a separate API are not baseline requirements. Do not add them without a documented need.
+Inertia and React/Vue SPA remain excluded for the public website. Filament (with its internal Livewire/Alpine runtime) is selected for CMS administration; GSAP is available for complex motion only.
 
 ## Engineering principles
 
 - Prefer Laravel's established conventions and server-rendered Blade where they meet the requirements.
-- Add packages only for a defined need; evaluate maintenance, security, licensing, and long-term cost.
+- **Package-first:** prefer a maintained compatible package over a homegrown replacement for non-trivial shared capabilities; check compatibility, maintenance, advisories, license, bundle size and hosting constraints first. Do not install packages for trivial one-off logic.
 - Keep business rules in appropriate application/domain layers rather than scattering them across views.
 - Validate input server-side and authorize every sensitive operation.
 - Use migrations for database changes and keep schema changes reviewable.

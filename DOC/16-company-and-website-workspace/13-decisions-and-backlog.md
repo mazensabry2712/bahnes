@@ -11,14 +11,14 @@ This document separates the established planning direction from proposals and de
 | Service line B | Software & Digital Solutions: websites, systems, apps, integration | Portfolio direction; capability needs validation |
 | App framework | Existing Laravel scaffold | Exists; must be audited |
 | Public rendering | Laravel Blade / server-rendered | Planned baseline |
-| Backend/runtime | PHP `^8.3` + Laravel `^13.17` | Declared in Composer; runtime audit pending |
+| Backend/runtime | PHP `^8.4` + Laravel `^13.17` | PHP 8.4 is required by the selected sitemap dependency and aligned with the CI baseline; target hosting still needs verification |
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
-| CSS/build | Tailwind CSS `^4.0` + Vite `^8.0` + Laravel Vite plugin | Declared in package.json; install/build audit pending |
+| CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Tailwind 4.1+ satisfies Filament 5's requirement |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
 | PHP tests/format | Pest + Laravel Pint | CI passes on PHP 8.4; latest service CRUD milestone: 23 tests / 83 assertions |
-| Admin UI | Custom Blade admin with session auth and server-side authorization | Login/provisioning plus initial service list/search/filter/create/edit/archive implemented and CI-tested |
+| Admin UI | Filament 5 for CMS resources; public site remains Blade | Filament selected to reduce bespoke CRUD maintenance; existing custom admin routes are transitional and must be migrated module by module with tests |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
-| Motion libraries | CSS/native features first; GSAP not baseline | Optional only after a concrete need is approved |
+| Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
 | Separate SPA | Not required by current plan | Out of initial scope |
 | Languages | Arabic and English | Planned requirement |
 | Themes | Proper light and dark themes with user preference | Planned requirement |
@@ -34,9 +34,13 @@ This document separates the established planning direction from proposals and de
 | Automated checkout/subscriptions | Defer until commercial flow is defined and tested | Deferred |
 | Logo/colors/fonts/tagline | Proposed identity direction | Needs review/approval |
 
+## Package-first rule
+
+When a maintained package is a strong fit for a non-trivial requirement, prefer it over a custom replacement. Filament is selected for admin CRUD/forms; Spatie packages for media, sitemaps and anti-spam; Larastan for static analysis; GSAP/Lucide/Fontsource for the frontend layer. Check official framework compatibility, maintenance, security advisories, license, bundle size and long-term cost before adoption. Keep custom code for BAHNES-specific business rules and UI only where the package does not solve the need.
+
 ## Technology decision and review rule
 
-The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, Blade server rendering, Tailwind CSS 4, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js, GSAP or a packaged admin merely because they are available.
+The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, Blade server rendering for the public site, Filament 5 for CMS administration, Tailwind CSS 4.1+, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js, GSAP or a packaged admin merely because they are available.
 
 The checked-in manifests and lockfiles were validated, and CI passed on PHP 8.4 / Node 24, including 23 Pest tests (83 assertions), TypeScript checking and Vite build for the current service management milestone ([run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204)). This verifies the GitHub CI environment, not the user's local Herd or deployment host. Update the docs before any technology change.
 

@@ -1,0 +1,86 @@
+name: Resolve dependency lockfiles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'composer.json'
+      - 'package.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dependency-lock-main
+  cancel-in-progress: false
+
+jobs:
+  resolve-and-verify:
+    name: Resolve, audit, test and commit lockfiles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: ctype, curl, dom, exif, fileinfo, gd, mbstring, openssl, pdo_sqlite, sqlite3, tokenizer, xml
+          coverage: none
+          tools: composer:v2
+
+      - name: Set up Node.js 24 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Resolve Composer lockfile for selected packages
+        run: composer update filament/filament filament/spatie-laravel-media-library-plugin spatie/laravel-medialibrary spatie/laravel-sitemap spatie/laravel-honeypot larastan/larastan --with-all-dependencies --no-interaction --prefer-dist --no-progress --no-scripts
+
+      - name: Resolve npm lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Validate Composer manifests
+        run: composer validate --strict
+
+      - name: Install locked PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare test environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+
+      - name: Audit Composer dependencies
+        run: composer audit --locked --no-interaction
+
+      - name: Run PHP static analysis
+        run: composer analyse
+
+      - name: Run Laravel tests
+        run: php artisan test
+
+      - name: Install locked frontend dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Commit verified lockfiles
+        run: |
+          git add composer.lock package-lock.json
+          if git diff --cached --quiet; then
+            echo "Lockfiles are already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: resolve and verify dependency lockfiles"
+          git push origin HEAD:main
