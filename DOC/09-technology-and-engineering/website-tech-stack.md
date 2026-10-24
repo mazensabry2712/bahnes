@@ -14,7 +14,7 @@
 | Database | MySQL as preferred relational database | Planned choice; verify local/hosting compatibility, configuration, charset and backups during Phase 0. |
 | Markup | Semantic HTML | Content, navigation and forms must not depend on a client-side app. |
 | CSS | Tailwind CSS `^4.0` plus purposeful custom CSS | Tailwind and `@tailwindcss/vite` are declared in `package.json`; verify lockfile, install and build. |
-| JavaScript | Native JavaScript / ES modules | Use for small interactions only. |
+| Client-side language | TypeScript / ES modules | Frontend-only, for small browser interactions; the backend remains Laravel/PHP. |
 | Asset build | Vite `^8.0` + `laravel-vite-plugin ^3.1` | Declared in `package.json`; actual installation/build still needs verification. |
 | PHP tests | Pest (declared `^5.3`) | Run the existing suite first and record the baseline. |
 | PHP formatting | Laravel Pint (declared `^1.27`) | Verify install; run on changed PHP files. |
