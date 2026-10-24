@@ -1,16 +1,36 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])
+Route::get('/contact', function () {
+    return redirect()->route('localized.contact.show', ['locale' => 'en']);
+})->name('contact.redirect');
+
+Route::get('/{locale}/contact', function (string $locale) {
+    return view('contact', ['locale' => $locale]);
+})->whereIn('locale', ['en', 'ar'])->name('localized.contact.show');
+
+Route::post('/{locale}/contact', [ContactController::class, 'store'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->middleware(['throttle:5,1', ProtectAgainstSpam::class])
+    ->name('localized.contact.store');
+
+// Keep the existing POST endpoint name for compatibility with older clients/tests.
+Route::post('/contact', [ContactController::class, 'store'])
     ->middleware(['throttle:5,1', ProtectAgainstSpam::class])
     ->name('contact.store');
+
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 
 Route::prefix('admin-panel')->name('admin.')->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('login');

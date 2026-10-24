@@ -20,7 +20,6 @@ class ContactController extends Controller
             'subject' => ['nullable', 'string', 'max:200'],
             'message' => ['required', 'string', 'min:20', 'max:5000'],
             'preferred_locale' => ['nullable', Rule::in(['en', 'ar'])],
-            'website_url' => ['nullable', 'string', 'max:0'],
         ]);
 
         $inquiry = Inquiry::query()->create([
@@ -31,14 +30,20 @@ class ContactController extends Controller
             'type' => $data['type'],
             'subject' => $data['subject'] ?? null,
             'message' => $data['message'],
-            'preferred_locale' => $data['preferred_locale'] ?? (in_array(app()->getLocale(), ['en', 'ar'], true) ? app()->getLocale() : 'en'),
+            'preferred_locale' => $request->route('locale')
+                ?? $data['preferred_locale']
+                ?? (in_array(app()->getLocale(), ['en', 'ar'], true) ? app()->getLocale() : 'en'),
             'source' => 'website_contact',
             'status' => 'new',
         ]);
 
         // Email notification is deferred until a real recipient and mail settings are agreed.
+        $message = $inquiry->preferred_locale === 'ar'
+            ? 'شكرًا لك، تم استلام رسالتك.'
+            : 'Thank you. Your message has been received.';
+
         return redirect()->back()
-            ->with('status', 'Thank you. Your message has been received.')
+            ->with('status', $message)
             ->with('inquiry_reference', 'BR-' . str_pad((string) $inquiry->getKey(), 6, '0', STR_PAD_LEFT));
     }
 }

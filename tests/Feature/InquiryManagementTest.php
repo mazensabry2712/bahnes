@@ -1,10 +1,3 @@
-it('protects public contact submission with both rate limiting and honeypot middleware', function () {
-    $route = Route::getRoutes()->getByName('contact.store');
-
-    expect($route)->not->toBeNull()
-        ->and($route->gatherMiddleware())->toContain('throttle:5,1', ProtectAgainstSpam::class);
-});
-
 <?php
 
 use App\Models\Inquiry;
@@ -14,6 +7,18 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 
 beforeEach(function (): void {
     config()->set('honeypot.enabled', false);
+});
+
+it('protects public contact submission with both rate limiting and honeypot middleware', function () {
+    $route = Route::getRoutes()->getByName('contact.store');
+
+    expect($route)->not->toBeNull()
+        ->and($route->gatherMiddleware())->toContain('throttle:5,1', ProtectAgainstSpam::class);
+
+    $localizedRoute = Route::getRoutes()->getByName('localized.contact.store');
+
+    expect($localizedRoute)->not->toBeNull()
+        ->and($localizedRoute->gatherMiddleware())->toContain(ProtectAgainstSpam::class);
 });
 
 it('requires admin access to view customer inquiries', function () {
