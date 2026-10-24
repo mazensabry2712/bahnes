@@ -24,8 +24,8 @@ trait HasContentMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('preview')
-            ->fit(Fit::Contain, 960, 720)
-            ->nonQueued();
+            ->nonQueued()
+            ->fit(Fit::Contain, 960, 720);
     }
 
     public function coverImageUrl(): ?string
