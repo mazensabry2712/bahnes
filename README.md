@@ -19,7 +19,7 @@ Start at the [DOC index](./DOC/README.md). The [Company & Website Workspace](./D
 
 The scaffold declares PHP ^8.3, Laravel Framework ^13.17, Laravel Tinker ^3.0, and Pest dependencies. These are repository constraints, not confirmation of the installed runtime or deployment environment.
 
-The planned company website uses Laravel + Blade server-rendered pages with a relational database. A separate SPA is not required by the current plan. Review [Technology & Engineering](./DOC/09-technology-and-engineering/README.md) and the [architecture workspace](./DOC/16-company-and-website-workspace/08-architecture-and-data-model.md) before implementation.
+The planned company website uses Laravel + Blade server-rendered pages with a relational database. A separate SPA is not required by the current plan. Review [Technology & Engineering](./DOC/09-technology-and-engineering/README.md) and the [architecture workspace](./DOC/16-company-and-website-workspace/09-architecture-and-data-model.md) before implementation.
 
 ## Working principles
 
