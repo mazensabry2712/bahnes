@@ -11,6 +11,7 @@
         </div>
         <div class="flex flex-wrap items-center gap-3">
             <a class="admin-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+            <a class="admin-link" href="{{ route('admin.projects.index') }}">Projects</a>
             <a class="admin-button" href="{{ route('admin.services.create') }}">Add service</a>
         </div>
     </header>
