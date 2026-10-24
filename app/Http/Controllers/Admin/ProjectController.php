@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesContentMedia;
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,8 @@ use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
+    use HandlesContentMedia;
+
     public function index(Request $request): View
     {
         $status = $request->query('status');
@@ -58,7 +61,9 @@ class ProjectController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $project = Project::query()->create($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $project = Project::query()->create($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $project);
 
         return redirect()->route('admin.projects.edit', $project)
             ->with('status', 'Project saved successfully.');
@@ -77,7 +82,9 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project): RedirectResponse
     {
-        $project->update($this->validatedData($request, $project));
+        $data = $this->validatedData($request, $project);
+        $project->update($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $project);
 
         return redirect()->route('admin.projects.edit', $project)
             ->with('status', 'Project updated successfully.');
@@ -96,7 +103,7 @@ class ProjectController extends Controller
             $slugAr->ignore($project->getKey());
         }
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'title_en' => ['nullable', 'string', 'max:180'],
             'title_ar' => ['nullable', 'string', 'max:180'],
             'slug_en' => ['nullable', 'string', 'max:180', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slugEn],
@@ -118,7 +125,9 @@ class ProjectController extends Controller
             'status' => ['required', Rule::in(Project::STATUSES)],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
             'published_at' => ['nullable', 'date'],
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), array_merge($rules, $this->contentMediaValidationRules()));
 
         $validator->after(function ($validator) use ($request): void {
             $completeLocales = 0;

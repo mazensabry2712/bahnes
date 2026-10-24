@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesContentMedia;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,8 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+    use HandlesContentMedia;
+
     public function index(Request $request): View
     {
         $status = $request->query('status');
@@ -32,7 +35,9 @@ class ProductController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $product = Product::query()->create($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $product = Product::query()->create($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $product);
         return redirect()->route('admin.products.edit', $product)->with('status', 'Product saved successfully.');
     }
 
@@ -43,7 +48,9 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product): RedirectResponse
     {
-        $product->update($this->validatedData($request, $product));
+        $data = $this->validatedData($request, $product);
+        $product->update($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $product);
         return redirect()->route('admin.products.edit', $product)->with('status', 'Product updated successfully.');
     }
 
@@ -86,7 +93,7 @@ class ProductController extends Controller
             $rules["price_note_{$locale}"] = ['nullable', 'string', 'max:180'];
         }
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), array_merge($rules, $this->contentMediaValidationRules()));
         $validator->after(function ($validator) use ($request): void {
             $complete = false;
             foreach (['en', 'ar'] as $locale) {

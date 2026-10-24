@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesContentMedia;
 use App\Models\WebsiteTemplate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,8 @@ use Illuminate\Validation\Rule;
 
 class WebsiteTemplateController extends Controller
 {
+    use HandlesContentMedia;
+
     public function index(Request $request): View
     {
         $status = $request->query('status');
@@ -32,7 +35,9 @@ class WebsiteTemplateController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $template = WebsiteTemplate::query()->create($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $template = WebsiteTemplate::query()->create($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $template);
         return redirect()->route('admin.templates.edit', $template)->with('status', 'Website template saved successfully.');
     }
 
@@ -43,7 +48,9 @@ class WebsiteTemplateController extends Controller
 
     public function update(Request $request, WebsiteTemplate $template): RedirectResponse
     {
-        $template->update($this->validatedData($request, $template));
+        $data = $this->validatedData($request, $template);
+        $template->update($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $template);
         return redirect()->route('admin.templates.edit', $template)->with('status', 'Website template updated successfully.');
     }
 
@@ -87,7 +94,7 @@ class WebsiteTemplateController extends Controller
             $rules["price_note_{$locale}"] = ['nullable', 'string', 'max:180'];
         }
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), array_merge($rules, $this->contentMediaValidationRules()));
         $validator->after(function ($validator) use ($request): void {
             $complete = false;
             foreach (['en', 'ar'] as $locale) {

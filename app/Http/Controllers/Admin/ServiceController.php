@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesContentMedia;
 use App\Models\Service;
 use App\Models\ServiceLine;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,8 @@ use Illuminate\Validation\Rule;
 
 class ServiceController extends Controller
 {
+    use HandlesContentMedia;
+
     public function index(Request $request): View
     {
         $status = $request->query('status');
@@ -53,7 +56,9 @@ class ServiceController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $service = Service::query()->create($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $service = Service::query()->create($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $service);
 
         return redirect()->route('admin.services.edit', $service)
             ->with('status', 'Service saved successfully.');
@@ -70,7 +75,9 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service): RedirectResponse
     {
-        $service->update($this->validatedData($request, $service));
+        $data = $this->validatedData($request, $service);
+        $service->update($this->withoutContentMediaFields($data));
+        $this->saveCoverImage($request, $service);
 
         return redirect()->route('admin.services.edit', $service)
             ->with('status', 'Service updated successfully.');
@@ -91,7 +98,7 @@ class ServiceController extends Controller
             $slugAr->ignore($service->getKey());
         }
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'service_line_id' => ['required', 'integer', Rule::exists('service_lines', 'id')],
             'title_en' => ['nullable', 'string', 'max:180'],
             'title_ar' => ['nullable', 'string', 'max:180'],
@@ -108,7 +115,9 @@ class ServiceController extends Controller
             'status' => ['required', Rule::in(Service::STATUSES)],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
             'published_at' => ['nullable', 'date'],
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), array_merge($rules, $this->contentMediaValidationRules()));
 
         $validator->after(function ($validator) use ($request): void {
             $completeLocales = 0;
