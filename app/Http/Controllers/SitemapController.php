@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\WebsiteTemplate;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\Response;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
@@ -44,10 +43,8 @@ class SitemapController extends Controller
         ]);
     }
 
-    /**
-     * @return EloquentCollection<int, Service|Project|Product|WebsiteTemplate|Insight>
-     */
-    private function publishedRecords(string $section, string $locale): EloquentCollection
+    /** @return \\Illuminate\\Support\\Collection<int, mixed> */
+    private function publishedRecords(string $section, string $locale): \\Illuminate\\Support\\Collection
     {
         $query = match ($section) {
             'services' => Service::query()->publishedForLocale($locale),
@@ -58,6 +55,6 @@ class SitemapController extends Controller
             default => throw new \InvalidArgumentException('Unsupported public content section.'),
         };
 
-        return $query->get(['id', "slug_{$locale}"]);
+        return collect($query->get(['id', "slug_{$locale}"])->all());
     }
 }
