@@ -9,7 +9,7 @@ BAHNES is being planned as one company brand with two clear service lines:
 
 The longer-term plan includes validated software products and website templates. They should be sold only when scope, licensing, support, and buyer demand are understood.
 
-> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, bilingual Services and Projects / Case Studies management, Products and Website Templates catalogs, and customer inquiry follow-up, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
+> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, bilingual Services and Projects / Case Studies management, Products and Website Templates catalogs, customer inquiry follow-up, and bilingual Insights/category management, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
 
 ## Documentation
 
