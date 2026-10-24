@@ -32,7 +32,7 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 - Never commit secrets, production credentials, or private customer data.
 - Do not claim features are implemented or tested unless they actually are.
 
-The initial scaffold audit and first CMS modules are tested. Dependency-manifest changes trigger lockfile regeneration and the full CI checks: Composer/npm security audits, Larastan, Pest tests, TypeScript checking and the Vite production build. Media workflows, public pages and email notification delivery remain separate milestones.
+The latest dependency-refresh run completed successfully: 51 tests (193 assertions), Larastan with no errors, Composer audit with no security advisories, npm audit with 0 reported vulnerabilities, and a successful Vite production build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). The run also regenerated `composer.lock` and removed the third-party admin-panel dependencies. Media workflows, public pages and email notification delivery remain separate milestones.
 
 ## Package-first engineering
 

@@ -18,7 +18,7 @@ Use the canonical [Website Tech Stack & Frontend Architecture decision](../09-te
 - **Rendering:** server-rendered Blade for both public pages and the custom admin. Keep current controllers/views and improve them using reusable Blade layouts/components.
 - **Frontend:** semantic HTML, Tailwind CSS `^4.1`, limited custom CSS, TypeScript browser modules and Vite `^8.0` through Laravel Vite. Run `tsc --noEmit` separately because Vite transpiles but does not type-check.
 - **Database:** MySQL preferred; confirm local/hosting compatibility, then use Eloquent and migrations.
-- **Quality tools:** Pest, Pint and Larastan are dependencies; the current set passes 51 tests (193 assertions), Larastan, Composer/npm audits and Vite build ([CI run 40101984829](https://github.com/mazensabry2712/bahnes/actions/runs/40101984829)).
+- **Quality tools:** Pest, Pint and Larastan are dependencies; the current package-removal refresh passed 51 tests (193 assertions), Larastan, Composer/npm audits and Vite build ([CI run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)).
 - **Not selected:** Inertia/React/Vue SPA, Livewire/Alpine.js, third-party admin panels, separate public API, microservices or universal page builder. TypeScript is only for browser assets.
 
 ## Suggested records

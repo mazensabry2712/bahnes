@@ -15,7 +15,7 @@ This document separates the established planning direction from proposals and de
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
 | CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Selected CSS/build constraints; lockfile and Vite build are verified by CI after manifest changes |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
-| PHP quality gates | Pest + Laravel Pint + Larastan | Dependency workflow passes 51 tests / 193 assertions, static analysis, Composer audit, npm audit and Vite build |
+| PHP quality gates | Pest + Laravel Pint + Larastan | Current package refresh: 51 tests / 193 assertions, analysis and security audits pass, Vite build passes |
 | Admin UI | Custom Laravel Blade admin and public site | Existing controllers, views, authentication and server-side authorization remain the baseline; improve through shared Blade components and tested features |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
@@ -42,7 +42,7 @@ When a maintained package is a strong fit for a non-trivial requirement, prefer 
 
 The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, custom Blade admin and public pages, Tailwind CSS 4.1+, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js or a packaged admin panel. Use GSAP only for motion that materially benefits from it.
 
-The dependency-refresh workflow resolves lockfiles and verifies Composer/npm security audits, Larastan, Pest tests, TypeScript checking and Vite production build on PHP 8.4 / Node 24. Check the corresponding Actions run for the actual result after each dependency change. CI does not verify local Herd or the deployment host.
+The latest dependency refresh resolved Composer/npm lockfiles and passed Composer/npm security audits, Larastan, 51 Pest tests (193 assertions), TypeScript checking and the Vite production build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). CI does not verify local Herd or the deployment host.
 
 ## Decisions required before backend implementation
 

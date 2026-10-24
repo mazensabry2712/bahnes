@@ -1,6 +1,6 @@
 # BAHNES Website — Technology Stack & Frontend Architecture
 
-**Status:** Approved stack and package policy. The custom Laravel Blade admin remains the chosen approach. Lockfiles are regenerated and verified by CI after dependency-manifest changes; local and production environments remain unverified.
+**Status:** Approved stack and package policy. The custom Laravel Blade admin remains the chosen approach. The package-removal lock refresh and all CI quality gates passed in [run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453); local and production environments remain unverified.
 **Scope:** Public BAHNES IT SOLUTIONS company website and its Laravel-based admin.
 
 ## 1. Selected stack
@@ -21,7 +21,7 @@
 | Motion | CSS first; GSAP `^3.15` for complex, approved sequences | Use GSAP when timelines or scroll-linked motion justify it; respect reduced motion and avoid heavy animation by default. |
 | Fonts | Self-hostable Fontsource packages for Manrope and IBM Plex Sans Arabic | Packages are being added as candidates; final font, weights and use remain subject to design approval and license review. |
 
-The dependency-refresh workflow verifies Composer validation/install/audit, Larastan, Laravel tests, npm audit, TypeScript checking and the Vite build after manifest changes. Check the corresponding Actions run for the actual result of each dependency change; GitHub CI does not verify the local Herd or production host.
+The latest dependency refresh passed Composer validation/install/audit, Larastan, 51 Laravel tests (193 assertions), npm audit, TypeScript checking and the Vite production build ([run 40102913453](https://github.com/mazensabry2712/bahnes/actions/runs/40102913453)). The workflow regenerates lockfiles from the manifest; it does not verify local Herd or the eventual production host.
 
 ## 2. Package-selection policy
 
