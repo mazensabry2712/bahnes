@@ -38,7 +38,8 @@ Resolve each point or record a safe temporary assumption:
 - [x] **First service CMS milestone:** Service list/search/status filters, create/edit, localized fields, publish validation and archive state passed CI ([run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204)).
 - [x] **Projects / Case Studies:** Admin CRUD and permission-aware publication rules passed CI ([run 40098999954](https://github.com/mazensabry2712/bahnes/actions/runs/40098999954)).
 - [x] **Inquiry backend milestone:** Rate-limited contact POST, database storage, admin inbox, status and protected notes passed CI ([run 40099285127](https://github.com/mazensabry2712/bahnes/actions/runs/40099285127)).
-- [x] **Products / Website Templates milestone:** separate admin catalogs, bilingual fields and publication gates passed CI ([run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157)): 43 tests, 165 assertions, TypeScript check and Vite build.
+- [x] **Products / Website Templates milestone:** separate admin catalogs, bilingual fields and publication gates passed CI ([run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157)).
+- [x] **Insights / categories milestone:** bilingual category/article CRUD, scheduling and locale/category publication guards passed CI ([run 40099826855](https://github.com/mazensabry2712/bahnes/actions/runs/40099826855)): 51 tests, 193 assertions, TypeScript check and Vite build.
 
 **Important distinction:** The data model can support the full planned service taxonomy now. Individual services must be marked unavailable/draft until delivery capability, supplier dependencies, warranty, and support terms are confirmed. Those commercial confirmations are required before publishing/selling offers, not a reason to block the initial schema design.
 
@@ -71,11 +72,12 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 4. [x] Add and test service CRUD screens with status/locale validation.
 5. [x] Add and test project/case-study CRUD with project-stage labels and authorization checks.
 6. [x] Add Products and Website Templates admin catalogs with explicit commercial publication gates.
-7. Continue the **backend first** with Insights/articles/categories and safe media handling; finish the public contact form and email notification settings after the recipient is confirmed.
-8. Verify each backend milestone and record its results before relying on it.
-9. Build the public Blade frontend section by section using tested backend workflows.
-10. Show public portfolio/catalog sections only when accurate content and terms are ready.
-11. Run release checks before deployment.
+7. [x] Add Insights/category admin with bilingual content and publication guards.
+8. Continue the **backend first** with safe media handling; finish the public contact form and email notification settings after the recipient is confirmed.
+9. Verify each backend milestone and record its results before relying on it.
+10. Build the public Blade frontend section by section using tested backend workflows.
+11. Show public portfolio/catalog/editorial sections only when accurate content and terms are ready.
+12. Run release checks before deployment.
 
 This is a staged build, not a demand to implement payments, customer accounts, a full CRM, or an advanced page builder.
 

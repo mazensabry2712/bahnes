@@ -30,11 +30,12 @@ Build the backend capabilities needed to support the agreed website content type
 - Validated uploads, safe storage paths, authorization, input validation, and safe output handling.
 - [x] Backend inquiry capture, type/status, protected internal notes, server-side validation, and a rate-limited contact submission endpoint.
 - [x] Product and Website Template admin catalogs with separate models, bilingual content, unique slugs, draft/published/archived state, and license/delivery/support publication gates. Verified in [CI run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157): 43 tests / 165 assertions, TypeScript and Vite build passed.
+- [x] Insights and category admin with bilingual content/SEO fields, category CRUD, scheduled publishing and complete-translation/category-active gates. Verified in [CI run 40099826855](https://github.com/mazensabry2712/bahnes/actions/runs/40099826855): 51 tests / 193 assertions, TypeScript and Vite build passed.
 - [ ] Confirm notification destination/provider and implement safe email delivery/failure handling after the recipient is approved.
 - Localization foundations for Arabic/English, plus per-locale slug and SEO metadata as appropriate.
 - Automated tests for access control, content visibility, validation, locale behavior, uploads, and inquiry submission.
 
-**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. Latest backend catalog evidence is [run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157): 43 tests passed (165 assertions), TypeScript check and Vite build passed. Empty catalogs can stay unpublished until real items exist.
+**Exit criteria:** admin workflows and core backend behavior pass the agreed tests; unpublished content is not publicly exposed; content types remain distinct. Latest backend evidence is [run 40099826855](https://github.com/mazensabry2712/bahnes/actions/runs/40099826855): 51 tests passed (193 assertions), TypeScript check and Vite build passed. Empty catalogs can stay unpublished until real items exist.
 
 ## Phase 2 — Shared public frontend foundation
 

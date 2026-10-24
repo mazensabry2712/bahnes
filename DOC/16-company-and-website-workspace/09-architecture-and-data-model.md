@@ -52,7 +52,8 @@ Use the selected storage driver, safe generated names, content/size validation, 
 - **Projects / Case Studies CRUD:** admin list/search/filter/create/edit/archive status and separate project stage, bilingual content, permission-aware publication and confidential-project exclusion are CI-verified in [run 40098999954](https://github.com/mazensabry2712/bahnes/actions/runs/40098999954).
 - **Inquiry intake and inbox:** `POST /contact` with validation/rate limiting, protected admin inbox, status changes and admin-only notes are CI-verified in [run 40099285127](https://github.com/mazensabry2712/bahnes/actions/runs/40099285127).
 - **Products / Website Templates:** separate migrations, models, localized admin forms/lists and publish requirements are CI-verified in [run 40099542157](https://github.com/mazensabry2712/bahnes/actions/runs/40099542157).
-- **Not yet implemented:** Insights/articles/categories, media upload UI, public contact page/form, email notification delivery, and public service/project/catalog pages.
+- **Insights / categories:** bilingual category and article schema plus admin CRUD with locale-aware publication filtering passed [CI run 40099826855](https://github.com/mazensabry2712/bahnes/actions/runs/40099826855): 51 tests / 193 assertions.
+- **Not yet implemented:** media upload UI, public contact page/form, email notification delivery, and public service/project/catalog/editorial pages.
 
 ## Implementation sequence
 
