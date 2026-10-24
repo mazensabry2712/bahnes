@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\WebsiteTemplate;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -43,8 +44,8 @@ class SitemapController extends Controller
         ]);
     }
 
-    /** @return \\Illuminate\\Support\\Collection<int, mixed> */
-    private function publishedRecords(string $section, string $locale): \\Illuminate\\Support\\Collection
+    /** @return Collection<int, mixed> */
+    private function publishedRecords(string $section, string $locale): Collection
     {
         $query = match ($section) {
             'services' => Service::query()->publishedForLocale($locale),
