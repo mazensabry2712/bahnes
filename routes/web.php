@@ -25,5 +25,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::put('/inquiries/{inquiry}', [\App\Http\Controllers\Admin\InquiryController::class, 'update'])->name('inquiries.update');
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class)->except(['show', 'destroy']);
         Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class)->except(['show', 'destroy']);
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show', 'destroy']);
+        Route::resource('templates', \App\Http\Controllers\Admin\WebsiteTemplateController::class)->except(['show', 'destroy']);
     });
 });

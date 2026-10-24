@@ -16,10 +16,12 @@
 
     <section class="admin-card">
         <h2 class="text-xl font-semibold">Content management</h2>
-        <p class="admin-muted mt-2">Manage the first CMS modules. Other areas will be added in tested milestones.</p>
+        <p class="admin-muted mt-2">Manage the current CMS modules. Other areas will be added in tested milestones.</p>
         <div class="mt-5 flex flex-wrap gap-3">
-            <a class="admin-button" href="{{ route('admin.services.index') }}">Manage services</a>
-            <a class="admin-button" href="{{ route('admin.projects.index') }}">Manage projects</a>
+            <a class="admin-button" href="{{ route('admin.services.index') }}">Services</a>
+            <a class="admin-button" href="{{ route('admin.projects.index') }}">Projects</a>
+            <a class="admin-button" href="{{ route('admin.products.index') }}">Products</a>
+            <a class="admin-button" href="{{ route('admin.templates.index') }}">Website templates</a>
             <a class="admin-button" href="{{ route('admin.inquiries.index') }}">Customer inquiries</a>
         </div>
     </section>
