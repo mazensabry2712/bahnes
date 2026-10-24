@@ -95,8 +95,8 @@
 <body>
     <div class="contact-shell">
         <header class="contact-header">
-            <a class="contact-brand" href="{{ route('home') }}" aria-label="BAHNES IT SOLUTIONS">BAHNES<span style="color:#0d8f78">.</span></a>
-            <a class="contact-nav" href="{{ route('home') }}">{{ $labels['home'] }}</a>
+            <a class="contact-brand" href="{{ route('localized.home', ['locale' => $locale]) }}" aria-label="BAHNES IT SOLUTIONS">BAHNES<span style="color:#0d8f78">.</span></a>
+            <a class="contact-nav" href="{{ route('localized.home', ['locale' => $locale]) }}">{{ $labels['home'] }}</a>
         </header>
 
         <main class="contact-layout">

@@ -51,13 +51,21 @@ it('lists only published services with a complete translation and active service
         'status' => 'draft',
         'sort_order' => 2,
     ]);
+    $inactiveLine = ServiceLine::query()->create([
+        'key' => 'inactive-public-test',
+        'name_en' => 'Inactive service line',
+        'name_ar' => 'مجال خدمة غير نشط',
+        'is_active' => false,
+        'sort_order' => 2,
+    ]);
+
     Service::query()->create([
-        'service_line_id' => $line->id,
+        'service_line_id' => $inactiveLine->id,
         'title_en' => 'Inactive Service',
         'slug_en' => 'inactive-service',
         'status' => 'published',
         'sort_order' => 3,
-    ])->serviceLine()->update(['is_active' => false]);
+    ]);
 
     $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'services']))
         ->assertOk()
