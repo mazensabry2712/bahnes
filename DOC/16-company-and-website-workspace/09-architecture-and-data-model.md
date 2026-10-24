@@ -38,11 +38,17 @@ Products/templates must stay separate content types; portfolio proof must stay d
 
 ## Admin and translations
 
-Use admin authentication and server-side authorization; safe uploads; consistent publication states; and pagination/filtering where needed. Decide translation representation after auditing existing conventions. Keep slugs, content, SEO metadata, and publication status coherent per language.
+Use admin authentication and server-side authorization; safe uploads; consistent publication states; and pagination/filtering where needed. For the two agreed launch languages, the initial content schema uses explicit `_en` and `_ar` columns, with locale-specific slugs and SEO fields. A service is visible in a locale only when it is published, its publication time has arrived, its service line is active, and that locale has a non-empty title and slug. This deliberate two-language approach avoids a generic translation engine; review the schema before adding a third language.
 
 ## Media
 
 Use the selected storage driver, safe generated names, content/size validation, and protected storage paths. Prevent executable uploads, optimize public images, and document backups/deletion. Keep private files outside public access.
+
+## Current implementation slice
+
+- **Implemented and CI-verified:** secure administrator sign-in/provisioning and the first `ServiceLine` / `Service` models and migrations.
+- **Implemented and CI-verified:** per-locale publication scope for services, scheduled publication filtering, active-line filtering, and the two agreed default service-line records.
+- **Not yet implemented:** service CRUD screens, uploads/media management, the rest of the CMS content types, inquiry workflow, and the public service pages.
 
 ## Implementation sequence
 

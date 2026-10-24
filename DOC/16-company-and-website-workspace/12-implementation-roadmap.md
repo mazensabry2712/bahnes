@@ -14,13 +14,14 @@ Finish and test the backend foundation before building the public frontend. Then
 - Document unresolved assumptions for locale routing, storage, mail, and initial content.
 - Keep service capability, supplier, legal, identity, and privacy items visible as separate content/launch gates.
 
-**Exit criteria:** the real scaffold/test baseline is known; the first backend milestone is bounded; unknowns and safe assumptions are documented.
+**Exit criteria:** scaffold and package versions are reviewed; baseline CI passed on PHP 8.4 and Node 24. Local/hosting runtime, DB and storage settings remain separate environment checks. The initial runtime/build baseline is recorded in [GitHub Actions](https://github.com/mazensabry2712/bahnes/actions/runs/40097226745).
 
 ## Phase 1 — Backend and CMS foundation
 
 Build the backend capabilities needed to support the agreed website content types before starting the public frontend:
 
-- Secure admin access and a documented first-admin provisioning/recovery path; no public admin registration by default.
+- [x] Secure admin access, protected dashboard, CLI provisioning (`admin:create`) and password recovery (`admin:password-reset`); no public admin registration. Tested in CI.
+- [x] First service-line/service migrations and Eloquent models with English/Arabic fields, locale-aware publish filtering, and tests. Service CRUD workflows remain next.
 - Migrations and maintainable content models for pages/predefined homepage sections, service lines/services, projects/case studies, products, website templates, Insights/articles and categories, media metadata as needed, inquiries, locale content, and SEO fields.
 - Admin create/edit/preview/publish/archive workflows for the agreed content types.
 - Predefined homepage section ordering/visibility rather than a universal drag-and-drop page builder.

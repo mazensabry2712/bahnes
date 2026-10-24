@@ -25,15 +25,15 @@ These are agreed directions for planning, not evidence that the features or cont
 
 Resolve each point or record a safe temporary assumption:
 
-- [ ] **Repository baseline:** Inspect PHP/Composer/Node versions, lockfiles, routes, views, models, migrations, tests, config, and available storage. Record current test results before changing anything.
-- [ ] **Technology/runtime compatibility:** Verify PHP and Node/npm versions, PHP extensions, Composer/npm lockfiles, installed Laravel/Tailwind/Vite/TypeScript/Pest/Pint versions, `tsc --noEmit`, `npm run build`, and DB/hosting compatibility. Manifest declarations do not prove these checks pass; see the [canonical stack decision](../09-technology-and-engineering/website-tech-stack.md).
-- [ ] **Admin access:** Decide how the first administrator is created and recovered. No public admin registration by default.
+- [x] **Repository scaffold and CI baseline:** Reviewed manifests/lockfiles, routes, views, models, migrations and sample tests. GitHub Actions passed Composer validation/install, Laravel tests, `npm ci`, TypeScript checking and Vite build on PHP 8.4 / Node 24 ([baseline run](https://github.com/mazensabry2712/bahnes/actions/runs/40097226745); [TypeScript run](https://github.com/mazensabry2712/bahnes/actions/runs/40097563846)).
+- [x] **Admin access:** Implemented protected admin login/dashboard, CLI account creation and password reset; feature tests pass in [CI](https://github.com/mazensabry2712/bahnes/actions/runs/40097754107). No public admin registration.
+- [ ] **Local/hosting runtime and storage:** Confirm the selected PHP executable in Herd, local Node/npm, MySQL connection, media-storage path/permissions, and target-host compatibility. CI success does not verify the user's local machine or deployment host.
 - [ ] **Inquiry handling:** Decide which inquiry types are captured and record the initial notification/recipient assumption. Real mail secrets and live recipient details may remain environment-specific.
-- [ ] **Locale approach:** Choose route/default-locale and translation storage after auditing the existing scaffold.
+- [x] **Translation storage:** The first content models use explicit `_en` and `_ar` columns with locale-aware publication scopes. Route prefixes/default locale will be confirmed before public page routing.
 - [ ] **Storage/mail assumptions:** Define development defaults and safe configuration points. Keep secrets outside Git.
 - [ ] **CMS boundary:** Confirm the manageable content types and fields listed in the content-model document. Use predefined homepage section types with order/visibility controls; do not build a universal page builder.
-- [ ] **Publication rules:** Define Draft/Published/Archived behavior and ensure unpublished content never appears publicly.
-- [ ] **First milestone acceptance:** Agree to observable pass/fail criteria, including admin authorization, validation, publishing, inquiry submission, safe uploads, locale handling, and automated tests.
+- [x] **Initial service publication rules:** Services default to draft; locale queries require published status, a complete locale title/slug, an active service line, and a reached publication time. Apply the same tests to future content types.
+- [x] **Admin-access milestone acceptance:** Admin-only sign-in, regular-user denial, guest redirect, logout/session invalidation, CLI creation/reset and existing scaffold checks pass in CI. The full CMS milestone remains in progress; inquiry handling and safe uploads are not implemented yet.
 
 **Important distinction:** The data model can support the full planned service taxonomy now. Individual services must be marked unavailable/draft until delivery capability, supplier dependencies, warranty, and support terms are confirmed. Those commercial confirmations are required before publishing/selling offers, not a reason to block the initial schema design.
 
@@ -60,12 +60,14 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 
 ## E. Agreed build order
 
-1. Audit the scaffold and record the test baseline.
-2. Build and test the **backend first**: admin access, content models, validation, authorization, media handling, publishing, localization/SEO fields, and inquiry handling for the agreed CMS content types.
-3. Verify backend behavior and record the test results before relying on it.
-4. Build the Blade frontend section by section using the backend.
-5. Show public portfolio/catalog sections only when accurate content and terms are ready.
-6. Run release checks before deployment.
+1. [x] Audit the scaffold and establish a passing CI baseline on PHP 8.4 / Node 24.
+2. [x] Implement and test the secure admin access/provisioning foundation.
+3. [x] Add and test the first ServiceLine/Service models and English/Arabic publication scopes.
+4. Continue the **backend first** with service CRUD screens, then remaining CMS content types, media and inquiry handling.
+5. Verify each backend milestone and record its results before relying on it.
+6. Build the public Blade frontend section by section using tested backend workflows.
+7. Show public portfolio/catalog sections only when accurate content and terms are ready.
+8. Run release checks before deployment.
 
 This is a staged build, not a demand to implement payments, customer accounts, a full CRM, or an advanced page builder.
 
