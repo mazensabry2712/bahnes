@@ -6,7 +6,7 @@
     <header class="mb-7"><a class="admin-link text-sm" href="{{ route('admin.insights.index') }}">← Back to Insights</a><h1 class="mt-3 text-3xl font-semibold tracking-tight">{{ $insight->exists ? 'Edit Insight' : 'Add Insight' }}</h1><p class="admin-muted mt-2">Use reviewed copy. The article body is plain text and will be escaped when rendered publicly.</p></header>
     @if (session('status'))<p class="admin-status admin-flash" role="status">{{ session('status') }}</p>@endif
     @if ($errors->any())<div class="admin-error admin-flash" role="alert"><ul class="list-disc pl-5">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
-    <form method="POST" action="{{ $formAction }}" class="admin-card">
+    <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}" class="admin-card">
         @csrf
         @if ($httpMethod !== 'POST') @method($httpMethod) @endif
         <div class="admin-field"><label for="insight_category_id" class="font-medium">Category</label><select id="insight_category_id" name="insight_category_id" class="admin-select" required><option value="">Choose a category</option>@foreach ($categories as $category)<option value="{{ $category->id }}" @selected((string) old('insight_category_id', $insight->insight_category_id) === (string) $category->id)>{{ $category->name_en }} — {{ $category->name_ar }}{{ $category->is_active ? '' : ' (inactive)' }}</option>@endforeach</select>@error('insight_category_id')<p class="admin-error">{{ $message }}</p>@enderror</div>
@@ -21,6 +21,7 @@
                 <div class="admin-field"><label for="meta_description_{{ $locale }}" class="font-medium">SEO description</label><textarea id="meta_description_{{ $locale }}" name="meta_description_{{ $locale }}" maxlength="320" class="admin-textarea" dir="{{ $locale === 'ar' ? 'rtl' : 'ltr' }}">{{ old('meta_description_'.$locale, $insight->{'meta_description_'.$locale}) }}</textarea>@error('meta_description_'.$locale)<p class="admin-error">{{ $message }}</p>@enderror</div>
             </div>
         @endforeach
+        @include('admin.partials.cover-image-field', ['entity' => $insight])
         <h2 class="admin-section-heading">Publication</h2>
         <div class="admin-grid">
             <div class="admin-field"><label for="status" class="font-medium">Status</label><select id="status" name="status" class="admin-select" required>@foreach ($statuses as $status)<option value="{{ $status }}" @selected(old('status', $insight->status ?: 'draft') === $status)>{{ ucfirst($status) }}</option>@endforeach</select>@error('status')<p class="admin-error">{{ $message }}</p>@enderror</div>

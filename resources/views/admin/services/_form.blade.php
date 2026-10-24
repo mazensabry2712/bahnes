@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ $formAction }}" class="admin-card">
+<form method="POST" enctype="multipart/form-data" action="{{ $formAction }}" class="admin-card">
     @csrf
     @if ($httpMethod !== 'POST')
         @method($httpMethod)
@@ -99,6 +99,8 @@
             @error('meta_description_ar') <p class="admin-error">{{ $message }}</p> @enderror
         </div>
     </div>
+
+    @include('admin.partials.cover-image-field', ['entity' => $service])
 
     <h2 class="admin-section-heading">Publication</h2>
     <div class="admin-grid">

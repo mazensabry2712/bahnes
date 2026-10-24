@@ -14,7 +14,7 @@
         <div class="admin-error admin-flash" role="alert"><ul class="list-disc pl-5">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
     @endif
 
-    <form method="POST" action="{{ $formAction }}" class="admin-card">
+    <form method="POST" enctype="multipart/form-data" action="{{ $formAction }}" class="admin-card">
         @csrf
         @if ($httpMethod !== 'POST') @method($httpMethod) @endif
 
@@ -34,6 +34,8 @@
                 </div>
             @endforeach
         @endforeach
+
+        @include('admin.partials.cover-image-field', ['entity' => $entity])
 
         <h2 class="admin-section-heading">Preview and publication</h2>
         <div class="admin-field">
