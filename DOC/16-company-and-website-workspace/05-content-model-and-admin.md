@@ -19,10 +19,11 @@ Let an authorized admin manage routine site content without editing code. Start 
 
 ## Implementation status
 
-- **Implemented and CI-verified:** protected admin access and the first Services list/search/status filter/create/edit workflows.
+- **Implemented and CI-verified:** protected admin access; Services list/search/status filter/create/edit; and Projects / Case Studies list/filter/create/edit/archive status workflows.
+- **Projects:** publication status is separate from project stage (Completed, In Progress, Concept, Confidential). Real Completed/In Progress work needs explicit display-permission confirmation; Confidential projects cannot be published; Concepts can be shown only when clearly labeled.
 - **Service fields supported:** service line; separate English/Arabic title, slug, summary, description and SEO metadata; draft/published/archived status; display order and optional scheduled publication.
 - **Publication safety:** a service needs a complete title/slug pair in at least one locale to publish. It appears in a locale only when that locale has its own complete title/slug, the status is published, the service line is active and any scheduled publication time has arrived.
-- **Not yet implemented:** media upload UI, projects, products, website templates, Insights, shared page settings and inquiry management. These remain separate backend milestones.
+- **Not yet implemented:** media upload UI, products, website templates, Insights, shared page settings and inquiry management. These remain separate backend milestones.
 
 ## Workflow
 

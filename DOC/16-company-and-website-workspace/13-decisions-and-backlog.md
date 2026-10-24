@@ -23,10 +23,10 @@ This document separates the established planning direction from proposals and de
 | Languages | Arabic and English | Planned requirement |
 | Themes | Proper light and dark themes with user preference | Planned requirement |
 | Public service pages | Both service lines, with detailed pages for approved offers | Planned scope |
-| Work portfolio | Projects/case studies separate from products | Planned requirement |
+| Work portfolio | Projects/case studies separate from products | Initial admin CRUD implemented; publication requires permissions for real work and excludes confidential cases |
 | Digital catalog | Products and website templates are separate types | Planned requirement |
 | Editorial | Insights/articles | Planned content section |
-| CMS | Manage core content, media, locales, SEO, and inquiries | Planned scope; first Services module implemented, remaining content types and inquiries pending |
+| CMS | Manage core content, media, locales, SEO, and inquiries | Services and Projects/Case Studies admin modules implemented; media, product/template/article types and inquiries pending |
 | Sales flow | General contact plus guided project brief and simple pipeline | Planned scope |
 | Company profile PDF | Bilingual, after company facts and identity are approved | Later deliverable |
 | Interactive system showcase | Lightweight, clearly illustrative | Optional after core site |

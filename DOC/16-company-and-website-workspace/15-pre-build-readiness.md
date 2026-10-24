@@ -65,7 +65,8 @@ If an item is unknown, record the assumption, its risk, and when it must be reso
 2. [x] Implement and test the secure admin access/provisioning foundation.
 3. [x] Add and test the first ServiceLine/Service models and English/Arabic publication scopes.
 4. [x] Add and test service CRUD screens with status/locale validation.
-5. Continue the **backend first** with remaining CMS content types, media and inquiry handling.
+5. [x] Add and test project/case-study CRUD with project-stage labels and authorization checks.
+6. Continue the **backend first** with product/template/article content types, media and inquiry handling.
 6. Verify each backend milestone and record its results before relying on it.
 7. Build the public Blade frontend section by section using tested backend workflows.
 8. Show public portfolio/catalog sections only when accurate content and terms are ready.

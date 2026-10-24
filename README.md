@@ -9,7 +9,7 @@ BAHNES is being planned as one company brand with two clear service lines:
 
 The longer-term plan includes validated software products and website templates. They should be sold only when scope, licensing, support, and buyer demand are understood.
 
-> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, a bilingual service content model, and initial admin service management workflows, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
+> **Project status:** Early setup. This repository contains a Laravel application with secure administrator access, bilingual Services management, and initial Projects / Case Studies management, alongside planning documentation. It does not confirm a finished public website, registered legal entity, approved logo, launched product, or production deployment.
 
 ## Documentation
 
@@ -32,4 +32,4 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 - Never commit secrets, production credentials, or private customer data.
 - Do not claim features are implemented or tested unless they actually are.
 
-The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service models, and the first service list/search/filter/create/edit/archive workflows are implemented and CI-tested. Next, continue with the remaining CMS types, media and inquiry handling before building the public site section by section.
+The initial scaffold audit and CI baseline are complete. Secure administrator access, bilingual service management, and project/case-study management are implemented and CI-tested. The latest CI run passed 30 tests (109 assertions), TypeScript checking and the Vite production build. Next, continue with the remaining CMS types, media and inquiry handling before building the public site section by section.

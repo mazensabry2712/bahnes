@@ -49,7 +49,8 @@ Use the selected storage driver, safe generated names, content/size validation, 
 - **Implemented and CI-verified:** secure administrator sign-in/provisioning and the first `ServiceLine` / `Service` models and migrations.
 - **Implemented and CI-verified:** per-locale publication scope for services, scheduled publication filtering, active-line filtering, and the two agreed default service-line records.
 - **Service CRUD:** initial Blade admin list/search/status filter/create/edit/archive workflows are CI-verified in [run 40098468204](https://github.com/mazensabry2712/bahnes/actions/runs/40098468204) (23 tests, 83 assertions).
-- **Not yet implemented:** media upload UI, the remaining CMS content types, inquiry workflow, and public service pages.
+- **Projects / Case Studies CRUD:** admin list/search/filter/create/edit/archive status and separate project stage, bilingual content, permission-aware publication and confidential-project exclusion are CI-verified in [run 40098999954](https://github.com/mazensabry2712/bahnes/actions/runs/40098999954).
+- **Not yet implemented:** media upload UI, product/template/article content types, inquiry workflow, and public service/project pages.
 
 ## Implementation sequence
 
