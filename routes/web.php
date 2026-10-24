@@ -2,14 +2,16 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PublicWebsiteController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [PublicWebsiteController::class, 'root'])->name('home');
+Route::get('/{locale}', [PublicWebsiteController::class, 'home'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->name('localized.home');
 
 Route::get('/contact', function () {
     return redirect()->route('localized.contact.show', ['locale' => 'en']);
@@ -24,10 +26,21 @@ Route::post('/{locale}/contact', [ContactController::class, 'store'])
     ->middleware(['throttle:5,1', ProtectAgainstSpam::class])
     ->name('localized.contact.store');
 
-// Keep the existing POST endpoint name for compatibility with older clients/tests.
+// Keep the existing POST endpoint name for older clients while new forms use localized URLs.
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware(['throttle:5,1', ProtectAgainstSpam::class])
     ->name('contact.store');
+
+Route::get('/{locale}/{section}', [PublicWebsiteController::class, 'index'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->whereIn('section', ['services', 'projects', 'products', 'templates', 'insights'])
+    ->name('public.content.index');
+
+Route::get('/{locale}/{section}/{slug}', [PublicWebsiteController::class, 'show'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->whereIn('section', ['services', 'projects', 'products', 'templates', 'insights'])
+    ->where('slug', '[a-z0-9]+(?:-[a-z0-9]+)*')
+    ->name('public.content.show');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');

@@ -7,12 +7,15 @@ it('serves a valid sitemap containing only implemented public GET pages', functi
 
     $response->assertOk()
         ->assertHeader('Content-Type', 'application/xml; charset=UTF-8')
-        ->assertSee(route('home'), false)
+        ->assertSee(route('localized.home', ['locale' => 'en']), false)
+        ->assertSee(route('localized.home', ['locale' => 'ar']), false)
         ->assertSee(route('localized.contact.show', ['locale' => 'en']), false)
         ->assertSee(route('localized.contact.show', ['locale' => 'ar']), false)
+        ->assertSee(route('public.content.index', ['locale' => 'en', 'section' => 'services']), false)
+        ->assertSee(route('public.content.index', ['locale' => 'ar', 'section' => 'insights']), false)
         ->assertDontSee('/admin-panel', false);
 
-    expect(substr_count($response->getContent(), '<loc>'))->toBe(3);
+    expect(substr_count($response->getContent(), '<loc>'))->toBe(14);
 });
 
 it('serves robots directives with the absolute sitemap URL and admin exclusion', function () {
