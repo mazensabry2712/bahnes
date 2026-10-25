@@ -37,7 +37,7 @@ class ProjectTaskController extends Controller
             $request->user(), $task->is_milestone ? 'project.milestone_created' : 'project.task_created',
             $task->is_milestone ? 'Project milestone created.' : 'Project task created.',
             $project->client, $project, null,
-            ['task_id' => $task->getKey(), 'title' => $task->title, 'status' => $task->status, 'due_date' => $task->due_date?->toDateString()],
+            ['task_id' => $task->getKey(), 'title' => $task->title, 'status' => $task->status, 'due_date' => $data['due_date'] ?? null],
         );
 
         return back()->with('status', $task->is_milestone ? 'Milestone created.' : 'Task created.');
