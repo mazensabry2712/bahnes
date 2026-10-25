@@ -47,6 +47,16 @@ return [
             'report' => false,
         ],
 
+        // Store uploaded CMS media in the project root, never inside public/.
+        'bahnes_images' => [
+            'driver' => 'local',
+            'root' => base_path('Bahnes_img'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/media',
+            'visibility' => 'public',
+            'throw' => true,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
