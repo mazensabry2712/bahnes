@@ -79,7 +79,7 @@ class WebsiteTemplateController extends Controller
     {
         $rules = [
             'preview_url' => ['nullable', 'url:http,https', 'max:2048'],
-            'demo_url' => ['nullable', 'url', 'max:2048'],
+            'demo_url' => ['nullable', 'url:http,https', 'max:2048'],
             'status' => ['required', Rule::in(WebsiteTemplate::STATUSES)],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
             'published_at' => ['nullable', 'date'],
