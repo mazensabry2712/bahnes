@@ -16,6 +16,16 @@ class DeliveryProject extends Model
         'planning', 'in_progress', 'blocked', 'review', 'completed', 'on_hold', 'cancelled',
     ];
 
+    public const STATUS_TRANSITIONS = [
+        'planning' => ['in_progress', 'on_hold', 'cancelled', 'completed'],
+        'in_progress' => ['blocked', 'review', 'completed', 'on_hold', 'cancelled'],
+        'blocked' => ['in_progress', 'on_hold', 'cancelled'],
+        'review' => ['in_progress', 'completed', 'on_hold', 'cancelled'],
+        'completed' => ['in_progress'],
+        'on_hold' => ['planning', 'in_progress', 'blocked', 'cancelled'],
+        'cancelled' => ['planning'],
+    ];
+
     protected $fillable = [
         'client_id', 'owner_id', 'title', 'description', 'status',
         'progress_percent', 'start_date', 'target_date', 'completed_at', 'internal_notes',
@@ -30,6 +40,12 @@ class DeliveryProject extends Model
             'target_date' => 'date',
             'completed_at' => 'datetime',
         ];
+    }
+
+    public function canTransitionTo(string $nextStatus): bool
+    {
+        return $nextStatus === $this->status
+            || in_array($nextStatus, self::STATUS_TRANSITIONS[$this->status] ?? [], true);
     }
 
     /** @return BelongsTo<Client, $this> */
