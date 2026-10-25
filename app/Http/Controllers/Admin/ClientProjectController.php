@@ -7,6 +7,7 @@ use App\Mail\ClientProjectUpdateMail;
 use App\Models\Client;
 use App\Models\DeliveryProject;
 use App\Models\ProjectUpdate;
+use App\Services\ProjectActivityLogger;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ClientProjectController extends Controller
         ]);
 
         $client = Client::query()->create($data);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'client.created', 'Client record created.', $client, null, null,
             collect($data)->except(['internal_notes'])->all(),
         );
@@ -72,7 +73,7 @@ class ClientProjectController extends Controller
 
         $oldValues = $client->only(array_keys($data));
         $client->update($data);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'client.updated', 'Client record updated.', $client, null, $oldValues,
             collect($data)->except(['internal_notes'])->all(),
         );
@@ -86,7 +87,7 @@ class ClientProjectController extends Controller
             return back()->withErrors(['client' => 'Archive or complete the client’s active delivery projects before archiving this client.']);
         }
 
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'client.archived', 'Client record archived.', $client,
             null, ['name' => $client->name, 'email' => $client->email], null,
         );
@@ -97,7 +98,7 @@ class ClientProjectController extends Controller
 
     public function archiveProject(Request $request, DeliveryProject $project): RedirectResponse
     {
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'project.archived', 'Delivery project archived.', $project->client, $project,
             ['title' => $project->title, 'status' => $project->status], null,
         );
@@ -149,7 +150,7 @@ class ClientProjectController extends Controller
         $project->forceFill([
             'reference' => 'BH-PRJ-'.str_pad((string) $project->getKey(), 6, '0', STR_PAD_LEFT),
         ])->save();
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'project.created', 'Delivery project created.', $client, $project, null,
             collect($data)->except(['internal_notes'])->all(),
         );
@@ -190,7 +191,7 @@ class ClientProjectController extends Controller
 
         $oldValues = $project->only(array_keys($data));
         $project->update($data);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'project.updated', 'Delivery project updated.', $project->client, $project, $oldValues,
             collect($data)->except(['internal_notes'])->all(),
         );
@@ -214,7 +215,7 @@ class ClientProjectController extends Controller
             'author_id' => $request->user()->id,
             'client_visible' => (bool) ($data['client_visible'] ?? false),
         ]);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'project_update.created', 'Project progress update recorded.', $project->client, $project, null,
             ['update_id' => $update->getKey(), 'client_visible' => $update->client_visible],
         );
@@ -271,7 +272,7 @@ class ClientProjectController extends Controller
                 'email_sent_at' => now(),
                 'email_error' => null,
             ])->save();
-            app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            app(ProjectActivityLogger::class)->record(
                 request()->user(), 'project_update.email_sent', 'Client progress update emailed.',
                 $update->project->client, $update->project, null,
                 ['update_id' => $update->getKey(), 'recipient' => $update->project->client->email],
@@ -282,7 +283,7 @@ class ClientProjectController extends Controller
                 'email_status' => 'failed',
                 'email_error' => 'Email delivery failed. Check application logs before retrying.',
             ])->save();
-            app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            app(ProjectActivityLogger::class)->record(
                 request()->user(), 'project_update.email_failed', 'Client progress email failed.',
                 $update->project->client, $update->project, null,
                 ['update_id' => $update->getKey(), 'attempt' => $update->email_attempts],
