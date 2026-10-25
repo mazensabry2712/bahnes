@@ -22,6 +22,15 @@ class ProjectActivityLogger
         ?array $oldValues = null,
         ?array $newValues = null,
     ): ProjectActivity {
+        // Internal notes are private operational data and must never be copied into the audit API payload.
+        if ($oldValues !== null) {
+            unset($oldValues['internal_notes']);
+        }
+
+        if ($newValues !== null) {
+            unset($newValues['internal_notes']);
+        }
+
         return ProjectActivity::query()->create([
             'actor_id' => $actor?->getKey(),
             'client_id' => $client?->getKey() ?? $project?->client_id,
