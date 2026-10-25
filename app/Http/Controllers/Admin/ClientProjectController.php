@@ -187,7 +187,8 @@ class ClientProjectController extends Controller
                 return 'sent';
             }
 
-            if ($lockedUpdate->email_status === 'sending') {
+            if ($lockedUpdate->email_status === 'sending'
+                && $lockedUpdate->updated_at?->greaterThan(now()->subMinutes(10))) {
                 return 'sending';
             }
 
