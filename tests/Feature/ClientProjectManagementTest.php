@@ -4,6 +4,7 @@ use App\Mail\ClientProjectUpdateMail;
 use App\Models\Client;
 use App\Models\DeliveryProject;
 use App\Models\ProjectUpdate;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
@@ -242,7 +243,7 @@ it('does not send an update that is already in the sending state', function () {
 
 
 it('enforces update and email-send permissions independently of view permissions', function () {
-    $role = \\App\\Models\\Role::query()->create([
+    $role = Role::query()->create([
         'name' => 'Project viewer',
         'slug' => 'project-viewer',
         'permissions' => ['clients.view', 'projects.view', 'project_updates.create'],
