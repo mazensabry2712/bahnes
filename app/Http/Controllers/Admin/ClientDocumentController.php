@@ -72,7 +72,12 @@ class ClientDocumentController extends Controller
         abort_unless($document->client, 404);
         $client = $document->client;
         $disk = Storage::disk('local');
-        $disk->delete($document->storage_path);
+        if (! $disk->delete($document->storage_path)) {
+            return back()->withErrors([
+                'document' => 'The document could not be removed from private storage. The record was kept so the operation can be retried safely.',
+            ]);
+        }
+
         $documentId = $document->getKey();
         $category = $document->category;
         $document->delete();
