@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ProjectActivity;
 use App\Models\Role;
 use App\Models\User;
 
@@ -136,7 +137,8 @@ it('creates staff roles and persists only the selected supported permissions', f
 
     $role = Role::query()->where('name', 'Service editor')->firstOrFail();
 
-    expect($role->permissions)->toBe(['cms.services.view', 'cms.services.create']);
+    expect($role->permissions)->toBe(['cms.services.view', 'cms.services.create'])
+        ->and(ProjectActivity::query()->where('event_key', 'role.created')->exists())->toBeTrue();
 
     $this->actingAs($admin)->put(route('admin.access.roles.update', $role), [
         'name' => 'Service publisher',
@@ -144,7 +146,8 @@ it('creates staff roles and persists only the selected supported permissions', f
     ])->assertRedirect(route('admin.access.index'));
 
     expect($role->fresh()->name)->toBe('Service publisher')
-        ->and($role->fresh()->permissions)->toBe(['cms.services.view', 'cms.services.update']);
+        ->and($role->fresh()->permissions)->toBe(['cms.services.view', 'cms.services.update'])
+        ->and(ProjectActivity::query()->where('event_key', 'role.updated')->exists())->toBeTrue();
 
     $this->actingAs($admin)->post(route('admin.access.users.store'), [
         'name' => 'Service Staff',
@@ -165,5 +168,13 @@ it('creates staff roles and persists only the selected supported permissions', f
         'role_id' => null,
     ])->assertRedirect(route('admin.access.index'));
 
-    expect($staff->fresh()->role_id)->toBeNull();
+    expect($staff->fresh()->role_id)->toBeNull()
+        ->and(ProjectActivity::query()->where('event_key', 'staff.created')->exists())->toBeTrue()
+        ->and(ProjectActivity::query()->where('event_key', 'staff.role_updated')->exists())->toBeTrue();
+
+    $this->actingAs($admin)->put(route('admin.access.users.role.update', $admin), [
+        'role_id' => null,
+    ])->assertSessionHasErrors(['role_id']);
+
+    expect($admin->fresh()->is_admin)->toBeTrue();
 });
