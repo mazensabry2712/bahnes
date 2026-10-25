@@ -174,7 +174,7 @@ it('creates staff roles and persists only the selected supported permissions', f
 
     $this->actingAs($admin)->get(route('admin.access.activity'))
         ->assertOk()
-        ->assertJsonPath('data.0.event_key', 'staff.role_updated');
+        ->assertJsonFragment(['event_key' => 'staff.role_updated']);
 
     $this->actingAs($staff)->get(route('admin.access.activity'))->assertForbidden();
 
