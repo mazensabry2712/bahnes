@@ -65,42 +65,36 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::get('/services/create', [ServiceController::class, 'create'])->middleware('permission:cms.services.create')->name('services.create');
         Route::post('/services', [ServiceController::class, 'store'])->middleware('permission:cms.services.create')->name('services.store');
         Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->middleware('permission:cms.services.update')->name('services.edit');
-        Route::put('/services/{service}', [ServiceController::class, 'update'])->middleware('permission:cms.services.update')->name('services.update');
-        Route::patch('/services/{service}', [ServiceController::class, 'update'])->middleware('permission:cms.services.update')->name('services.patch');
+        Route::match(['put', 'patch'], '/services/{service}', [ServiceController::class, 'update'])->middleware('permission:cms.services.update')->name('services.update');
 
         Route::get('/projects', [ProjectController::class, 'index'])->middleware('permission:cms.projects.view')->name('projects.index');
         Route::get('/projects/create', [ProjectController::class, 'create'])->middleware('permission:cms.projects.create')->name('projects.create');
         Route::post('/projects', [ProjectController::class, 'store'])->middleware('permission:cms.projects.create')->name('projects.store');
         Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->middleware('permission:cms.projects.update')->name('projects.edit');
-        Route::put('/projects/{project}', [ProjectController::class, 'update'])->middleware('permission:cms.projects.update')->name('projects.update');
-        Route::patch('/projects/{project}', [ProjectController::class, 'update'])->middleware('permission:cms.projects.update')->name('projects.patch');
+        Route::match(['put', 'patch'], '/projects/{project}', [ProjectController::class, 'update'])->middleware('permission:cms.projects.update')->name('projects.update');
 
         Route::get('/products', [ProductController::class, 'index'])->middleware('permission:cms.products.view')->name('products.index');
         Route::get('/products/create', [ProductController::class, 'create'])->middleware('permission:cms.products.create')->name('products.create');
         Route::post('/products', [ProductController::class, 'store'])->middleware('permission:cms.products.create')->name('products.store');
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->middleware('permission:cms.products.update')->name('products.edit');
-        Route::put('/products/{product}', [ProductController::class, 'update'])->middleware('permission:cms.products.update')->name('products.update');
-        Route::patch('/products/{product}', [ProductController::class, 'update'])->middleware('permission:cms.products.update')->name('products.patch');
+        Route::match(['put', 'patch'], '/products/{product}', [ProductController::class, 'update'])->middleware('permission:cms.products.update')->name('products.update');
 
         Route::get('/templates', [WebsiteTemplateController::class, 'index'])->middleware('permission:cms.templates.view')->name('templates.index');
         Route::get('/templates/create', [WebsiteTemplateController::class, 'create'])->middleware('permission:cms.templates.create')->name('templates.create');
         Route::post('/templates', [WebsiteTemplateController::class, 'store'])->middleware('permission:cms.templates.create')->name('templates.store');
         Route::get('/templates/{template}/edit', [WebsiteTemplateController::class, 'edit'])->middleware('permission:cms.templates.update')->name('templates.edit');
-        Route::put('/templates/{template}', [WebsiteTemplateController::class, 'update'])->middleware('permission:cms.templates.update')->name('templates.update');
-        Route::patch('/templates/{template}', [WebsiteTemplateController::class, 'update'])->middleware('permission:cms.templates.update')->name('templates.patch');
+        Route::match(['put', 'patch'], '/templates/{template}', [WebsiteTemplateController::class, 'update'])->middleware('permission:cms.templates.update')->name('templates.update');
 
         Route::get('/insights', [InsightController::class, 'index'])->middleware('permission:cms.insights.view')->name('insights.index');
         Route::get('/insights/create', [InsightController::class, 'create'])->middleware('permission:cms.insights.create')->name('insights.create');
         Route::post('/insights', [InsightController::class, 'store'])->middleware('permission:cms.insights.create')->name('insights.store');
         Route::get('/insights/{insight}/edit', [InsightController::class, 'edit'])->middleware('permission:cms.insights.update')->name('insights.edit');
-        Route::put('/insights/{insight}', [InsightController::class, 'update'])->middleware('permission:cms.insights.update')->name('insights.update');
-        Route::patch('/insights/{insight}', [InsightController::class, 'update'])->middleware('permission:cms.insights.update')->name('insights.patch');
+        Route::match(['put', 'patch'], '/insights/{insight}', [InsightController::class, 'update'])->middleware('permission:cms.insights.update')->name('insights.update');
 
         Route::get('/insight-categories', [InsightCategoryController::class, 'index'])->middleware('permission:cms.insights.view')->name('insight-categories.index');
         Route::get('/insight-categories/create', [InsightCategoryController::class, 'create'])->middleware('permission:cms.insights.create')->name('insight-categories.create');
         Route::post('/insight-categories', [InsightCategoryController::class, 'store'])->middleware('permission:cms.insights.create')->name('insight-categories.store');
         Route::get('/insight-categories/{insight_category}/edit', [InsightCategoryController::class, 'edit'])->middleware('permission:cms.insights.update')->name('insight-categories.edit');
-        Route::put('/insight-categories/{insight_category}', [InsightCategoryController::class, 'update'])->middleware('permission:cms.insights.update')->name('insight-categories.update');
-        Route::patch('/insight-categories/{insight_category}', [InsightCategoryController::class, 'update'])->middleware('permission:cms.insights.update')->name('insight-categories.patch');
+        Route::match(['put', 'patch'], '/insight-categories/{insight_category}', [InsightCategoryController::class, 'update'])->middleware('permission:cms.insights.update')->name('insight-categories.update');
     });
 });
