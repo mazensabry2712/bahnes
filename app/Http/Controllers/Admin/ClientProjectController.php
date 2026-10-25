@@ -10,6 +10,7 @@ use App\Models\ProjectUpdate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Throwable;
@@ -175,22 +176,51 @@ class ClientProjectController extends Controller
             abort(403, 'Only updates explicitly marked client-visible can be emailed.');
         }
 
-        if ($update->email_sent_at) {
-            return back()->with('status', 'This update was already emailed.');
-        }
-
         if (app()->environment('production') && in_array(config('mail.default'), ['log', 'array'], true)) {
             return back()->withErrors(['email' => 'Production mail is not configured for real delivery. Set MAIL_MAILER to a delivery transport before sending client updates.']);
         }
 
-        $update->increment('email_attempts');
+        $claim = DB::transaction(function () use ($update): string {
+            $lockedUpdate = ProjectUpdate::query()->whereKey($update->getKey())->lockForUpdate()->firstOrFail();
+
+            if ($lockedUpdate->email_sent_at || $lockedUpdate->email_status === 'sent') {
+                return 'sent';
+            }
+
+            if ($lockedUpdate->email_status === 'sending') {
+                return 'sending';
+            }
+
+            $lockedUpdate->forceFill([
+                'email_status' => 'sending',
+                'email_attempts' => $lockedUpdate->email_attempts + 1,
+                'email_error' => null,
+            ])->save();
+
+            return 'claimed';
+        });
+
+        if ($claim === 'sent') {
+            return back()->with('status', 'This update was already emailed.');
+        }
+
+        if ($claim === 'sending') {
+            return back()->withErrors(['email' => 'This update is already being sent. Please wait before retrying.']);
+        }
 
         try {
             Mail::to($update->project->client->email)->send(new ClientProjectUpdateMail($update));
-            $update->forceFill(['email_sent_at' => now(), 'email_error' => null])->save();
+            $update->forceFill([
+                'email_status' => 'sent',
+                'email_sent_at' => now(),
+                'email_error' => null,
+            ])->save();
         } catch (Throwable $exception) {
             report($exception);
-            $update->forceFill(['email_error' => 'Email delivery failed. Check application logs before retrying.'])->save();
+            $update->forceFill([
+                'email_status' => 'failed',
+                'email_error' => 'Email delivery failed. Check application logs before retrying.',
+            ])->save();
 
             return back()->withErrors(['email' => 'Email could not be sent. Check mail configuration and application logs.']);
         }
