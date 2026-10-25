@@ -68,6 +68,8 @@ class ClientProjectController extends Controller
             'phone' => ['nullable', 'string', 'max:40'],
             'preferred_locale' => ['required', Rule::in(['en', 'ar'])],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
+            'agreed_services' => ['nullable', 'string', 'max:10000'],
+            'commercial_summary' => ['nullable', 'string', 'max:10000'],
             'account_manager_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
@@ -180,6 +182,8 @@ class ClientProjectController extends Controller
             'target_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'owner_id' => ['nullable', 'integer', 'exists:users,id'],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
+            'blocker' => ['nullable', 'string', 'max:10000'],
+            'delivery_notes' => ['nullable', 'string', 'max:10000'],
         ]);
 
         if ($data['status'] === 'completed') {
