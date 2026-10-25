@@ -23,6 +23,8 @@ it('renders the bilingual homepage with localized navigation and no fabricated p
     $this->get(route('localized.home', ['locale' => 'en']))
         ->assertOk()
         ->assertSee('Technology that works for your business.')
+        ->assertSee('Home')
+        ->assertSee(route('localized.home', ['locale' => 'en']), false)
         ->assertSee('Services')
         ->assertDontSee('Trusted by 500+ companies');
 
@@ -30,6 +32,8 @@ it('renders the bilingual homepage with localized navigation and no fabricated p
         ->assertOk()
         ->assertSee('lang="ar"', false)
         ->assertSee('dir="rtl"', false)
+        ->assertSee(route('localized.home', ['locale' => 'ar']), false)
+        ->assertSee('الرئيسية')
         ->assertSee('تقنية تعمل لصالح أعمالك.');
 });
 
