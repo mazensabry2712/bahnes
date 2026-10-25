@@ -36,11 +36,15 @@ class AccessManagementController extends Controller
             'permissions.*' => ['string', Rule::in($permissions)],
         ]);
 
-        Role::query()->create([
+        $role = Role::query()->create([
             'name' => $data['name'],
             'slug' => Str::slug($data['name']).'-'.Str::lower(Str::random(5)),
             'permissions' => array_values(array_unique($data['permissions'] ?? [])),
         ]);
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'role.created', 'Staff role created.',
+            null, null, null, ['role_id' => $role->getKey(), 'name' => $role->name, 'permissions' => $role->permissions],
+        );
 
         return redirect()->route('admin.access.index')->with('status', 'Role created.');
     }
@@ -56,11 +60,16 @@ class AccessManagementController extends Controller
             'permissions.*' => ['string', Rule::in($permissions)],
         ]);
 
+        $oldValues = ['name' => $role->name, 'permissions' => $role->permissions];
         $role->update([
             'name' => $data['name'],
             'slug' => Str::slug($data['name']).'-'.Str::lower(Str::random(5)),
             'permissions' => array_values(array_unique($data['permissions'] ?? [])),
         ]);
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'role.updated', 'Staff role permissions updated.',
+            null, null, $oldValues, ['role_id' => $role->getKey(), 'name' => $role->name, 'permissions' => $role->permissions],
+        );
 
         return redirect()->route('admin.access.index')->with('status', 'Role permissions updated.');
     }
@@ -76,13 +85,17 @@ class AccessManagementController extends Controller
             'role_id' => ['required', 'integer', 'exists:roles,id'],
         ]);
 
-        User::query()->create([
+        $staff = User::query()->create([
             'name' => $data['name'],
             'email' => Str::lower($data['email']),
             'password' => Hash::make($data['password']),
             'is_admin' => false,
             'role_id' => $data['role_id'],
         ]);
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'staff.created', 'Staff account created.',
+            null, null, null, ['user_id' => $staff->getKey(), 'email' => $staff->email, 'role_id' => $staff->role_id],
+        );
 
         return redirect()->route('admin.access.index')->with('status', 'Staff account created with the selected role.');
     }
@@ -99,7 +112,13 @@ class AccessManagementController extends Controller
             'role_id' => ['nullable', 'integer', 'exists:roles,id'],
         ]);
 
+        $oldRoleId = $user->role_id;
         $user->forceFill(['role_id' => $data['role_id'] ?? null])->save();
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'staff.role_updated', 'Staff access assignment updated.',
+            null, null, ['user_id' => $user->getKey(), 'role_id' => $oldRoleId],
+            ['user_id' => $user->getKey(), 'role_id' => $user->role_id],
+        );
 
         return redirect()->route('admin.access.index')->with('status', 'Staff access updated.');
     }
