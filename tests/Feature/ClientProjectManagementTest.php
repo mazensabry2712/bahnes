@@ -239,3 +239,53 @@ it('does not send an update that is already in the sending state', function () {
     Mail::assertNothingOutgoing();
     expect($update->fresh()->email_attempts)->toBe(0);
 });
+
+
+it('enforces update and email-send permissions independently of view permissions', function () {
+    $role = \\App\\Models\\Role::query()->create([
+        'name' => 'Project viewer',
+        'slug' => 'project-viewer',
+        'permissions' => ['clients.view', 'projects.view', 'project_updates.create'],
+    ]);
+    $staff = User::factory()->create(['is_admin' => false, 'role_id' => $role->id]);
+    $client = Client::query()->create([
+        'name' => 'Permission Client',
+        'email' => 'permission-client@example.com',
+        'preferred_locale' => 'en',
+        'internal_notes' => 'Keep unchanged',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Permission project',
+        'status' => 'in_progress',
+        'progress_percent' => 20,
+        'internal_notes' => 'Project internal notes',
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $staff->id,
+        'summary' => 'Approved update',
+        'client_visible' => true,
+    ]);
+
+    $this->actingAs($staff)->put(route('admin.clients.update', $client), [
+        'name' => 'Tampered name',
+        'email' => $client->email,
+        'preferred_locale' => 'en',
+    ])->assertForbidden();
+
+    $this->actingAs($staff)->put(route('admin.delivery-projects.update', $project), [
+        'title' => 'Tampered project',
+        'status' => 'completed',
+        'progress_percent' => 100,
+    ])->assertForbidden();
+
+    Mail::fake();
+    $this->actingAs($staff)->post(route('admin.project-updates.send', $update))->assertForbidden();
+    Mail::assertNothingOutgoing();
+
+    expect($client->fresh()->name)->toBe('Permission Client')
+        ->and($project->fresh()->title)->toBe('Permission project')
+        ->and($update->fresh()->email_attempts)->toBe(0)
+        ->and($update->fresh()->email_sent_at)->toBeNull();
+});
