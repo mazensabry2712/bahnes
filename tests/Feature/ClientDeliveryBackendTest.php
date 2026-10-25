@@ -5,6 +5,7 @@ use App\Models\ClientDocument;
 use App\Models\DeliveryProject;
 use App\Models\ProjectActivity;
 use App\Models\ProjectTask;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -100,7 +101,7 @@ it('tracks project tasks and milestones with validated completion state', functi
     ])->assertRedirect();
 
     $task = ProjectTask::query()->where('title', 'Approve architecture')->firstOrFail();
-    $viewerRole = \\App\\Models\\Role::query()->create([
+    $viewerRole = Role::query()->create([
         'name' => 'Task viewer only',
         'slug' => 'task-viewer-only',
         'permissions' => ['project_tasks.view'],
