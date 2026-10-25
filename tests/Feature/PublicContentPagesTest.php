@@ -69,12 +69,14 @@ it('lists only published services with a complete translation and active service
 
     $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'services']))
         ->assertOk()
+        ->assertSee('Home <span aria-hidden="true">/</span>', false)
         ->assertSee('Managed Network Support')
         ->assertDontSee('Hidden Draft')
         ->assertDontSee('Inactive Service');
 
     $this->get(route('public.content.index', ['locale' => 'ar', 'section' => 'services']))
         ->assertOk()
+        ->assertSee('الرئيسية <span aria-hidden="true">/</span>', false)
         ->assertDontSee('Managed Network Support');
 });
 
