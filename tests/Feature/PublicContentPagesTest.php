@@ -26,6 +26,8 @@ it('renders the bilingual homepage with localized navigation and no fabricated p
         ->assertSee('Home')
         ->assertSee(route('localized.home', ['locale' => 'en']), false)
         ->assertSee('Services')
+        ->assertSee('SYSTEMS / PEOPLE / OUTCOMES')
+        ->assertDontSee("30° 02' N / 31° 14' E")
         ->assertDontSee('Trusted by 500+ companies');
 
     $this->get(route('localized.home', ['locale' => 'ar']))
@@ -34,7 +36,9 @@ it('renders the bilingual homepage with localized navigation and no fabricated p
         ->assertSee('dir="rtl"', false)
         ->assertSee(route('localized.home', ['locale' => 'ar']), false)
         ->assertSee('الرئيسية')
-        ->assertSee('تقنية تعمل لصالح أعمالك.');
+        ->assertSee('تقنية تعمل لصالح أعمالك.')
+        ->assertSee('الأنظمة / الأشخاص / النتائج')
+        ->assertDontSee("30° 02' N / 31° 14' E");
 });
 
 it('renders the contact page inside the shared bilingual public layout', function () {
