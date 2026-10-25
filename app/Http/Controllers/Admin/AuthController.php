@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -28,6 +29,16 @@ class AuthController extends Controller
         ]);
 
         $credentials['email'] = Str::lower($credentials['email']);
+
+        // Keep email matching case-insensitive even for accounts created before
+        // the application began normalizing stored email addresses.
+        $storedUser = User::query()
+            ->whereRaw('LOWER(email) = ?', [$credentials['email']])
+            ->first();
+
+        if ($storedUser) {
+            $credentials['email'] = $storedUser->email;
+        }
 
         if (! Auth::attempt($credentials)) {
             return back()
