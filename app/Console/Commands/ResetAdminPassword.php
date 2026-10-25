@@ -16,7 +16,7 @@ class ResetAdminPassword extends Command
         $email = mb_strtolower(trim((string) $this->argument('email')));
 
         $admin = User::query()
-            ->where('email', $email)
+            ->whereRaw('LOWER(email) = ?', [$email])
             ->where('is_admin', true)
             ->first();
 
