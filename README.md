@@ -23,6 +23,13 @@ See the [canonical Website Tech Stack & Frontend Architecture decision](./DOC/09
 
 ## Working principles
 
+## Git workflow (mandatory)
+
+- All implementation, fixes, tests, and documentation changes are made directly on `main`.
+- This project does **not** use feature branches; do not create or switch to another branch.
+- Keep commits focused, review the resulting changes, and verify CI before reporting completion.
+- Never force-push or rewrite shared history. Production deployment requires explicit user approval.
+
 - Keep one company brand and clearly separate the two service lines in the customer experience.
 - Sell defined outcomes and scope rather than vague promises.
 - Use the site for qualified inquiries, credible work examples, and a curated digital catalog.
