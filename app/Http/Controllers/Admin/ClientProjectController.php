@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class ClientProjectController extends Controller
@@ -185,6 +186,12 @@ class ClientProjectController extends Controller
             'blocker' => ['nullable', 'string', 'max:10000'],
             'delivery_notes' => ['nullable', 'string', 'max:10000'],
         ]);
+
+        if (! $project->canTransitionTo($data['status'])) {
+            throw ValidationException::withMessages([
+                'status' => 'This delivery project status transition is not allowed.',
+            ]);
+        }
 
         if ($data['status'] === 'completed') {
             $data['progress_percent'] = 100;
