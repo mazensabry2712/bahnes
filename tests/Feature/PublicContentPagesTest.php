@@ -3,6 +3,8 @@
 use App\Models\Insight;
 use App\Models\InsightCategory;
 use App\Models\Project;
+use App\Models\Product;
+use App\Models\WebsiteTemplate;
 use App\Models\Service;
 use App\Models\ServiceLine;
 
@@ -286,4 +288,83 @@ it('adds only published locale variants to the sitemap', function () {
         ->toContain(route('public.content.show', ['locale' => 'en', 'section' => 'services', 'slug' => 'published-service']))
         ->toContain(route('public.content.show', ['locale' => 'ar', 'section' => 'services', 'slug' => 'khidma-manshura']))
         ->not->toContain('draft-sitemap-service');
+});
+
+
+it('publishes only complete live products and website templates on public pages', function () {
+    Product::query()->create([
+        'title_en' => 'Published Business Product',
+        'slug_en' => 'published-business-product',
+        'summary_en' => 'A complete public product summary.',
+        'license_terms_en' => 'License terms are available.',
+        'delivery_terms_en' => 'Delivery terms are available.',
+        'support_terms_en' => 'Support terms are available.',
+        'status' => 'published',
+        'sort_order' => 1,
+    ]);
+    Product::query()->create([
+        'title_en' => 'Future Business Product',
+        'slug_en' => 'future-business-product',
+        'summary_en' => 'This product is scheduled for the future.',
+        'license_terms_en' => 'License terms.',
+        'delivery_terms_en' => 'Delivery terms.',
+        'support_terms_en' => 'Support terms.',
+        'status' => 'published',
+        'published_at' => now()->addDay(),
+        'sort_order' => 2,
+    ]);
+    Product::query()->create([
+        'title_en' => 'Draft Business Product',
+        'slug_en' => 'draft-business-product',
+        'summary_en' => 'This draft must stay private.',
+        'license_terms_en' => 'License terms.',
+        'delivery_terms_en' => 'Delivery terms.',
+        'support_terms_en' => 'Support terms.',
+        'status' => 'draft',
+        'sort_order' => 3,
+    ]);
+
+    WebsiteTemplate::query()->create([
+        'title_en' => 'Published Corporate Template',
+        'slug_en' => 'published-corporate-template',
+        'summary_en' => 'A public template with complete commercial terms.',
+        'license_terms_en' => 'Single-site license.',
+        'delivery_terms_en' => 'Source package delivery.',
+        'support_terms_en' => 'Email support.',
+        'status' => 'published',
+        'sort_order' => 1,
+    ]);
+    WebsiteTemplate::query()->create([
+        'title_en' => 'Draft Corporate Template',
+        'slug_en' => 'draft-corporate-template',
+        'summary_en' => 'This draft must stay private.',
+        'license_terms_en' => 'License terms.',
+        'delivery_terms_en' => 'Delivery terms.',
+        'support_terms_en' => 'Support terms.',
+        'status' => 'draft',
+        'sort_order' => 2,
+    ]);
+
+    $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'products']))
+        ->assertOk()
+        ->assertSee('Published Business Product')
+        ->assertDontSee('Future Business Product')
+        ->assertDontSee('Draft Business Product');
+
+    $this->get(route('public.content.show', [
+        'locale' => 'en',
+        'section' => 'products',
+        'slug' => 'published-business-product',
+    ]))->assertOk()->assertSee('Published Business Product');
+
+    $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'templates']))
+        ->assertOk()
+        ->assertSee('Published Corporate Template')
+        ->assertDontSee('Draft Corporate Template');
+
+    $this->get(route('public.content.show', [
+        'locale' => 'en',
+        'section' => 'templates',
+        'slug' => 'draft-corporate-template',
+    ]))->assertNotFound();
 });
