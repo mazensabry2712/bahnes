@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function create(): View|RedirectResponse
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (Auth::check() && (Auth::user()->is_admin || Auth::user()->role_id)) {
             return redirect()->route('admin.dashboard');
         }
 
