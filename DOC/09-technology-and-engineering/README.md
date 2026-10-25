@@ -31,6 +31,14 @@ Inertia, React/Vue SPA, Livewire, Alpine.js and third-party admin-panel packages
 
 ## Repository workflow
 
+## Main-only Git policy (mandatory)
+
+- `main` is the only branch used for all project work.
+- Implement changes, tests, bug fixes, and documentation directly on `main`.
+- Do not create, switch to, or recommend feature/development/release branches.
+- Use focused commits, review changes, and verify CI after updates.
+- Never force-push or rewrite shared history. Production deployment requires explicit approval from the user.
+
 - Work against the agreed branch policy; current repository default branch is `main`.
 - Keep commits focused and messages meaningful.
 - Avoid destructive history rewrites and unrelated file changes.
