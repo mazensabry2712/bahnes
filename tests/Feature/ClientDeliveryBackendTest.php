@@ -421,3 +421,34 @@ it('keeps the document record when private storage throws during deletion', func
     expect(ClientDocument::query()->whereKey($document->id)->exists())->toBeTrue();
     expect(ProjectActivity::query()->where('event_key', 'client.document_deleted')->exists())->toBeFalse();
 });
+
+
+it('allows archiving a client after all delivery projects are completed or cancelled', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Completed Client',
+        'email' => 'completed-client@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $completed = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Completed project',
+        'status' => 'completed',
+        'progress_percent' => 100,
+        'completed_at' => now(),
+    ]);
+    $cancelled = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Cancelled project',
+        'status' => 'cancelled',
+        'progress_percent' => 0,
+    ]);
+
+    $this->actingAs($admin)->delete(route('admin.clients.archive', $client))
+        ->assertRedirect(route('admin.clients.index'))
+        ->assertSessionHas('status', 'Client archived.');
+
+    expect(Client::withTrashed()->find($client->id)?->trashed())->toBeTrue()
+        ->and($completed->fresh())->not->toBeNull()
+        ->and($cancelled->fresh())->not->toBeNull();
+});
