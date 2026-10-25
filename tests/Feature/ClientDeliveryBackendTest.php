@@ -278,3 +278,44 @@ it('never writes private internal notes into client or project activity payloads
         ->and($taskActivity->new_values)->not->toHaveKey('internal_notes')
         ->and(json_encode([$taskActivity->old_values, $taskActivity->new_values]))->not->toContain('UPDATED_TASK_SECRET');
 });
+
+
+it('rejects assigning clients projects and tasks to accounts without admin access', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $ordinaryUser = User::factory()->create(['is_admin' => false, 'role_id' => null]);
+    $client = Client::query()->create([
+        'name' => 'Assignment Validation Client',
+        'email' => 'assignment-validation@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Assignment validation project',
+        'status' => 'planning',
+        'progress_percent' => 0,
+    ]);
+
+    $this->actingAs($admin)->put(route('admin.clients.update', $client), [
+        'name' => $client->name,
+        'email' => $client->email,
+        'preferred_locale' => 'en',
+        'account_manager_id' => $ordinaryUser->id,
+    ])->assertSessionHasErrors(['account_manager_id']);
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $project), [
+        'title' => $project->title,
+        'status' => 'planning',
+        'progress_percent' => 0,
+        'owner_id' => $ordinaryUser->id,
+    ])->assertSessionHasErrors(['owner_id']);
+
+    $this->actingAs($admin)->post(route('admin.delivery-projects.tasks.store', $project), [
+        'title' => 'Unauthorized assignee task',
+        'status' => 'todo',
+        'assigned_to' => $ordinaryUser->id,
+    ])->assertSessionHasErrors(['assigned_to']);
+
+    expect($client->fresh()->account_manager_id)->toBeNull()
+        ->and($project->fresh()->owner_id)->toBeNull()
+        ->and(ProjectTask::query()->where('title', 'Unauthorized assignee task')->exists())->toBeFalse();
+});
