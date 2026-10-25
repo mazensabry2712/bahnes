@@ -307,3 +307,39 @@ it('enforces update and email-send permissions independently of view permissions
         ->and($update->fresh()->email_attempts)->toBe(0)
         ->and($update->fresh()->email_sent_at)->toBeNull();
 });
+
+
+it('recovers a client email left in sending state for more than ten minutes', function () {
+    Mail::fake();
+
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Recovered Mail Client',
+        'email' => 'recovered-mail@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Recovered mail project',
+        'status' => 'in_progress',
+        'progress_percent' => 55,
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $admin->id,
+        'summary' => 'Retry after abandoned delivery',
+        'client_visible' => true,
+        'email_status' => 'sending',
+        'email_attempts' => 1,
+        'updated_at' => now()->subMinutes(11),
+    ]);
+
+    $this->actingAs($admin)
+        ->post(route('admin.project-updates.send', $update))
+        ->assertRedirect()
+        ->assertSessionHas('status', 'Client progress email sent.');
+
+    Mail::assertSent(\\App\\Mail\\ClientProjectUpdateMail::class);
+    expect($update->fresh()->email_status)->toBe('sent')
+        ->and($update->fresh()->email_attempts)->toBe(2);
+});
