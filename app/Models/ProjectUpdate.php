@@ -13,7 +13,7 @@ class ProjectUpdate extends Model
     protected $fillable = [
         'delivery_project_id', 'author_id', 'summary', 'completed_work',
         'current_work', 'next_step', 'target_date', 'client_visible',
-        'email_sent_at', 'email_error',
+        'email_status', 'email_attempts', 'email_sent_at', 'email_error',
     ];
 
     protected function casts(): array
