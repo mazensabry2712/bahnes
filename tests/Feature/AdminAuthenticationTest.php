@@ -74,3 +74,20 @@ it('signs the administrator out and invalidates the session', function () {
 
     $this->assertGuest();
 });
+
+
+it('rate limits repeated administrator login attempts', function () {
+    foreach (range(1, 5) as $attempt) {
+        $this->post(route('admin.authenticate'), [
+            'email' => 'missing-admin@example.com',
+            'password' => 'incorrect-password',
+        ])->assertRedirect(route('admin.login'));
+    }
+
+    $this->post(route('admin.authenticate'), [
+        'email' => 'missing-admin@example.com',
+        'password' => 'incorrect-password',
+    ])->assertTooManyRequests();
+
+    $this->assertGuest();
+});
