@@ -26,5 +26,4 @@ return [
     'cms.insights.view' => 'View website insights',
     'cms.insights.create' => 'Create website insights',
     'cms.insights.update' => 'Update website insights',
-    'access.manage' => 'Manage staff users, roles and permissions',
 ];
