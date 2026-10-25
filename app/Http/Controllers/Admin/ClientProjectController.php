@@ -48,7 +48,7 @@ class ClientProjectController extends Controller
             'internal_notes' => ['nullable', 'string', 'max:10000'],
             'agreed_services' => ['nullable', 'string', 'max:10000'],
             'commercial_summary' => ['nullable', 'string', 'max:10000'],
-            'account_manager_id' => ['nullable', 'integer', 'exists:users,id'],
+            'account_manager_id' => ['nullable', 'integer', Rule::exists('users', 'id')->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))],
         ]);
 
         $client = Client::query()->create($data);
@@ -71,7 +71,7 @@ class ClientProjectController extends Controller
             'internal_notes' => ['nullable', 'string', 'max:10000'],
             'agreed_services' => ['nullable', 'string', 'max:10000'],
             'commercial_summary' => ['nullable', 'string', 'max:10000'],
-            'account_manager_id' => ['nullable', 'integer', 'exists:users,id'],
+            'account_manager_id' => ['nullable', 'integer', Rule::exists('users', 'id')->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))],
         ]);
 
         $oldValues = $client->only(array_keys($data));
@@ -116,7 +116,7 @@ class ClientProjectController extends Controller
 
         return view('admin.clients.show', [
             'client' => $client,
-            'users' => \App\Models\User::query()->orderBy('name')->get(['id', 'name']),
+            'users' => \App\Models\User::query()->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -138,7 +138,7 @@ class ClientProjectController extends Controller
             'progress_percent' => ['required', 'integer', 'between:0,100'],
             'start_date' => ['nullable', 'date'],
             'target_date' => ['nullable', 'date', 'after_or_equal:start_date'],
-            'owner_id' => ['nullable', 'integer', 'exists:users,id'],
+            'owner_id' => ['nullable', 'integer', Rule::exists('users', 'id')->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
             'blocker' => ['nullable', 'string', 'max:10000'],
             'delivery_notes' => ['nullable', 'string', 'max:10000'],
@@ -181,7 +181,7 @@ class ClientProjectController extends Controller
             'progress_percent' => ['required', 'integer', 'between:0,100'],
             'start_date' => ['nullable', 'date'],
             'target_date' => ['nullable', 'date', 'after_or_equal:start_date'],
-            'owner_id' => ['nullable', 'integer', 'exists:users,id'],
+            'owner_id' => ['nullable', 'integer', Rule::exists('users', 'id')->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
             'blocker' => ['nullable', 'string', 'max:10000'],
             'delivery_notes' => ['nullable', 'string', 'max:10000'],
