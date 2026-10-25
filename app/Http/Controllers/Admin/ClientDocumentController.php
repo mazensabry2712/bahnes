@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\ClientDocument;
+use App\Services\ProjectActivityLogger;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
+
+class ClientDocumentController extends Controller
+{
+    public function store(Request $request, Client $client): RedirectResponse
+    {
+        $data = $request->validate([
+            'document' => ['required', 'file', 'mimes:pdf,doc,docx,xls,xlsx,csv,txt,jpg,jpeg,png', 'max:20480'],
+            'category' => ['required', Rule::in(['contract', 'proposal', 'invoice', 'specification', 'other'])],
+            'description' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $file = $data['document'];
+        $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
+        $path = 'client-documents/'.$client->getKey().'/'.Str::uuid().'.'.$extension;
+        $disk = Storage::disk('local');
+        $disk->putFileAs(dirname($path), $file, basename($path));
+
+        try {
+            $document = $client->documents()->create([
+                'uploaded_by' => $request->user()->id,
+                'original_name' => mb_substr(basename($file->getClientOriginalName()), 0, 255),
+                'storage_path' => $path,
+                'mime_type' => $file->getMimeType(),
+                'size_bytes' => $file->getSize(),
+                'category' => $data['category'],
+                'description' => $data['description'] ?? null,
+            ]);
+        } catch (Throwable $exception) {
+            $disk->delete($path);
+            throw $exception;
+        }
+
+        app(ProjectActivityLogger::class)->record(
+            $request->user(), 'client.document_uploaded', 'Private client document uploaded.', $client,
+            null, null, ['document_id' => $document->getKey(), 'category' => $document->category],
+        );
+
+        return back()->with('status', 'Private document uploaded.');
+    }
+
+    public function download(ClientDocument $document): StreamedResponse
+    {
+        abort_unless(Storage::disk('local')->exists($document->storage_path), 404);
+
+        return Storage::disk('local')->download($document->storage_path, $document->original_name, [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    public function destroy(Request $request, ClientDocument $document): RedirectResponse
+    {
+        $client = $document->client;
+        $disk = Storage::disk('local');
+        $disk->delete($document->storage_path);
+        $documentId = $document->getKey();
+        $category = $document->category;
+        $document->delete();
+
+        app(ProjectActivityLogger::class)->record(
+            $request->user(), 'client.document_deleted', 'Private client document deleted.', $client,
+            null, ['document_id' => $documentId, 'category' => $category], null,
+        );
+
+        return back()->with('status', 'Private document deleted.');
+    }
+}
