@@ -83,6 +83,7 @@ class ClientProjectController extends Controller
         return view('admin.projects.delivery-create', [
             'client' => $client,
             'statuses' => DeliveryProject::STATUSES,
+            'users' => \\App\\Models\\User::query()->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -111,6 +112,7 @@ class ClientProjectController extends Controller
         return view('admin.projects.delivery-show', [
             'project' => $project,
             'statuses' => DeliveryProject::STATUSES,
+            'users' => \\App\\Models\\User::query()->orderBy('name')->get(['id', 'name']),
         ]);
     }
 
