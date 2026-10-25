@@ -13,6 +13,15 @@ use Illuminate\Validation\Rule;
 
 class ProjectTaskController extends Controller
 {
+    public function index(DeliveryProject $project): JsonResponse
+    {
+        return response()->json($project->tasks()
+            ->with('assignee:id,name')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->paginate(50));
+    }
+
     public function store(Request $request, DeliveryProject $project): RedirectResponse
     {
         $data = $request->validate([
