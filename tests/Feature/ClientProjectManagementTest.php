@@ -136,3 +136,70 @@ it('prevents sending the same client update twice', function () {
 
     Mail::assertNothingOutgoing();
 });
+
+
+it('forces completed projects to 100 percent and preserves the original completion timestamp', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Completion Client',
+        'email' => 'completion@example.com',
+        'preferred_locale' => 'en',
+    ]);
+
+    $this->actingAs($admin)->post(route('admin.delivery-projects.store', $client), [
+        'title' => 'Already completed',
+        'status' => 'completed',
+        'progress_percent' => 15,
+        'start_date' => '2026-10-01',
+        'target_date' => '2026-10-20',
+    ])->assertRedirect(route('admin.clients.show', $client));
+
+    $project = DeliveryProject::query()->where('title', 'Already completed')->firstOrFail();
+    expect($project->progress_percent)->toBe(100)
+        ->and($project->completed_at)->not->toBeNull();
+
+    $originalCompletion = $project->completed_at->toDateTimeString();
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $project), [
+        'title' => $project->title,
+        'status' => 'completed',
+        'progress_percent' => 70,
+        'start_date' => '2026-10-01',
+        'target_date' => '2026-10-20',
+    ])->assertRedirect(route('admin.delivery-projects.show', $project));
+
+    expect($project->fresh()->progress_percent)->toBe(100)
+        ->and($project->fresh()->completed_at->toDateTimeString())->toBe($originalCompletion);
+});
+
+it('records a failed client email attempt without marking the update as sent', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Mail Failure Client',
+        'email' => 'mail-failure@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Mail failure project',
+        'status' => 'in_progress',
+        'progress_percent' => 25,
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $admin->id,
+        'summary' => 'A client-visible update',
+        'client_visible' => true,
+    ]);
+
+    Mail::shouldReceive('to')->once()->with($client->email)->andThrow(new RuntimeException('SMTP unavailable'));
+
+    $this->actingAs($admin)
+        ->post(route('admin.project-updates.send', $update))
+        ->assertRedirect()
+        ->assertSessionHasErrors('email');
+
+    expect($update->fresh()->email_attempts)->toBe(1)
+        ->and($update->fresh()->email_sent_at)->toBeNull()
+        ->and($update->fresh()->email_error)->not->toBeNull();
+});
