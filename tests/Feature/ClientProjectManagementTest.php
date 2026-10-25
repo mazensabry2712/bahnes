@@ -366,6 +366,7 @@ it('blocks production failover mailers that can silently log instead of deliveri
         'client_visible' => true,
     ]);
 
+    $this->app->instance('env', 'production');
     config()->set('app.env', 'production');
     config()->set('mail.default', 'failover');
     config()->set('mail.mailers.failover.mailers', ['smtp', 'log']);
