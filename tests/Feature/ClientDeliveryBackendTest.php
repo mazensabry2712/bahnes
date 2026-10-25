@@ -516,3 +516,64 @@ it('separates task-read, task-write, and project-activity permissions', function
         ->get(route('admin.delivery-projects.activity', $project))
         ->assertOk();
 });
+
+
+it('does not leak project, task, update, or document activity through a client-only permission', function () {
+    $client = Client::query()->create([
+        'name' => 'Activity isolation client',
+        'email' => 'activity-isolation@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Activity isolation project',
+        'status' => 'in_progress',
+        'progress_percent' => 25,
+    ]);
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    foreach ([
+        ['event_key' => 'client.updated', 'summary' => 'Client record changed.', 'project' => null],
+        ['event_key' => 'project.created', 'summary' => 'Project contains PRIVATE_PROJECT_DETAILS.', 'project' => $project],
+        ['event_key' => 'project.task_created', 'summary' => 'Task contains PRIVATE_TASK_DETAILS.', 'project' => $project],
+        ['event_key' => 'project_update.created', 'summary' => 'Update contains PRIVATE_UPDATE_DETAILS.', 'project' => $project],
+        ['event_key' => 'client.document_uploaded', 'summary' => 'Document contains PRIVATE_DOCUMENT_DETAILS.', 'project' => null],
+    ] as $event) {
+        ProjectActivity::query()->create([
+            'actor_id' => $admin->id,
+            'client_id' => $client->id,
+            'delivery_project_id' => $event['project']?->id,
+            'event_key' => $event['event_key'],
+            'summary' => $event['summary'],
+        ]);
+    }
+
+    $clientViewerRole = Role::query()->create([
+        'name' => 'Activity client viewer',
+        'slug' => 'activity-client-viewer',
+        'permissions' => ['clients.view'],
+    ]);
+    $clientViewer = User::factory()->create(['is_admin' => false, 'role_id' => $clientViewerRole->id]);
+
+    $response = $this->actingAs($clientViewer)->get(route('admin.clients.activity', $client));
+    $response->assertOk()
+        ->assertSee('Client record changed.')
+        ->assertDontSee('PRIVATE_PROJECT_DETAILS')
+        ->assertDontSee('PRIVATE_TASK_DETAILS')
+        ->assertDontSee('PRIVATE_UPDATE_DETAILS')
+        ->assertDontSee('PRIVATE_DOCUMENT_DETAILS');
+
+    $projectViewerRole = Role::query()->create([
+        'name' => 'Activity project viewer',
+        'slug' => 'activity-project-viewer',
+        'permissions' => ['clients.view', 'projects.view'],
+    ]);
+    $projectViewer = User::factory()->create(['is_admin' => false, 'role_id' => $projectViewerRole->id]);
+
+    $response = $this->actingAs($projectViewer)->get(route('admin.delivery-projects.activity', $project));
+    $response->assertOk()
+        ->assertSee('PRIVATE_PROJECT_DETAILS')
+        ->assertDontSee('PRIVATE_TASK_DETAILS')
+        ->assertDontSee('PRIVATE_UPDATE_DETAILS')
+        ->assertDontSee('PRIVATE_DOCUMENT_DETAILS');
+});
