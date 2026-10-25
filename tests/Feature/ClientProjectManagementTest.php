@@ -344,3 +344,40 @@ it('recovers a client email left in sending state for more than ten minutes', fu
     expect($update->fresh()->email_status)->toBe('sent')
         ->and($update->fresh()->email_attempts)->toBe(2);
 });
+
+
+it('blocks production failover mailers that can silently log instead of delivering', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Failover Guard Client',
+        'email' => 'failover-guard@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Failover guard project',
+        'status' => 'in_progress',
+        'progress_percent' => 15,
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $admin->id,
+        'summary' => 'Must not be marked delivered by log fallback',
+        'client_visible' => true,
+    ]);
+
+    config()->set('app.env', 'production');
+    config()->set('mail.default', 'failover');
+    config()->set('mail.mailers.failover.mailers', ['smtp', 'log']);
+    Mail::fake();
+
+    $this->actingAs($admin)
+        ->post(route('admin.project-updates.send', $update))
+        ->assertRedirect()
+        ->assertSessionHasErrors('email');
+
+    Mail::assertNothingOutgoing();
+    expect($update->fresh()->email_attempts)->toBe(0)
+        ->and($update->fresh()->email_status)->toBe('not_sent')
+        ->and($update->fresh()->email_sent_at)->toBeNull();
+});
