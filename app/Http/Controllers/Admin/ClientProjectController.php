@@ -86,8 +86,8 @@ class ClientProjectController extends Controller
 
     public function archiveClient(Request $request, Client $client): RedirectResponse
     {
-        if ($client->projects()->exists()) {
-            return back()->withErrors(['client' => 'Archive or complete the client’s active delivery projects before archiving this client.']);
+        if ($client->projects()->whereNotIn('status', ['completed', 'cancelled'])->exists()) {
+            return back()->withErrors(['client' => 'Complete, cancel, or archive the client’s active delivery projects before archiving this client.']);
         }
 
         app(ProjectActivityLogger::class)->record(
