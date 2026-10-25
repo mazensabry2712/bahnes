@@ -133,3 +133,17 @@ it('updates a project and can archive it', function () {
     expect($project->fresh()->title_en)->toBe('Updated Concept')
         ->and($project->fresh()->status)->toBe('archived');
 });
+
+
+it('rejects non-web protocols for public project links', function () {
+    $this->actingAs(makeProjectAdmin())->from(route('admin.projects.create'))->post(route('admin.projects.store'), [
+        'title_en' => 'Unsafe Link Project',
+        'slug_en' => 'unsafe-link-project',
+        'project_status' => 'concept',
+        'status' => 'draft',
+        'sort_order' => 0,
+        'project_url' => 'ftp://example.com/private',
+    ])->assertRedirect(route('admin.projects.create'))->assertSessionHasErrors(['project_url']);
+
+    expect(Project::query()->count())->toBe(0);
+});
