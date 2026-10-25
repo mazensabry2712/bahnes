@@ -39,6 +39,8 @@ it('renders the contact page inside the shared bilingual public layout', functio
         ->assertSee('Talk to BAHNES')
         ->assertSee('Services')
         ->assertSee('name="message"', false)
+        ->assertSee('We use your details to respond to this inquiry.')
+        ->assertDontSee('Review company privacy information before launch.')
         ->assertSee('hreflang="ar-EG"', false)
         ->assertSee('© ' . now()->year . ' BAHNES IT SOLUTIONS');
 
@@ -47,6 +49,7 @@ it('renders the contact page inside the shared bilingual public layout', functio
         ->assertSee('lang="ar"', false)
         ->assertSee('dir="rtl"', false)
         ->assertSee('تواصل مع BAHNES')
+        ->assertSee('نستخدم بياناتك للرد على هذا الاستفسار.')
         ->assertSee('lang="en"', false)
         ->assertSee('© ' . now()->year . ' BAHNES IT SOLUTIONS');
 });
