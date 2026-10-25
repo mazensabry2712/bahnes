@@ -42,7 +42,7 @@
                         </article>
                     @endforeach
                 </div>
-                <div class="site-pagination">{{ $items->links() }}</div>
+                <div class="site-pagination">{{ $items->links('website.pagination', ['isArabic' => $isArabic]) }}</div>
             @else
                 <div class="site-empty-state">
                     <span class="site-empty-mark" aria-hidden="true">B.</span>
