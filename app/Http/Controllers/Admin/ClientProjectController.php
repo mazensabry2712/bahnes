@@ -246,7 +246,7 @@ class ClientProjectController extends Controller
             abort(403, 'Only updates explicitly marked client-visible can be emailed.');
         }
 
-        if (app()->environment('production') && in_array(config('mail.default'), ['log', 'array'], true)) {
+        if (app()->environment('production') && $this->usesNonDeliveringMailTransport()) {
             return back()->withErrors(['email' => 'Production mail is not configured for real delivery. Set MAIL_MAILER to a delivery transport before sending client updates.']);
         }
 
@@ -308,4 +308,25 @@ class ClientProjectController extends Controller
 
         return back()->with('status', 'Client progress email sent.');
     }
+    private function usesNonDeliveringMailTransport(): bool
+    {
+        $mailerName = (string) config('mail.default');
+        $mailer = config("mail.mailers.{$mailerName}", []);
+        $transport = is_array($mailer) ? ($mailer['transport'] ?? null) : null;
+
+        if (in_array($mailerName, ['log', 'array'], true) || in_array($transport, ['log', 'array'], true)) {
+            return true;
+        }
+
+        $nestedMailers = is_array($mailer) ? ($mailer['mailers'] ?? []) : [];
+        foreach ($nestedMailers as $nestedMailer) {
+            $nestedTransport = config("mail.mailers.{$nestedMailer}.transport");
+            if (in_array($nestedTransport, ['log', 'array'], true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
