@@ -390,3 +390,34 @@ it('keeps the document record when private storage refuses deletion', function (
     expect(ClientDocument::query()->whereKey($document->id)->exists())->toBeTrue();
     expect(ProjectActivity::query()->where('event_key', 'client.document_deleted')->exists())->toBeFalse();
 });
+
+
+it('keeps the document record when private storage throws during deletion', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Storage exception client',
+        'email' => 'storage-exception@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $document = ClientDocument::query()->create([
+        'client_id' => $client->id,
+        'uploaded_by' => $admin->id,
+        'original_name' => 'proposal.pdf',
+        'storage_path' => 'client-documents/'.$client->id.'/proposal.pdf',
+        'mime_type' => 'application/pdf',
+        'size_bytes' => 2048,
+        'category' => 'proposal',
+    ]);
+
+    $disk = Mockery::mock();
+    $disk->shouldReceive('delete')->once()->with($document->storage_path)->andThrow(new RuntimeException('Storage unavailable'));
+    Storage::shouldReceive('disk')->once()->with('local')->andReturn($disk);
+
+    $this->actingAs($admin)
+        ->delete(route('admin.client-documents.destroy', $document))
+        ->assertRedirect()
+        ->assertSessionHasErrors(['document']);
+
+    expect(ClientDocument::query()->whereKey($document->id)->exists())->toBeTrue();
+    expect(ProjectActivity::query()->where('event_key', 'client.document_deleted')->exists())->toBeFalse();
+});
