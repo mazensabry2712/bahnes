@@ -182,6 +182,7 @@ class PublicWebsiteController extends Controller
             'languageSwitchUrl' => $alternates[$isArabic ? 'en' : 'ar'] ?? route('localized.home', ['locale' => $isArabic ? 'en' : 'ar']),
             'navLabels' => $isArabic ? [
                 'home' => 'الرئيسية',
+                'home' => 'الرئيسية',
                 'services' => 'الخدمات',
                 'projects' => 'المشروعات',
                 'products' => 'المنتجات',
@@ -190,6 +191,7 @@ class PublicWebsiteController extends Controller
                 'contact' => 'تواصل معنا',
                 'language' => 'EN',
             ] : [
+                'home' => 'Home',
                 'home' => 'Home',
                 'services' => 'Services',
                 'projects' => 'Projects',
