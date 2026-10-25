@@ -377,6 +377,7 @@ it('blocks production failover mailers that can silently log instead of deliveri
     config()->set('mail.default', 'failover');
     config()->set('mail.mailers.failover.mailers', ['smtp', 'log']);
     Mail::fake();
+    $this->withoutMiddleware(PreventRequestForgery::class);
 
     $this->actingAs($admin)
         ->post(route('admin.project-updates.send', $update))
