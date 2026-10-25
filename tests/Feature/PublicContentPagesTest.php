@@ -47,7 +47,7 @@ it('renders the contact page inside the shared bilingual public layout', functio
         ->assertSee('lang="ar"', false)
         ->assertSee('dir="rtl"', false)
         ->assertSee('تواصل مع BAHNES')
-        ->assertSee('الرئيسية')
+        ->assertSee('lang="en"', false)
         ->assertSee('© ' . now()->year . ' BAHNES IT SOLUTIONS');
 });
 
