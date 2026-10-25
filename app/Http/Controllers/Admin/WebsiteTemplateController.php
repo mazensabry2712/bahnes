@@ -78,7 +78,7 @@ class WebsiteTemplateController extends Controller
     private function validatedData(Request $request, ?WebsiteTemplate $template = null): array
     {
         $rules = [
-            'preview_url' => ['nullable', 'url', 'max:2048'],
+            'preview_url' => ['nullable', 'url:http,https', 'max:2048'],
             'demo_url' => ['nullable', 'url', 'max:2048'],
             'status' => ['required', Rule::in(WebsiteTemplate::STATUSES)],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
