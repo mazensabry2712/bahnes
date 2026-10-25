@@ -9,7 +9,7 @@ it('serves uploaded CMS images from the root-level media disk', function () {
     $this->get('/media/42/cover.webp')
         ->assertOk()
         ->assertHeader('X-Content-Type-Options', 'nosniff')
-        ->assertHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        ->assertHeader('Cache-Control', 'immutable, max-age=31536000, public');
 });
 
 it('does not expose unsupported files through the media route', function () {
