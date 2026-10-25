@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\\Support\\Facades\\Storage;
+use Illuminate\Support\Facades\Storage;
 
 it('serves uploaded CMS images from the root-level media disk', function () {
     Storage::fake('bahnes_images');
