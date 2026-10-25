@@ -353,7 +353,7 @@ it('recovers a client email left in sending state for more than ten minutes', fu
 });
 
 
-it('blocks production failover mailers that can silently log instead of delivering', function () {
+it('blocks non-local failover mailers that can silently log instead of delivering', function () {
     $admin = User::factory()->create(['is_admin' => true]);
     $client = Client::query()->create([
         'name' => 'Failover Guard Client',
@@ -373,8 +373,8 @@ it('blocks production failover mailers that can silently log instead of deliveri
         'client_visible' => true,
     ]);
 
-    $this->app->instance('env', 'production');
-    config()->set('app.env', 'production');
+    $this->app->instance('env', 'staging');
+    config()->set('app.env', 'staging');
     config()->set('mail.default', 'failover');
     config()->set('mail.mailers.failover.mailers', ['smtp', 'log']);
     Mail::fake();
