@@ -23,7 +23,7 @@
                 <div class="site-art-label site-art-label-top"><span>01</span>{{ $isArabic ? 'البنية التحتية' : 'INFRASTRUCTURE' }}</div>
                 <div class="site-art-label site-art-label-right"><span>02</span>{{ $isArabic ? 'الأمن' : 'SECURITY' }}</div>
                 <div class="site-art-label site-art-label-bottom"><span>03</span>{{ $isArabic ? 'البرمجيات' : 'SOFTWARE' }}</div>
-                <div class="site-art-coordinate">30° 02' N / 31° 14' E</div>
+                <div class="site-art-coordinate">{{ $isArabic ? 'الأنظمة / الأشخاص / النتائج' : 'SYSTEMS / PEOPLE / OUTCOMES' }}</div>
             </div>
         </div>
     </section>
