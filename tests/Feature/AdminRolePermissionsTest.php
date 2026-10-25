@@ -172,6 +172,12 @@ it('creates staff roles and persists only the selected supported permissions', f
         ->and(ProjectActivity::query()->where('event_key', 'staff.created')->exists())->toBeTrue()
         ->and(ProjectActivity::query()->where('event_key', 'staff.role_updated')->exists())->toBeTrue();
 
+    $this->actingAs($admin)->get(route('admin.access.activity'))
+        ->assertOk()
+        ->assertJsonPath('data.0.event_key', 'staff.role_updated');
+
+    $this->actingAs($staff)->get(route('admin.access.activity'))->assertForbidden();
+
     $this->actingAs($admin)->put(route('admin.access.users.role.update', $admin), [
         'role_id' => null,
     ])->assertSessionHasErrors(['role_id']);
