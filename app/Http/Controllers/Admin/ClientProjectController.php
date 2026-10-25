@@ -22,9 +22,14 @@ class ClientProjectController extends Controller
     public function clients(Request $request): View
     {
         $search = trim((string) $request->query('q', ''));
-        $clients = Client::query()
-            ->when($search !== '', fn ($query) => $query->search($search))
-            ->withCount('projects')
+        $clientsQuery = Client::query()
+            ->when($search !== '', fn ($query) => $query->search($search));
+
+        if ($request->user()->hasPermissionTo('projects.view')) {
+            $clientsQuery->withCount('projects');
+        }
+
+        $clients = $clientsQuery
             ->latest()
             ->paginate(20)
             ->withQueryString();
@@ -110,14 +115,23 @@ class ClientProjectController extends Controller
         return redirect()->route('admin.clients.show', $project->client)->with('status', 'Delivery project archived.');
     }
 
-    public function showClient(Client $client): View
+    public function showClient(Request $request, Client $client): View
     {
-        $client->load(['accountManager', 'projects' => fn ($query) => $query->with('owner')->latest()]);
+        $client->load('accountManager');
 
-        return view('admin.clients.show', [
-            'client' => $client,
-            'users' => \App\Models\User::query()->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))->orderBy('name')->get(['id', 'name']),
-        ]);
+        if ($request->user()->hasPermissionTo('projects.view')) {
+            $client->load(['projects' => fn ($query) => $query->with('owner')->latest()]);
+        } else {
+            // Prevent a client-only viewer from receiving project records through
+            // implicit Eloquent lazy loading in the Blade view.
+            $client->setRelation('projects', collect());
+        }
+
+        $users = $request->user()->hasPermissionTo('clients.update')
+            ? \App\Models\User::query()->where(fn ($query) => $query->where('is_admin', true)->orWhereNotNull('role_id'))->orderBy('name')->get(['id', 'name'])
+            : collect();
+
+        return view('admin.clients.show', compact('client', 'users'));
     }
 
     public function createProject(Client $client): View
