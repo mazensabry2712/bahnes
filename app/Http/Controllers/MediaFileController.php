@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -14,7 +13,7 @@ class MediaFileController extends Controller
      * The storage directory is outside public/, so files are only exposed
      * through this allow-listed route rather than a public symlink.
      */
-    public function show(Request $request, string $path): StreamedResponse
+    public function show(string $path): StreamedResponse
     {
         abort_unless(
             preg_match('/\A[0-9]+\/(?:conversions\/)?[A-Za-z0-9][A-Za-z0-9._-]*\z/D', $path) === 1,
