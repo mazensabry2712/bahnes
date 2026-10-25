@@ -210,3 +210,71 @@ it('archives delivery projects without hard-deleting their history', function ()
         ->and(DeliveryProject::withTrashed()->whereKey($project->id)->exists())->toBeTrue()
         ->and(ProjectActivity::query()->where('delivery_project_id', $project->id)->where('event_key', 'project.archived')->exists())->toBeTrue();
 });
+
+
+it('never writes private internal notes into client or project activity payloads', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    $this->actingAs($admin)->post(route('admin.clients.store'), [
+        'name' => 'Private Audit Client',
+        'email' => 'private-audit@example.com',
+        'preferred_locale' => 'en',
+        'internal_notes' => 'CLIENT_SECRET_INTERNAL_NOTE',
+    ])->assertRedirect();
+
+    $client = Client::query()->where('email', 'private-audit@example.com')->firstOrFail();
+    $created = ProjectActivity::query()
+        ->where('client_id', $client->id)
+        ->where('event_key', 'client.created')
+        ->firstOrFail();
+
+    expect($created->new_values)->not->toHaveKey('internal_notes')
+        ->and(json_encode($created->new_values))->not->toContain('CLIENT_SECRET_INTERNAL_NOTE');
+
+    $this->actingAs($admin)->put(route('admin.clients.update', $client), [
+        'name' => $client->name,
+        'email' => $client->email,
+        'preferred_locale' => 'en',
+        'internal_notes' => 'UPDATED_CLIENT_SECRET',
+    ])->assertRedirect();
+
+    $updated = ProjectActivity::query()
+        ->where('client_id', $client->id)
+        ->where('event_key', 'client.updated')
+        ->firstOrFail();
+
+    expect($updated->old_values)->not->toHaveKey('internal_notes')
+        ->and($updated->new_values)->not->toHaveKey('internal_notes')
+        ->and(json_encode([$updated->old_values, $updated->new_values]))->not->toContain('UPDATED_CLIENT_SECRET');
+
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Audit protected project',
+        'status' => 'in_progress',
+        'progress_percent' => 20,
+    ]);
+
+    $this->actingAs($admin)->post(route('admin.delivery-projects.tasks.store', $project), [
+        'title' => 'Private task',
+        'status' => 'todo',
+        'internal_notes' => 'TASK_SECRET_INTERNAL_NOTE',
+    ])->assertRedirect();
+
+    $task = ProjectTask::query()->where('title', 'Private task')->firstOrFail();
+
+    $this->actingAs($admin)->put(route('admin.project-tasks.update', $task), [
+        'title' => $task->title,
+        'status' => 'in_progress',
+        'sort_order' => 0,
+        'internal_notes' => 'UPDATED_TASK_SECRET',
+    ])->assertRedirect();
+
+    $taskActivity = ProjectActivity::query()
+        ->where('delivery_project_id', $project->id)
+        ->where('event_key', 'project.task_updated')
+        ->firstOrFail();
+
+    expect($taskActivity->old_values)->not->toHaveKey('internal_notes')
+        ->and($taskActivity->new_values)->not->toHaveKey('internal_notes')
+        ->and(json_encode([$taskActivity->old_values, $taskActivity->new_values]))->not->toContain('UPDATED_TASK_SECRET');
+});
