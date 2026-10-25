@@ -24,6 +24,29 @@ it('allows staff only the modules and actions assigned to their role', function 
     $this->actingAs($staff)->get(route('admin.clients.create'))->assertForbidden();
     $this->actingAs($staff)->get(route('admin.access.index'))->assertForbidden();
 
+    foreach ([
+        'admin.inquiries.index',
+        'admin.services.index',
+        'admin.projects.index',
+        'admin.products.index',
+        'admin.templates.index',
+        'admin.insights.index',
+        'admin.insight-categories.index',
+    ] as $routeName) {
+        $this->actingAs($staff)->get(route($routeName))->assertForbidden();
+    }
+
+    foreach ([
+        'admin.services.create',
+        'admin.projects.create',
+        'admin.products.create',
+        'admin.templates.create',
+        'admin.insights.create',
+        'admin.insight-categories.create',
+    ] as $routeName) {
+        $this->actingAs($staff)->get(route($routeName))->assertForbidden();
+    }
+
     expect($staff->hasPermissionTo('clients.view'))->toBeTrue()
         ->and($staff->hasPermissionTo('clients.create'))->toBeFalse()
         ->and($staff->hasPermissionTo('cms.products.update'))->toBeFalse();
