@@ -15,7 +15,7 @@ This document separates the established planning direction from proposals and de
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
 | CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Selected CSS/build constraints; lockfile and Vite build are verified by CI after manifest changes |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
-| PHP quality gates | Pest + Laravel Pint + Larastan | Latest CI: 67 tests / 309 assertions, static analysis and security audits pass, TypeScript and Vite build pass |
+| PHP quality gates | Pest + Laravel Pint + Larastan | Latest CI: 67 tests / 311 assertions, static analysis and security audits pass, TypeScript and Vite build pass |
 | Admin UI | Custom Laravel Blade admin and public site | Existing controllers, views, authentication and server-side authorization remain the baseline; improve through shared Blade components and tested features |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
@@ -41,8 +41,9 @@ This document separates the established planning direction from proposals and de
 - Replaced an internal launch reminder and an unverified retention-policy claim with accurate bilingual contact-form copy.
 - Contact validation errors now use Arabic or English copy based on the route locale or the legacy form's selected language.
 - Public content pagination now uses a custom bilingual Blade view with RTL-aware navigation labels and accessible current/disabled states.
-- Added bilingual contact-layout/privacy-copy, Arabic validation-error, and pagination coverage, plus explicit home breadcrumb assertions for localized content indexes.
-- GitHub Actions passed on `main` commit `b0dbfbe3c71f975786828b1fbc2be809a1b31b15`: 67 tests / 309 assertions, Larastan, dependency audits, TypeScript and frontend production build. This verifies CI only; it does not confirm a live deployment.
+- The public footer now prioritizes useful Services and Contact links instead of exposing the technical robots.txt endpoint as visitor navigation.
+- Added bilingual contact-layout/privacy-copy, Arabic validation-error, pagination, and footer navigation coverage, plus explicit home breadcrumb assertions for localized content indexes.
+- GitHub Actions passed on `main` commit `dd4073a3dde7667bc50ab19cf45c752c98fbff70`: 67 tests / 311 assertions, Larastan, dependency audits, TypeScript and frontend production build. This verifies CI only; it does not confirm a live deployment.
 
 ## Package-first rule
 
