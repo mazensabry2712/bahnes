@@ -42,6 +42,7 @@ This document separates the established planning direction from proposals and de
 - Contact validation errors now use Arabic or English copy based on the route locale or the legacy form's selected language.
 - Public content pagination now uses a custom bilingual Blade view with RTL-aware navigation labels and accessible current/disabled states.
 - The public footer now prioritizes useful Services and Contact links instead of exposing the technical robots.txt endpoint as visitor navigation.
+- The shared public header now includes an explicit localized Home link alongside the logo, with feature-test coverage for English and Arabic navigation.
 - Added bilingual contact-layout/privacy-copy, Arabic validation-error, pagination, and footer navigation coverage, plus explicit home breadcrumb assertions for localized content indexes.
 - GitHub Actions passed on `main` commit `dd4073a3dde7667bc50ab19cf45c752c98fbff70`: 67 tests / 311 assertions, Larastan, dependency audits, TypeScript and frontend production build. This verifies CI only; it does not confirm a live deployment.
 
