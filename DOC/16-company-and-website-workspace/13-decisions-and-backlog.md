@@ -44,6 +44,7 @@ This document separates the established planning direction from proposals and de
 - The public footer now prioritizes useful Services and Contact links instead of exposing the technical robots.txt endpoint as visitor navigation.
 - The shared public header now includes an explicit localized Home link alongside the logo, with feature-test coverage for English and Arabic navigation.
 - Removed unverified geographic coordinates from the homepage illustration and replaced them with neutral, localized brand messaging; tests guard against reintroducing the unsupported location claim.
+- Replaced the mixed Arabic/English project-concept label with fully Arabic copy on both listing cards and detail pages, with a bilingual regression test.
 - Added bilingual contact-layout/privacy-copy, Arabic validation-error, pagination, and footer navigation coverage, plus explicit home breadcrumb assertions for localized content indexes.
 - GitHub Actions passed on `main` commit `dd4073a3dde7667bc50ab19cf45c752c98fbff70`: 67 tests / 311 assertions, Larastan, dependency audits, TypeScript and frontend production build. This verifies CI only; it does not confirm a live deployment.
 
