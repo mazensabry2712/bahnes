@@ -19,6 +19,7 @@ class DeliveryProject extends Model
     protected $fillable = [
         'client_id', 'owner_id', 'title', 'description', 'status',
         'progress_percent', 'start_date', 'target_date', 'completed_at', 'internal_notes',
+        'reference', 'blocker', 'delivery_notes',
     ];
 
     protected function casts(): array
@@ -44,6 +45,18 @@ class DeliveryProject extends Model
     }
 
     /** @return HasMany<ProjectUpdate, $this> */
+    /** @return HasMany<ProjectTask, $this> */
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(ProjectTask::class, 'delivery_project_id');
+    }
+
+    /** @return HasMany<ProjectActivity, $this> */
+    public function activities(): HasMany
+    {
+        return $this->hasMany(ProjectActivity::class, 'delivery_project_id');
+    }
+
     public function updates(): HasMany
     {
         return $this->hasMany(ProjectUpdate::class);
