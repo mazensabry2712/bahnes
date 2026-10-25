@@ -33,6 +33,24 @@ it('renders the bilingual homepage with localized navigation and no fabricated p
         ->assertSee('تقنية تعمل لصالح أعمالك.');
 });
 
+it('renders the contact page inside the shared bilingual public layout', function () {
+    $this->get(route('localized.contact.show', ['locale' => 'en']))
+        ->assertOk()
+        ->assertSee('Talk to BAHNES')
+        ->assertSee('Services')
+        ->assertSee('name="message"', false)
+        ->assertSee('hreflang="ar-EG"', false)
+        ->assertSee('© ' . now()->year . ' BAHNES IT SOLUTIONS');
+
+    $this->get(route('localized.contact.show', ['locale' => 'ar']))
+        ->assertOk()
+        ->assertSee('lang="ar"', false)
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('تواصل مع BAHNES')
+        ->assertSee('الرئيسية')
+        ->assertSee('© ' . now()->year . ' BAHNES IT SOLUTIONS');
+});
+
 it('lists only published services with a complete translation and active service line', function () {
     $line = publicWebsiteServiceLine();
 
