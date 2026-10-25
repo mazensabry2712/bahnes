@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\ProjectActivityLogger;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class AccessManagementController extends Controller
             'slug' => Str::slug($data['name']).'-'.Str::lower(Str::random(5)),
             'permissions' => array_values(array_unique($data['permissions'] ?? [])),
         ]);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'role.created', 'Staff role created.',
             null, null, null, ['role_id' => $role->getKey(), 'name' => $role->name, 'permissions' => $role->permissions],
         );
@@ -66,7 +67,7 @@ class AccessManagementController extends Controller
             'slug' => Str::slug($data['name']).'-'.Str::lower(Str::random(5)),
             'permissions' => array_values(array_unique($data['permissions'] ?? [])),
         ]);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'role.updated', 'Staff role permissions updated.',
             null, null, $oldValues, ['role_id' => $role->getKey(), 'name' => $role->name, 'permissions' => $role->permissions],
         );
@@ -92,7 +93,7 @@ class AccessManagementController extends Controller
             'is_admin' => false,
             'role_id' => $data['role_id'],
         ]);
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'staff.created', 'Staff account created.',
             null, null, null, ['user_id' => $staff->getKey(), 'email' => $staff->email, 'role_id' => $staff->role_id],
         );
@@ -114,7 +115,7 @@ class AccessManagementController extends Controller
 
         $oldRoleId = $user->role_id;
         $user->forceFill(['role_id' => $data['role_id'] ?? null])->save();
-        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+        app(ProjectActivityLogger::class)->record(
             $request->user(), 'staff.role_updated', 'Staff access assignment updated.',
             null, null, ['user_id' => $user->getKey(), 'role_id' => $oldRoleId],
             ['user_id' => $user->getKey(), 'role_id' => $user->role_id],
