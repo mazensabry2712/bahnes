@@ -119,7 +119,7 @@ class ProjectController extends Controller
             'deliverables_en' => ['nullable', 'string', 'max:30000'],
             'deliverables_ar' => ['nullable', 'string', 'max:30000'],
             'client_name' => ['nullable', 'string', 'max:180'],
-            'project_url' => ['nullable', 'url', 'max:2048'],
+            'project_url' => ['nullable', 'url:http,https', 'max:2048'],
             'project_status' => ['required', Rule::in(Project::PROJECT_STATUSES)],
             'display_permission_confirmed' => ['nullable', 'boolean'],
             'status' => ['required', Rule::in(Project::STATUSES)],
