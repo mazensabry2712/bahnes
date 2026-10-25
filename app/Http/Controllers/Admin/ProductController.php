@@ -78,7 +78,7 @@ class ProductController extends Controller
     private function validatedData(Request $request, ?Product $product = null): array
     {
         $rules = [
-            'demo_url' => ['nullable', 'url', 'max:2048'],
+            'demo_url' => ['nullable', 'url:http,https', 'max:2048'],
             'status' => ['required', Rule::in(Product::STATUSES)],
             'sort_order' => ['required', 'integer', 'min:0', 'max:65535'],
             'published_at' => ['nullable', 'date'],
