@@ -4,30 +4,30 @@
 <body style="margin:0;background:#f4f6f8;color:#172033;font-family:Arial,sans-serif;line-height:1.65;padding:24px">
     <main style="max-width:680px;margin:0 auto;background:#fff;border:1px solid #e2e6ed;border-radius:12px;padding:28px">
         <p style="font-size:12px;letter-spacing:.12em;font-weight:bold;color:#667085">BAHNES IT SOLUTIONS</p>
-        <h1 style="font-size:24px;margin-bottom:8px">Project progress update</h1>
-        <p>Hello {{ $client->name }},</p>
-        <p>Here is the latest approved update for <strong>{{ $project->title }}</strong>.</p>
+        <h1 style="font-size:24px;margin-bottom:8px">{{ $client->preferred_locale === 'ar' ? 'تحديث تقدم المشروع' : 'Project progress update' }}</h1>
+        <p>{{ $client->preferred_locale === 'ar' ? 'مرحبًا' : 'Hello' }} {{ $client->name }},</p>
+        <p>{{ $client->preferred_locale === 'ar' ? 'إليك آخر تحديث معتمد لمشروع' : 'Here is the latest approved update for' }} <strong>{{ $project->title }}</strong>.</p>
         <section style="background:#f8fafc;border-radius:8px;padding:16px;margin:20px 0">
-            <p style="margin:0 0 8px"><strong>Summary</strong></p>
+            <p style="margin:0 0 8px"><strong>{{ $client->preferred_locale === 'ar' ? 'الملخص' : 'Summary' }}</strong></p>
             <p style="margin:0;white-space:pre-line">{{ $update->summary }}</p>
         </section>
         @if ($update->completed_work)
-            <h2 style="font-size:17px">Completed</h2>
+            <h2 style="font-size:17px">{{ $client->preferred_locale === 'ar' ? 'تم إنجازه' : 'Completed' }}</h2>
             <p style="white-space:pre-line">{{ $update->completed_work }}</p>
         @endif
         @if ($update->current_work)
-            <h2 style="font-size:17px">In progress</h2>
+            <h2 style="font-size:17px">{{ $client->preferred_locale === 'ar' ? 'جارٍ العمل عليه' : 'In progress' }}</h2>
             <p style="white-space:pre-line">{{ $update->current_work }}</p>
         @endif
         @if ($update->next_step)
-            <h2 style="font-size:17px">Next step</h2>
+            <h2 style="font-size:17px">{{ $client->preferred_locale === 'ar' ? 'الخطوة التالية' : 'Next step' }}</h2>
             <p style="white-space:pre-line">{{ $update->next_step }}</p>
         @endif
         @if ($update->target_date)
-            <p><strong>Expected target date:</strong> {{ $update->target_date->format('M j, Y') }}</p>
+            <p><strong>{{ $client->preferred_locale === 'ar' ? 'الموعد المتوقع:' : 'Expected target date:' }}</strong> {{ $update->target_date->format('M j, Y') }}</p>
         @endif
-        <p style="margin-top:28px">If you have questions, reply to this email and our team will follow up.</p>
-        <p>Regards,<br>BAHNES IT SOLUTIONS</p>
+        <p style="margin-top:28px">{{ $client->preferred_locale === 'ar' ? 'إذا كان لديك أي استفسار، يمكنك الرد على هذا البريد وسيتابع فريقنا معك.' : 'If you have questions, reply to this email and our team will follow up.' }}</p>
+        <p>{{ $client->preferred_locale === 'ar' ? 'مع تحيات،' : 'Regards,' }}<br>BAHNES IT SOLUTIONS</p>
     </main>
 </body>
 </html>
