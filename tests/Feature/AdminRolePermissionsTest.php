@@ -124,3 +124,46 @@ it('rejects unknown permissions and invalid role assignments', function () {
         'role_id' => null,
     ])->assertRedirect(route('admin.access.index'));
 });
+
+
+it('creates staff roles and persists only the selected supported permissions', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    $this->actingAs($admin)->post(route('admin.access.roles.store'), [
+        'name' => 'Service editor',
+        'permissions' => ['cms.services.view', 'cms.services.create'],
+    ])->assertRedirect(route('admin.access.index'));
+
+    $role = Role::query()->where('name', 'Service editor')->firstOrFail();
+
+    expect($role->permissions)->toBe(['cms.services.view', 'cms.services.create']);
+
+    $this->actingAs($admin)->put(route('admin.access.roles.update', $role), [
+        'name' => 'Service publisher',
+        'permissions' => ['cms.services.view', 'cms.services.update'],
+    ])->assertRedirect(route('admin.access.index'));
+
+    expect($role->fresh()->name)->toBe('Service publisher')
+        ->and($role->fresh()->permissions)->toBe(['cms.services.view', 'cms.services.update']);
+
+    $this->actingAs($admin)->post(route('admin.access.users.store'), [
+        'name' => 'Service Staff',
+        'email' => 'SERVICE-STAFF@example.com',
+        'password' => 'StrongPassword-123',
+        'password_confirmation' => 'StrongPassword-123',
+        'role_id' => $role->id,
+    ])->assertRedirect(route('admin.access.index'));
+
+    $staff = User::query()->where('email', 'service-staff@example.com')->firstOrFail();
+
+    expect($staff->is_admin)->toBeFalse()
+        ->and($staff->role_id)->toBe($role->id)
+        ->and($staff->hasPermissionTo('cms.services.view'))->toBeTrue()
+        ->and($staff->hasPermissionTo('cms.services.create'))->toBeFalse();
+
+    $this->actingAs($admin)->put(route('admin.access.users.role.update', $staff), [
+        'role_id' => null,
+    ])->assertRedirect(route('admin.access.index'));
+
+    expect($staff->fresh()->role_id)->toBeNull();
+});
