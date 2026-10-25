@@ -11,21 +11,17 @@ class ProjectActivityController extends Controller
 {
     public function client(Client $client): JsonResponse
     {
-        return response()->json([
-            'data' => $client->activities()
-                ->with('actor:id,name')
-                ->latest()
-                ->paginate(50),
-        ]);
+        return response()->json($client->activities()
+            ->with('actor:id,name')
+            ->latest()
+            ->paginate(50));
     }
 
     public function project(DeliveryProject $project): JsonResponse
     {
-        return response()->json([
-            'data' => $project->activities()
-                ->with('actor:id,name')
-                ->latest()
-                ->paginate(50),
-        ]);
+        return response()->json($project->activities()
+            ->with('actor:id,name')
+            ->latest()
+            ->paginate(50));
     }
 }
