@@ -2,7 +2,7 @@
 
 return [
     // Keep originals and generated previews in the root-level Bahnes_img directory.
-    'disk_name' => env('MEDIA_DISK', 'bahnes_images'),
+    'disk_name' => 'bahnes_images',
 
     // Public-facing image uploads are limited to 5 MiB by validation and the library.
     'max_file_size' => 5 * 1024 * 1024,
