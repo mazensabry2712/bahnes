@@ -28,7 +28,9 @@ class ClientDocumentController extends Controller
         $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
         $path = 'client-documents/'.$client->getKey().'/'.Str::uuid().'.'.$extension;
         $disk = Storage::disk('local');
-        $disk->putFileAs(dirname($path), $file, basename($path));
+        if (! $disk->putFileAs(dirname($path), $file, basename($path))) {
+            throw new RuntimeException('The private client document could not be stored.');
+        }
 
         try {
             $document = $client->documents()->create([
@@ -55,6 +57,7 @@ class ClientDocumentController extends Controller
 
     public function download(ClientDocument $document): StreamedResponse
     {
+        abort_unless($document->client, 404);
         abort_unless(Storage::disk('local')->exists($document->storage_path), 404);
 
         return Storage::disk('local')->download($document->storage_path, $document->original_name, [
@@ -65,6 +68,7 @@ class ClientDocumentController extends Controller
 
     public function destroy(Request $request, ClientDocument $document): RedirectResponse
     {
+        abort_unless($document->client, 404);
         $client = $document->client;
         $disk = Storage::disk('local');
         $disk->delete($document->storage_path);
