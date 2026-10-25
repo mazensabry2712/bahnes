@@ -339,7 +339,7 @@ it('recovers a client email left in sending state for more than ten minutes', fu
         ->assertRedirect()
         ->assertSessionHas('status', 'Client progress email sent.');
 
-    Mail::assertSent(\\App\\Mail\\ClientProjectUpdateMail::class);
+    Mail::assertSent(ClientProjectUpdateMail::class);
     expect($update->fresh()->email_status)->toBe('sent')
         ->and($update->fresh()->email_attempts)->toBe(2);
 });
