@@ -40,6 +40,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
 
         Route::get('/access', [AccessManagementController::class, 'index'])->name('access.index');
         Route::post('/access/roles', [AccessManagementController::class, 'storeRole'])->name('access.roles.store');
+        Route::put('/access/roles/{role}', [AccessManagementController::class, 'updateRole'])->name('access.roles.update');
         Route::post('/access/users', [AccessManagementController::class, 'storeUser'])->name('access.users.store');
         Route::put('/access/users/{user}/role', [AccessManagementController::class, 'updateUserRole'])->name('access.users.role.update');
 
