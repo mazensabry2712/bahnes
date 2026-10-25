@@ -3,6 +3,7 @@
 use App\Console\Commands\CreateAdmin;
 use App\Console\Commands\ResetAdminPassword;
 use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsurePermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([CreateAdmin::class, ResetAdminPassword::class])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'admin' => EnsureAdmin::class,\n            'permission' => EnsurePermission::class,
+            'admin' => EnsureAdmin::class,
+            'permission' => EnsurePermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
