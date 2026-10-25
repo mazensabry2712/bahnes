@@ -285,22 +285,13 @@ class ClientProjectController extends Controller
 
         try {
             Mail::to($client->email)->send(new ClientProjectUpdateMail($update));
-            $update->forceFill([
-                'email_status' => 'sent',
-                'email_sent_at' => now(),
-                'email_error' => null,
-            ])->save();
-            app(ProjectActivityLogger::class)->record(
-                $request->user(), 'project_update.email_sent', 'Client progress update emailed.',
-                $client, $project, null,
-                ['update_id' => $update->getKey(), 'recipient' => $client->email],
-            );
         } catch (Throwable $exception) {
             report($exception);
             $update->forceFill([
                 'email_status' => 'failed',
                 'email_error' => 'Email delivery failed. Check application logs before retrying.',
             ])->save();
+
             app(ProjectActivityLogger::class)->record(
                 $request->user(), 'project_update.email_failed', 'Client progress email failed.',
                 $client, $project, null,
@@ -308,6 +299,24 @@ class ClientProjectController extends Controller
             );
 
             return back()->withErrors(['email' => 'Email could not be sent. Check mail configuration and application logs.']);
+        }
+
+        $update->forceFill([
+            'email_status' => 'sent',
+            'email_sent_at' => now(),
+            'email_error' => null,
+        ])->save();
+
+        try {
+            app(ProjectActivityLogger::class)->record(
+                $request->user(), 'project_update.email_sent', 'Client progress update emailed.',
+                $client, $project, null,
+                ['update_id' => $update->getKey(), 'recipient' => $client->email],
+            );
+        } catch (Throwable $exception) {
+            // The mail transport already accepted the message. Do not mark it failed
+            // or permit a retry just because audit logging failed afterwards.
+            report($exception);
         }
 
         return back()->with('status', 'Client progress email sent.');
