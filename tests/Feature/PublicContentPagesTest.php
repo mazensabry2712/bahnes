@@ -367,4 +367,12 @@ it('publishes only complete live products and website templates on public pages'
         'section' => 'templates',
         'slug' => 'draft-corporate-template',
     ]))->assertNotFound();
+
+    $this->get(route('sitemap'))
+        ->assertOk()
+        ->assertSee('published-business-product')
+        ->assertSee('published-corporate-template')
+        ->assertDontSee('future-business-product')
+        ->assertDontSee('draft-business-product')
+        ->assertDontSee('draft-corporate-template');
 });
