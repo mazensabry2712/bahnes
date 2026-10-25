@@ -63,12 +63,14 @@ it('emails only approved client-visible progress updates and records the send ti
         'email' => 'client@example.com',
         'preferred_locale' => 'en',
         'internal_notes' => 'Never include this in the email',
+        'commercial_summary' => 'Internal commercial terms must never be emailed',
     ]);
     $project = DeliveryProject::query()->create([
         'client_id' => $client->id,
         'title' => 'Client website',
         'status' => 'in_progress',
         'progress_percent' => 40,
+        'internal_notes' => 'Never email project internal notes',
     ]);
     $internalUpdate = ProjectUpdate::query()->create([
         'delivery_project_id' => $project->id,
@@ -101,7 +103,9 @@ it('emails only approved client-visible progress updates and records the send ti
     Mail::assertSent(ClientProjectUpdateMail::class, function (ClientProjectUpdateMail $mail) use ($client, $update): bool {
         return $mail->hasTo($client->email)
             && $mail->update->is($update)
-            && ! str_contains($mail->render(), 'Never include this in the email');
+            && ! str_contains($mail->render(), 'Never include this in the email')
+            && ! str_contains($mail->render(), 'Internal commercial terms must never be emailed')
+            && ! str_contains($mail->render(), 'Never email project internal notes');
     });
 
     expect($update->fresh()->email_sent_at)->not->toBeNull()
