@@ -31,16 +31,19 @@ class DeliveryProject extends Model
         ];
     }
 
+    /** @return BelongsTo<Client, $this> */
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
 
+    /** @return BelongsTo<User, $this> */
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    /** @return HasMany<ProjectUpdate, $this> */
     public function updates(): HasMany
     {
         return $this->hasMany(ProjectUpdate::class);
