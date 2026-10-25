@@ -184,3 +184,24 @@ it('creates staff roles and persists only the selected supported permissions', f
 
     expect($admin->fresh()->is_admin)->toBeTrue();
 });
+
+
+it('revokes dashboard access immediately when an administrator removes a staff role', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $role = Role::query()->create([
+        'name' => 'Temporary access',
+        'slug' => 'temporary-access',
+        'permissions' => ['clients.view'],
+    ]);
+    $staff = User::factory()->create(['is_admin' => false, 'role_id' => $role->id]);
+
+    $this->actingAs($staff)->get(route('admin.dashboard'))->assertOk();
+
+    $this->actingAs($admin)->put(route('admin.access.users.role.update', $staff), [
+        'role_id' => null,
+    ])->assertRedirect(route('admin.access.index'));
+
+    $this->actingAs($staff)->get(route('admin.dashboard'))->assertForbidden();
+    $this->actingAs($staff)->get(route('admin.clients.index'))->assertForbidden();
+    $this->actingAs($staff)->post(route('admin.logout'))->assertRedirect(route('admin.login'));
+});
