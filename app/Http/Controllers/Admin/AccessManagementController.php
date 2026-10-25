@@ -45,6 +45,26 @@ class AccessManagementController extends Controller
         return redirect()->route('admin.access.index')->with('status', 'Role created.');
     }
 
+    public function updateRole(Request $request, Role $role): RedirectResponse
+    {
+        abort_unless($request->user()->is_admin, 403);
+
+        $permissions = array_keys(config('admin-permissions'));
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:100', Rule::unique('roles', 'name')->ignore($role->id)],
+            'permissions' => ['sometimes', 'array'],
+            'permissions.*' => ['string', Rule::in($permissions)],
+        ]);
+
+        $role->update([
+            'name' => $data['name'],
+            'slug' => Str::slug($data['name']).'-'.Str::lower(Str::random(5)),
+            'permissions' => array_values(array_unique($data['permissions'] ?? [])),
+        ]);
+
+        return redirect()->route('admin.access.index')->with('status', 'Role permissions updated.');
+    }
+
     public function storeUser(Request $request): RedirectResponse
     {
         abort_unless($request->user()->is_admin, 403);
