@@ -54,3 +54,40 @@ Provide a private, authenticated workspace for managing BAHNES clients and deliv
 - Run the complete automated CI suite after implementation.
 - Configure and verify SMTP/transactional mail in the deployment environment before claiming real delivery.
 - Existing public CMS projects are not automatically converted into client delivery projects; do not infer client contracts from public portfolio entries.
+
+
+## Backend implementation status
+
+The internal backend now includes:
+
+- Client profile fields for agreed services, commercial summary, account manager, preferred email language, and internal notes.
+- Delivery project references (BH-PRJ-000001 format), status/progress validation, completion timestamps, blockers, delivery notes, assigned owner, and soft archiving.
+- Project tasks and milestones with assignees, due dates, statuses, completion timestamps, internal notes, and soft archiving.
+- Private client document upload/download/delete endpoints. Documents use the private local storage disk, are not placed under public/, and require explicit document permissions.
+- Client/project activity history for record changes, task and milestone events, email outcomes, document events, role creation/changes, and staff access assignments.
+- A protected, paginated JSON history endpoint for clients and projects, plus task listing for future UI integration.
+- Granular permissions for document access, tasks/milestones, and archiving, enforced by route middleware.
+- Email delivery state (not_sent, sending, sent, failed), attempt count, safe failure messages, duplicate-send claim protection, and recovery of abandoned sending states after ten minutes.
+
+### Protected backend routes
+
+- POST /admin-panel/clients/{client}/documents
+- GET /admin-panel/client-documents/{document}/download
+- DELETE /admin-panel/client-documents/{document}
+- GET /admin-panel/clients/{client}/activity
+- GET /admin-panel/delivery-projects/{project}/activity
+- GET /admin-panel/delivery-projects/{project}/tasks
+- POST /admin-panel/delivery-projects/{project}/tasks
+- PUT /admin-panel/project-tasks/{task}
+- DELETE /admin-panel/project-tasks/{task}
+- DELETE /admin-panel/clients/{client}
+- DELETE /admin-panel/delivery-projects/{project}
+
+The backend routes, data models and tests are being completed independently of the admin Blade/UI integration. No client portal has been created; these endpoints are protected for internal staff only.
+
+### Release gates still required
+
+- Run the latest full CI workflow successfully after all current backend changes.
+- Verify migrations on the actual target database engine and confirm private storage directory permissions/persistence on the host.
+- Configure and verify a real production mail transport before sending real client email.
+- Build the admin screens for documents, tasks, activity history, and the new client/project fields only after explicit frontend approval.
