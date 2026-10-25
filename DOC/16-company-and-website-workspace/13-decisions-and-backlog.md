@@ -53,7 +53,7 @@ When a maintained package is a strong fit for a non-trivial requirement, prefer 
 
 The canonical choice is [Website Tech Stack & Frontend Architecture](../09-technology-and-engineering/website-tech-stack.md): one Laravel app with PHP backend, custom Blade admin and public pages, Tailwind CSS 4.1+, TypeScript for browser-side code and Vite; MySQL is preferred. Do not add Inertia, a SPA, Livewire, Alpine.js or a packaged admin panel. Use GSAP only for motion that materially benefits from it.
 
-The latest feature and dependency-lock runs passed **59 Pest tests (234 assertions)**, Composer/npm security audits, Larastan, TypeScript and the Vite production build ([feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)). CI does not verify local Herd or the deployment host.
+Historical baseline: the initial feature and dependency-lock runs passed **59 Pest tests (234 assertions)**, Composer/npm security audits, Larastan, TypeScript and the Vite production build ([initial feature CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104580639); [initial dependency-lock CI](https://github.com/mazensabry2712/bahnes/actions/runs/40104175812)). The current verified baseline is listed in the implementation notes above. CI does not verify local Herd or the deployment host.
 
 ## Decisions required before backend implementation
 
