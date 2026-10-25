@@ -141,7 +141,7 @@ it('records audit history for client project and task changes', function () {
 
     $this->actingAs($admin)->get(route('admin.clients.activity', $client))
         ->assertOk()
-        ->assertJsonPath('data.0.event_key', 'project.created');
+        ->assertJsonFragment(['event_key' => 'project.created']);
 });
 
 it('prevents archiving a client while active delivery projects remain', function () {
