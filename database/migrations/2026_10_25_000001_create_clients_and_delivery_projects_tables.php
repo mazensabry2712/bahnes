@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('progress_percent')->default(0);
             $table->date('start_date')->nullable();
             $table->date('target_date')->nullable();
-            $table->date('completed_at')->nullable();
+            $table->timestamp('completed_at')->nullable();
             $table->text('internal_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
