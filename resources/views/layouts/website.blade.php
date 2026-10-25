@@ -58,8 +58,8 @@
             </a>
             <p>{{ $isArabic ? 'البنية التحتية لتقنية المعلومات والأمن والحلول البرمجية.' : 'IT infrastructure, security, and software solutions.' }}</p>
             <div class="site-footer-links">
+                <a href="{{ route('public.content.index', ['locale' => $locale, 'section' => 'services']) }}">{{ $navLabels['services'] }}</a>
                 <a href="{{ route('localized.contact.show', ['locale' => $locale]) }}">{{ $navLabels['contact'] }}</a>
-                <a href="{{ route('robots') }}">robots.txt</a>
             </div>
             <small>© {{ now()->year }} BAHNES IT SOLUTIONS</small>
         </div>
