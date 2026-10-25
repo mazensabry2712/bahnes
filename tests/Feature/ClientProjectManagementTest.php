@@ -7,6 +7,7 @@ use App\Models\ProjectUpdate;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Mail;
 
 it('allows an administrator to create a private client and delivery project', function () {
@@ -253,6 +254,7 @@ it('does not send an update that is already in the sending state', function () {
     ]);
 
     Mail::fake();
+    $this->withoutMiddleware(PreventRequestForgery::class);
 
     $this->actingAs($admin)
         ->post(route('admin.project-updates.send', $update))
