@@ -1,10 +1,10 @@
 <?php
 
-namespace App\\Http\\Controllers;
+namespace App\Http\Controllers;
 
-use Illuminate\\Http\\Request;
-use Illuminate\\Support\\Facades\\Storage;
-use Symfony\\Component\\HttpFoundation\\StreamedResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MediaFileController extends Controller
 {
@@ -17,7 +17,7 @@ class MediaFileController extends Controller
     public function show(Request $request, string $path): StreamedResponse
     {
         abort_unless(
-            preg_match('/\\A[0-9]+\\/(?:conversions\\/)?[A-Za-z0-9][A-Za-z0-9._-]*\\z/D', $path) === 1,
+            preg_match('/\A[0-9]+\/(?:conversions\/)?[A-Za-z0-9][A-Za-z0-9._-]*\z/D', $path) === 1,
             404,
         );
 
