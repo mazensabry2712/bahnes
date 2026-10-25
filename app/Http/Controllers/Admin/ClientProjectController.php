@@ -44,6 +44,8 @@ class ClientProjectController extends Controller
             'phone' => ['nullable', 'string', 'max:40'],
             'preferred_locale' => ['required', Rule::in(['en', 'ar'])],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
+            'agreed_services' => ['nullable', 'string', 'max:10000'],
+            'commercial_summary' => ['nullable', 'string', 'max:10000'],
             'account_manager_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
@@ -78,6 +80,32 @@ class ClientProjectController extends Controller
         return redirect()->route('admin.clients.show', $client)->with('status', 'Client record updated.');
     }
 
+    public function archiveClient(Request $request, Client $client): RedirectResponse
+    {
+        if ($client->projects()->exists()) {
+            return back()->withErrors(['client' => 'Archive or complete the client’s active delivery projects before archiving this client.']);
+        }
+
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'client.archived', 'Client record archived.', $client,
+            null, ['name' => $client->name, 'email' => $client->email], null,
+        );
+        $client->delete();
+
+        return redirect()->route('admin.clients.index')->with('status', 'Client archived.');
+    }
+
+    public function archiveProject(Request $request, DeliveryProject $project): RedirectResponse
+    {
+        app(\\App\\Services\\ProjectActivityLogger::class)->record(
+            $request->user(), 'project.archived', 'Delivery project archived.', $project->client, $project,
+            ['title' => $project->title, 'status' => $project->status], null,
+        );
+        $project->delete();
+
+        return redirect()->route('admin.clients.show', $project->client)->with('status', 'Delivery project archived.');
+    }
+
     public function showClient(Client $client): View
     {
         $client->load(['accountManager', 'projects' => fn ($query) => $query->with('owner')->latest()]);
@@ -108,12 +136,9 @@ class ClientProjectController extends Controller
             'target_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'owner_id' => ['nullable', 'integer', 'exists:users,id'],
             'internal_notes' => ['nullable', 'string', 'max:10000'],
+            'blocker' => ['nullable', 'string', 'max:10000'],
+            'delivery_notes' => ['nullable', 'string', 'max:10000'],
         ]);
-
-        if ($data['status'] === 'completed') {
-            $data['progress_percent'] = 100;
-            $data['completed_at'] = now();
-        }
 
         if ($data['status'] === 'completed') {
             $data['progress_percent'] = 100;
