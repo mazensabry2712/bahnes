@@ -389,3 +389,41 @@ it('blocks production failover mailers that can silently log instead of deliveri
         ->and($update->fresh()->email_status)->toBe('not_sent')
         ->and($update->fresh()->email_sent_at)->toBeNull();
 });
+
+
+it('keeps a successfully sent email marked sent when audit logging fails afterwards', function () {
+    Mail::fake();
+
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Audit failure client',
+        'email' => 'audit-failure@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Audit failure project',
+        'status' => 'in_progress',
+        'progress_percent' => 75,
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $admin->id,
+        'summary' => 'Successful email',
+        'client_visible' => true,
+    ]);
+
+    $logger = Mockery::mock(\\App\\Services\\ProjectActivityLogger::class);
+    $logger->shouldReceive('record')->once()->andThrow(new RuntimeException('Audit database unavailable'));
+    $this->app->instance(\\App\\Services\\ProjectActivityLogger::class, $logger);
+
+    $this->actingAs($admin)
+        ->post(route('admin.project-updates.send', $update))
+        ->assertRedirect()
+        ->assertSessionHas('status', 'Client progress email sent.');
+
+    Mail::assertSent(ClientProjectUpdateMail::class);
+    expect($update->fresh()->email_status)->toBe('sent')
+        ->and($update->fresh()->email_sent_at)->not->toBeNull()
+        ->and($update->fresh()->email_attempts)->toBe(1);
+});
