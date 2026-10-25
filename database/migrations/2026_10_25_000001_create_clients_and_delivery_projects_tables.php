@@ -50,6 +50,7 @@ return new class extends Migration
             $table->text('next_step')->nullable();
             $table->date('target_date')->nullable();
             $table->boolean('client_visible')->default(false);
+            $table->string('email_status')->default('not_sent');
             $table->unsignedSmallInteger('email_attempts')->default(0);
             $table->timestamp('email_sent_at')->nullable();
             $table->text('email_error')->nullable();
