@@ -20,8 +20,7 @@ function createMediaTestServiceLine(): ServiceLine
 }
 
 beforeEach(function (): void {
-    Storage::fake('public');
-    config()->set('media-library.disk_name', 'public');
+    Storage::fake('bahnes_images');
     config()->set('media-library.queue_conversions_by_default', false);
 });
 
@@ -51,7 +50,7 @@ it('uploads a cover image with a generated filename and localized alt text', fun
     expect($media->getCustomProperty('alt_en'))->toBe('Network equipment in a rack');
     expect($media->getCustomProperty('alt_ar'))->toBe('معدات الشبكات داخل خزانة');
     expect($service->coverImageUrl())->not->toBeNull();
-    expect(Storage::disk('public')->allFiles())->not->toBeEmpty();
+    expect(Storage::disk('bahnes_images')->allFiles())->not->toBeEmpty();
 });
 
 it('can remove a previously uploaded cover image', function () {
