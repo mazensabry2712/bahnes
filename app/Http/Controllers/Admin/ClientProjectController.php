@@ -172,6 +172,12 @@ class ClientProjectController extends Controller
             return back()->with('status', 'This update was already emailed.');
         }
 
+        if (app()->environment('production') && in_array(config('mail.default'), ['log', 'array'], true)) {
+            return back()->withErrors(['email' => 'Production mail is not configured for real delivery. Set MAIL_MAILER to a delivery transport before sending client updates.']);
+        }
+
+        $update->increment('email_attempts');
+
         try {
             Mail::to($update->project->client->email)->send(new ClientProjectUpdateMail($update));
             $update->forceFill(['email_sent_at' => now(), 'email_error' => null])->save();
