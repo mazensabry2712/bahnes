@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\DeliveryProject;
+use App\Models\ProjectActivity;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class ProjectActivityController extends Controller
