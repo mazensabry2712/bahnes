@@ -79,7 +79,7 @@ class ProjectTaskController extends Controller
             $request->user(), 'project.task_updated',
             $task->is_milestone ? 'Project milestone updated.' : 'Project task updated.',
             $project?->client, $project, $oldValues,
-            collect($data)->except(['internal_notes'])->all(),
+            collect($data)->all(),
         );
 
         return back()->with('status', $task->is_milestone ? 'Milestone updated.' : 'Task updated.');
