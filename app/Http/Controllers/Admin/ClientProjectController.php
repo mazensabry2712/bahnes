@@ -100,6 +100,11 @@ class ClientProjectController extends Controller
             'internal_notes' => ['nullable', 'string', 'max:10000'],
         ]);
 
+        if ($data['status'] === 'completed') {
+            $data['progress_percent'] = 100;
+            $data['completed_at'] = now();
+        }
+
         $client->projects()->create($data);
 
         return redirect()->route('admin.clients.show', $client)->with('status', 'Delivery project created.');
@@ -131,8 +136,8 @@ class ClientProjectController extends Controller
 
         if ($data['status'] === 'completed') {
             $data['progress_percent'] = 100;
-            $data['completed_at'] = now();
-        } elseif (($data['status'] ?? null) !== 'completed') {
+            $data['completed_at'] = $project->completed_at ?? now();
+        } else {
             $data['completed_at'] = null;
         }
 
