@@ -34,6 +34,13 @@ The website has three commercial jobs: generate service inquiries, establish tru
 
 ## Working rules
 
+## Git workflow (mandatory)
+
+- Work directly on `main` for every implementation, test, fix, and documentation change.
+- This project has no feature-branch workflow. Never create or switch to another branch.
+- Keep commits focused and reviewable; check CI before reporting a change as verified.
+- Do not force-push, rewrite shared history, or deploy to production without explicit user approval.
+
 - Keep one canonical source per policy; link to existing DOC sections rather than copying conflicting rules.
 - Distinguish agreed planning direction from proposed design, pending decisions, implementation, and verification.
 - Never invent clients, testimonials, metrics, certifications, prices, supplier capability, or legal status.
