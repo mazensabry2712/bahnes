@@ -47,6 +47,12 @@ jobs:
           cp .env.example .env
           php artisan key:generate --force
 
+      - name: Verify migrations roll back and reapply cleanly
+        run: |
+          php artisan migrate:fresh --force
+          php artisan migrate:rollback --force
+          php artisan migrate --force
+
       - name: Run PHP static analysis
         run: composer analyse
 
