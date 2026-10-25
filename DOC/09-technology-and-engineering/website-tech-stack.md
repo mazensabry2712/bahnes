@@ -89,7 +89,7 @@ Provide per-language titles/descriptions, canonical URLs, reciprocal hreflang fo
 
 - MySQL is the preferred plan; exact local/production configuration and hosting limits must be verified.
 - Use reviewed migrations; do not alter a live schema manually without a recovery plan.
-- Generate upload filenames; validate content/MIME and size; prevent executable uploads; keep private files outside public access. Content covers are stored through the media library on the Laravel public disk, and local setup runs `storage:link --force` so `/storage/...` URLs resolve. Confirm persistent disk/backups and PHP `gd`, `exif`, and `fileinfo` on production.
+- Generate upload filenames; validate content/MIME and size; prevent executable uploads. New CMS media originals and previews use the `bahnes_images` disk rooted at `<project-root>/Bahnes_img`, outside `public/`; Laravel serves only allow-listed JPG/JPEG/PNG/WebP media through `/media/{path}` without a public symlink. The directory is runtime storage and is git-ignored except for `.gitkeep`. Confirm persistent disk/backups and PHP `gd`, `exif`, and `fileinfo` on production. Existing media records retain their previously assigned disk until a controlled migration is performed.
 - Media disk, mail provider/recipient, queue strategy, backup destination, analytics and hosting remain environment decisions. Never hard-code secrets.
 - Do not add Redis, queues, search infrastructure, public API, microservices or multi-tenancy without a demonstrated requirement.
 
@@ -127,3 +127,12 @@ Revisit this decision only if a genuine interactive journey, public API/mobile c
 - [Laravel Blade](https://laravel.com/docs/13.x/blade)
 - [Laravel Vite integration](https://laravel.com/docs/13.x/vite)
 - [Tailwind CSS with Laravel and Vite](https://tailwindcss.com/docs/installation/framework-guides/laravel/vite)
+
+
+## Root-level CMS media storage — 2026-10-25
+
+- Added `Bahnes_img/` at the project root, outside `public/`; runtime uploads are ignored by Git and the directory is preserved with `.gitkeep`.
+- Added the `bahnes_images` local filesystem disk rooted at `base_path('Bahnes_img')` and changed Spatie Media Library's default disk for new uploads to that disk.
+- Added `/media/{path}` delivery through a Laravel controller. It only serves files under numeric media IDs, permits image extensions JPG/JPEG/PNG/WebP, rejects other paths/extensions, and sets `nosniff` plus long-lived cache headers. No symlink into `public/` is created.
+- Added feature tests for serving a stored image, rejecting non-image extensions, and checking the storage configuration. These tests are committed but still require a CI run to establish their result.
+- Important: changing the default disk affects new uploads. Existing Media Library records retain the disk recorded in their database rows; migrate them deliberately after backup and a tested dry run. Production deployment and storage migration have not been performed.
