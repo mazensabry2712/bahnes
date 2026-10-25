@@ -44,7 +44,6 @@ class DeliveryProject extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    /** @return HasMany<ProjectUpdate, $this> */
     /** @return HasMany<ProjectTask, $this> */
     public function tasks(): HasMany
     {
@@ -57,6 +56,7 @@ class DeliveryProject extends Model
         return $this->hasMany(ProjectActivity::class, 'delivery_project_id');
     }
 
+    /** @return HasMany<ProjectUpdate, $this> */
     public function updates(): HasMany
     {
         return $this->hasMany(ProjectUpdate::class);
