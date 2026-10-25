@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Inquiry;
+use App\Models\Client;
+use App\Models\DeliveryProject;
 
 it('serves a valid sitemap containing only implemented public GET pages', function () {
     $response = $this->get(route('sitemap'));
@@ -54,13 +56,13 @@ it('does not store an inquiry when the honeypot is filled', function () {
 
 
 it('never exposes private client delivery projects in public pages or the sitemap', function () {
-    $client = \\App\\Models\\Client::query()->create([
+    $client = Client::query()->create([
         'name' => 'Private Customer Name',
         'email' => 'private-customer@example.com',
         'preferred_locale' => 'en',
         'internal_notes' => 'Confidential internal notes',
     ]);
-    \\App\\Models\\DeliveryProject::query()->create([
+    DeliveryProject::query()->create([
         'client_id' => $client->id,
         'title' => 'Confidential Internal Delivery Project',
         'status' => 'in_progress',
