@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\PublicWebsiteController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
