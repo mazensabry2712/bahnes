@@ -206,3 +206,29 @@ it('revokes dashboard access immediately when an administrator removes a staff r
     $this->actingAs($revokedStaff)->get(route('admin.clients.index'))->assertForbidden();
     $this->actingAs($revokedStaff)->post(route('admin.logout'))->assertRedirect(route('admin.login'));
 });
+
+
+it('rejects staff emails that differ from an existing address only by letter case', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $role = Role::query()->create([
+        'name' => 'Case-sensitive test role',
+        'slug' => 'case-sensitive-test-role',
+        'permissions' => ['clients.view'],
+    ]);
+    User::factory()->create([
+        'name' => 'Existing Staff',
+        'email' => 'duplicate-staff@example.com',
+        'is_admin' => false,
+        'role_id' => $role->id,
+    ]);
+
+    $this->actingAs($admin)->post(route('admin.access.users.store'), [
+        'name' => 'Duplicate Staff',
+        'email' => 'DUPLICATE-STAFF@EXAMPLE.COM',
+        'password' => 'StrongPassword-123',
+        'password_confirmation' => 'StrongPassword-123',
+        'role_id' => $role->id,
+    ])->assertSessionHasErrors(['email']);
+
+    expect(User::query()->whereRaw('LOWER(email) = ?', ['duplicate-staff@example.com'])->count())->toBe(1);
+});
