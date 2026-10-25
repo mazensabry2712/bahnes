@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::get('/', [PublicWebsiteController::class, 'root'])->name('home');
+Route::get('/media/{path}', [MediaFileController::class, 'show'])
+    ->where('path', '.+')
+    ->name('media.show');
 Route::get('/{locale}', [PublicWebsiteController::class, 'home'])
     ->whereIn('locale', ['en', 'ar'])
     ->name('localized.home');
