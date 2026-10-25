@@ -91,3 +91,19 @@ it('rate limits repeated administrator login attempts', function () {
 
     $this->assertGuest();
 });
+
+
+it('authenticates a legacy administrator whose stored email uses mixed case', function () {
+    $admin = User::factory()->create([
+        'email' => 'LEGACY-ADMIN@example.com',
+        'password' => 'a-strong-test-password',
+        'is_admin' => true,
+    ]);
+
+    $this->post(route('admin.authenticate'), [
+        'email' => 'legacy-admin@EXAMPLE.com',
+        'password' => 'a-strong-test-password',
+    ])->assertRedirect(route('admin.dashboard'));
+
+    $this->assertAuthenticatedAs($admin);
+});
