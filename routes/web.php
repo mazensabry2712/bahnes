@@ -48,11 +48,20 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::get('/clients/create', [ClientProjectController::class, 'createClient'])->middleware('permission:clients.create')->name('clients.create');
         Route::post('/clients', [ClientProjectController::class, 'storeClient'])->middleware('permission:clients.create')->name('clients.store');
         Route::put('/clients/{client}', [ClientProjectController::class, 'updateClient'])->middleware('permission:clients.update')->name('clients.update');
+        Route::delete('/clients/{client}', [ClientProjectController::class, 'archiveClient'])->middleware('permission:clients.archive')->name('clients.archive');
+        Route::post('/clients/{client}/documents', [ClientDocumentController::class, 'store'])->middleware('permission:clients.documents.manage')->name('clients.documents.store');
+        Route::get('/client-documents/{document}/download', [ClientDocumentController::class, 'download'])->middleware('permission:clients.documents.view')->name('client-documents.download');
+        Route::delete('/client-documents/{document}', [ClientDocumentController::class, 'destroy'])->middleware('permission:clients.documents.manage')->name('client-documents.destroy');
         Route::get('/clients/{client}', [ClientProjectController::class, 'showClient'])->middleware('permission:clients.view')->name('clients.show');
         Route::get('/clients/{client}/delivery-projects/create', [ClientProjectController::class, 'createProject'])->middleware('permission:projects.create')->name('delivery-projects.create');
         Route::post('/clients/{client}/delivery-projects', [ClientProjectController::class, 'storeProject'])->middleware('permission:projects.create')->name('delivery-projects.store');
         Route::get('/delivery-projects/{project}', [ClientProjectController::class, 'showProject'])->middleware('permission:projects.view')->name('delivery-projects.show');
         Route::put('/delivery-projects/{project}', [ClientProjectController::class, 'updateProject'])->middleware('permission:projects.update')->name('delivery-projects.update');
+        Route::delete('/delivery-projects/{project}', [ClientProjectController::class, 'archiveProject'])->middleware('permission:projects.archive')->name('delivery-projects.archive');
+        Route::get('/delivery-projects/{project}/tasks', [ProjectTaskController::class, 'index'])->middleware('permission:project_tasks.view')->name('delivery-projects.tasks.index');
+        Route::post('/delivery-projects/{project}/tasks', [ProjectTaskController::class, 'store'])->middleware('permission:project_tasks.create')->name('delivery-projects.tasks.store');
+        Route::put('/project-tasks/{task}', [ProjectTaskController::class, 'update'])->middleware('permission:project_tasks.update')->name('project-tasks.update');
+        Route::delete('/project-tasks/{task}', [ProjectTaskController::class, 'archive'])->middleware('permission:project_tasks.archive')->name('project-tasks.archive');
         Route::post('/delivery-projects/{project}/updates', [ClientProjectController::class, 'storeUpdate'])->middleware('permission:project_updates.create')->name('delivery-projects.updates.store');
         Route::post('/project-updates/{update}/send', [ClientProjectController::class, 'sendUpdate'])->middleware('permission:project_updates.send')->name('project-updates.send');
 
