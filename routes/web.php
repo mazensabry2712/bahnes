@@ -42,6 +42,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
         Route::get('/access', [AccessManagementController::class, 'index'])->name('access.index');
+        Route::get('/access/activity', [ProjectActivityController::class, 'security'])->name('access.activity');
         Route::post('/access/roles', [AccessManagementController::class, 'storeRole'])->name('access.roles.store');
         Route::put('/access/roles/{role}', [AccessManagementController::class, 'updateRole'])->name('access.roles.update');
         Route::post('/access/users', [AccessManagementController::class, 'storeUser'])->name('access.users.store');
