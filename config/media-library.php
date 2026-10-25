@@ -1,8 +1,8 @@
 <?php
 
 return [
-    // Keep originals and generated previews on Laravel's public disk.
-    'disk_name' => env('MEDIA_DISK', 'public'),
+    // Keep originals and generated previews in the root-level Bahnes_img directory.
+    'disk_name' => env('MEDIA_DISK', 'bahnes_images'),
 
     // Public-facing image uploads are limited to 5 MiB by validation and the library.
     'max_file_size' => 5 * 1024 * 1024,
