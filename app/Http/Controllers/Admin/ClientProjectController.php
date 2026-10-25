@@ -54,7 +54,7 @@ class ClientProjectController extends Controller
         $client = Client::query()->create($data);
         app(ProjectActivityLogger::class)->record(
             $request->user(), 'client.created', 'Client record created.', $client, null, null,
-            collect($data)->except(['internal_notes'])->all(),
+            collect($data)->all(),
         );
 
         return redirect()->route('admin.clients.show', $client)->with('status', 'Client created.');
