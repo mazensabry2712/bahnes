@@ -51,6 +51,23 @@ class ClientProjectController extends Controller
         return redirect()->route('admin.clients.show', $client)->with('status', 'Client created.');
     }
 
+    public function updateClient(Request $request, Client $client): RedirectResponse
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:40'],
+            'preferred_locale' => ['required', Rule::in(['en', 'ar'])],
+            'internal_notes' => ['nullable', 'string', 'max:10000'],
+            'account_manager_id' => ['nullable', 'integer', 'exists:users,id'],
+        ]);
+
+        $client->update($data);
+
+        return redirect()->route('admin.clients.show', $client)->with('status', 'Client record updated.');
+    }
+
     public function showClient(Client $client): View
     {
         $client->load(['accountManager', 'projects' => fn ($query) => $query->with('owner')->latest()]);
