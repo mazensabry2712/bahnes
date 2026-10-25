@@ -51,3 +51,32 @@ it('does not store an inquiry when the honeypot is filled', function () {
 
     expect(Inquiry::query()->count())->toBe(0);
 });
+
+
+it('never exposes private client delivery projects in public pages or the sitemap', function () {
+    $client = \\App\\Models\\Client::query()->create([
+        'name' => 'Private Customer Name',
+        'email' => 'private-customer@example.com',
+        'preferred_locale' => 'en',
+        'internal_notes' => 'Confidential internal notes',
+    ]);
+    \\App\\Models\\DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Confidential Internal Delivery Project',
+        'status' => 'in_progress',
+        'progress_percent' => 35,
+        'reference' => 'BH-PRJ-PRIVATE',
+        'internal_notes' => 'Never public',
+    ]);
+
+    $this->get(route('sitemap'))
+        ->assertOk()
+        ->assertDontSee('Confidential Internal Delivery Project')
+        ->assertDontSee('BH-PRJ-PRIVATE')
+        ->assertDontSee('private-customer@example.com');
+
+    $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'projects']))
+        ->assertOk()
+        ->assertDontSee('Confidential Internal Delivery Project')
+        ->assertDontSee('Private Customer Name');
+});
