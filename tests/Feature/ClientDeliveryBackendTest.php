@@ -138,6 +138,10 @@ it('records audit history for client project and task changes', function () {
         ->and($client->commercial_summary)->toBe('Fixed-scope engagement')
         ->and(ProjectActivity::query()->where('client_id', $client->id)->where('event_key', 'client.created')->exists())->toBeTrue()
         ->and(ProjectActivity::query()->where('delivery_project_id', $project->id)->where('event_key', 'project.created')->exists())->toBeTrue();
+
+    $this->actingAs($admin)->get(route('admin.clients.activity', $client))
+        ->assertOk()
+        ->assertJsonPath('data.0.event_key', 'project.created');
 });
 
 it('prevents archiving a client while active delivery projects remain', function () {
