@@ -153,3 +153,22 @@ it('does not allow unsupported follow-up statuses', function () {
 
     expect($inquiry->fresh()->status)->toBe('new');
 });
+
+
+it('enforces the five-per-minute public inquiry submission limit', function () {
+    $payload = [
+        'name' => 'Rate Limit Visitor',
+        'email' => 'rate-limit@example.com',
+        'type' => 'general',
+        'message' => 'This is a valid message for checking the public inquiry rate limiter.',
+        'preferred_locale' => 'en',
+    ];
+
+    foreach (range(1, 5) as $attempt) {
+        $this->post(route('contact.store'), $payload)->assertRedirect();
+    }
+
+    $this->post(route('contact.store'), $payload)->assertTooManyRequests();
+
+    expect(Inquiry::query()->count())->toBe(5);
+});
