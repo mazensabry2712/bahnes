@@ -359,3 +359,34 @@ it('preserves task completion timestamps and clears them when reopened', functio
 
     expect($task->fresh()->completed_at)->toBeNull();
 });
+
+
+it('keeps the document record when private storage refuses deletion', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Storage failure client',
+        'email' => 'storage-failure@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $document = ClientDocument::query()->create([
+        'client_id' => $client->id,
+        'uploaded_by' => $admin->id,
+        'original_name' => 'contract.pdf',
+        'storage_path' => 'client-documents/'.$client->id.'/contract.pdf',
+        'mime_type' => 'application/pdf',
+        'size_bytes' => 1024,
+        'category' => 'contract',
+    ]);
+
+    $disk = Mockery::mock();
+    $disk->shouldReceive('delete')->once()->with($document->storage_path)->andReturnFalse();
+    Storage::shouldReceive('disk')->once()->with('local')->andReturn($disk);
+
+    $this->actingAs($admin)
+        ->delete(route('admin.client-documents.destroy', $document))
+        ->assertRedirect()
+        ->assertSessionHasErrors(['document']);
+
+    expect(ClientDocument::query()->whereKey($document->id)->exists())->toBeTrue();
+    expect(ProjectActivity::query()->where('event_key', 'client.document_deleted')->exists())->toBeFalse();
+});
