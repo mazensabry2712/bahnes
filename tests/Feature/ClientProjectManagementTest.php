@@ -331,8 +331,8 @@ it('recovers a client email left in sending state for more than ten minutes', fu
         'client_visible' => true,
         'email_status' => 'sending',
         'email_attempts' => 1,
-        'updated_at' => now()->subMinutes(11),
     ]);
+    DB::table('project_updates')->where('id', $update->id)->update(['updated_at' => now()->subMinutes(11)]);
 
     $this->actingAs($admin)
         ->post(route('admin.project-updates.send', $update))
