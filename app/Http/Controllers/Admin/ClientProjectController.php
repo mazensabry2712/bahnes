@@ -271,6 +271,10 @@ class ClientProjectController extends Controller
             return 'claimed';
         });
 
+        if ($claim === 'claimed') {
+            $update->refresh();
+        }
+
         if ($claim === 'sent') {
             return back()->with('status', 'This update was already emailed.');
         }
@@ -308,20 +312,38 @@ class ClientProjectController extends Controller
 
         return back()->with('status', 'Client progress email sent.');
     }
+
     private function usesNonDeliveringMailTransport(): bool
     {
-        $mailerName = (string) config('mail.default');
-        $mailer = config("mail.mailers.{$mailerName}", []);
-        $transport = is_array($mailer) ? ($mailer['transport'] ?? null) : null;
+        return $this->mailerCanFallBackToNonDelivery((string) config('mail.default'));
+    }
 
-        if (in_array($mailerName, ['log', 'array'], true) || in_array($transport, ['log', 'array'], true)) {
+    /**
+     * @param array<int, string> $visited
+     */
+    private function mailerCanFallBackToNonDelivery(string $mailerName, array $visited = []): bool
+    {
+        if (in_array($mailerName, ['log', 'array'], true)) {
             return true;
         }
 
-        $nestedMailers = is_array($mailer) ? ($mailer['mailers'] ?? []) : [];
-        foreach ($nestedMailers as $nestedMailer) {
-            $nestedTransport = config("mail.mailers.{$nestedMailer}.transport");
-            if (in_array($nestedTransport, ['log', 'array'], true)) {
+        if (in_array($mailerName, $visited, true)) {
+            return false;
+        }
+
+        $visited[] = $mailerName;
+        $mailer = config("mail.mailers.{$mailerName}", []);
+
+        if (! is_array($mailer)) {
+            return false;
+        }
+
+        if (in_array($mailer['transport'] ?? null, ['log', 'array'], true)) {
+            return true;
+        }
+
+        foreach (($mailer['mailers'] ?? []) as $nestedMailer) {
+            if ($this->mailerCanFallBackToNonDelivery((string) $nestedMailer, $visited)) {
                 return true;
             }
         }
