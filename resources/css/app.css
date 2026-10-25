@@ -132,6 +132,11 @@
 .site-pagination { margin-top: 2.5rem; }
 .site-pagination nav { display: flex; justify-content: center; gap: .5rem; }
 .site-pagination a, .site-pagination span[aria-current="page"] span { border-radius: .4rem; border: 1px solid var(--bahnes-line); padding: .55rem .8rem; text-decoration: none; }
+.site-pagination .site-page-link { display: inline-flex; align-items: center; justify-content: center; min-width: 2.5rem; min-height: 2.5rem; border-radius: .4rem; border: 1px solid var(--bahnes-line); padding: .55rem .8rem; color: var(--bahnes-ink); text-decoration: none; font-size: .85rem; }
+.site-pagination .site-page-link:hover, .site-pagination .site-page-link:focus-visible { border-color: #0b8c78; color: #087f6e; }
+.site-pagination .site-page-link.is-current { border-color: var(--bahnes-ink); background: var(--bahnes-ink); color: #fff; font-weight: 750; }
+.site-pagination .site-page-link.is-disabled, .site-pagination .site-page-link.is-ellipsis { color: #8a94a4; background: #f7f8f6; }
+.site-pagination .site-page-link.is-disabled { cursor: not-allowed; }
 .site-detail-top { padding-block: clamp(3rem,6vw,5rem); background: var(--bahnes-ivory); border-bottom: 1px solid var(--bahnes-line); }
 .site-detail-top .site-container { max-width: 76rem; }
 .site-detail-summary { max-width: 47rem; margin: 1.5rem 0 0; color: #59667b; font-size: clamp(1rem,1.5vw,1.25rem); line-height: 1.9; }
