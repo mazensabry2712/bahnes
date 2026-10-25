@@ -6,7 +6,7 @@ Use Laravel Blade server-rendered HTML. Do not introduce SPA routing for the cur
 
 ## Languages and URLs
 
-Arabic and English are implemented at launch with consistent locale URLs, for example /en/services and /ar/services. The root route redirects to the English homepage. Language switching preserves the equivalent content page when a published translation exists; otherwise it falls back to the localized section index. Use proper RTL/LTR layout for navigation, forms, breadcrumbs, pagination, and mixed technical terms.
+Arabic and English are implemented at launch with consistent locale URLs, for example /en/services and /ar/services. The root route redirects to the English homepage. Language switching preserves the equivalent content page when a published translation exists; otherwise it falls back to the localized section index. Navigation, forms, breadcrumbs, and pagination have locale-aware labels; pagination also switches direction for RTL. Mixed technical terms should retain readable direction and spacing.
 
 Each locale requires reviewed copy, slug policy, title/description, canonical, social preview, and translation state. Never declare a nonexistent translation as available.
 
