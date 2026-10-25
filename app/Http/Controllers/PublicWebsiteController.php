@@ -305,7 +305,7 @@ class PublicWebsiteController extends Controller
             'kicker' => 'البنية التحتية · البرمجيات · الأمن',
             'privacy' => 'وضح لنا نوع الخدمة والسياق والنتيجة التي تريد الوصول إليها. لا ترسل كلمات مرور أو بيانات سرية في النموذج.',
             'validation' => 'راجع البيانات التالية:',
-            'privacyNote' => 'تُستخدم البيانات للرد على استفسارك فقط وفق إعدادات الاحتفاظ المعتمدة.',
+            'privacyNote' => 'نستخدم بياناتك للرد على هذا الاستفسار. يُرجى عدم إرسال كلمات مرور أو بيانات دخول حساسة.',
         ] : [
             'title' => 'Talk to BAHNES',
             'description' => 'Contact BAHNES IT SOLUTIONS to discuss your IT, security and software needs.',
@@ -332,7 +332,7 @@ class PublicWebsiteController extends Controller
             'kicker' => 'IT INFRASTRUCTURE · SOFTWARE · SECURITY',
             'privacy' => 'Share the service you need and the outcome you are aiming for. Do not include passwords or confidential credentials in this form.',
             'validation' => 'Please check the following fields:',
-            'privacyNote' => 'Your details are used to follow up on this inquiry. Review company privacy information before launch.',
+            'privacyNote' => 'We use your details to respond to this inquiry. Please do not submit passwords or sensitive login credentials.',
         ];
     }
 
