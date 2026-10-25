@@ -6,7 +6,7 @@ Use Laravel Blade server-rendered HTML. Do not introduce SPA routing for the cur
 
 ## Languages and URLs
 
-Plan Arabic and English at launch with consistent locale URLs, for example /en/services and /ar/services. Decide the default-locale rule during implementation. Language switching should preserve the equivalent page when its translation exists; otherwise show a sensible fallback. Use proper RTL/LTR layout for navigation, forms, breadcrumbs, pagination, and mixed technical terms.
+Arabic and English are implemented at launch with consistent locale URLs, for example /en/services and /ar/services. The root route redirects to the English homepage. Language switching preserves the equivalent content page when a published translation exists; otherwise it falls back to the localized section index. Use proper RTL/LTR layout for navigation, forms, breadcrumbs, pagination, and mixed technical terms.
 
 Each locale requires reviewed copy, slug policy, title/description, canonical, social preview, and translation state. Never declare a nonexistent translation as available.
 
@@ -16,7 +16,7 @@ Each locale requires reviewed copy, slug policy, title/description, canonical, s
 - Unique titles and useful descriptions for indexable pages.
 - Stable URLs, canonical handling, and redirects for changed slugs.
 - Reciprocal hreflang links for existing language variants.
-- **Implemented and CI-tested:** dynamic `/sitemap.xml` via Spatie Sitemap currently lists only existing public URLs (homepage and `/en/contact`, `/ar/contact`). Add service/project/product/template/Insight URLs when those public routes exist; exclude drafts, archived records, confidential projects, and missing translations.
+- **Implemented and CI-tested:** dynamic `/sitemap.xml` via Spatie Sitemap lists both localized homepages, contact pages, all five section indexes per locale, and published service/project/product/template/Insight detail URLs only when the locale-specific translation is eligible for publication. Drafts, archived records, confidential projects, and missing translations must remain excluded.
 - **Implemented and CI-tested:** dynamic `/robots.txt` allows public crawling, disallows `/admin-panel/`, and points to the absolute sitemap URL.
 - Open Graph previews with the approved logo/brand asset and relevant page image.
 - Accurate structured data only where appropriate.
