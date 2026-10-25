@@ -163,3 +163,27 @@ it('prevents archiving a client while active delivery projects remain', function
 
     expect($client->fresh())->not->toBeNull();
 });
+
+
+it('archives delivery projects without hard-deleting their history', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Archive Project Client',
+        'email' => 'archive-project@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Archived delivery',
+        'status' => 'completed',
+        'progress_percent' => 100,
+        'reference' => 'BH-PRJ-900002',
+    ]);
+
+    $this->actingAs($admin)->delete(route('admin.delivery-projects.archive', $project))
+        ->assertRedirect(route('admin.clients.show', $client));
+
+    expect(DeliveryProject::query()->whereKey($project->id)->exists())->toBeFalse()
+        ->and(DeliveryProject::withTrashed()->whereKey($project->id)->exists())->toBeTrue()
+        ->and(ProjectActivity::query()->where('delivery_project_id', $project->id)->where('event_key', 'project.archived')->exists())->toBeTrue();
+});
