@@ -79,6 +79,10 @@ class AccessManagementController extends Controller
     {
         abort_unless($request->user()->is_admin, 403);
 
+        // Normalize before unique validation so case variants cannot bypass the check
+        // on databases whose unique-index collation is case-sensitive.
+        $request->merge(['email' => Str::lower(trim((string) $request->input('email')))]);
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
