@@ -6,6 +6,7 @@ use App\Models\DeliveryProject;
 use App\Models\ProjectUpdate;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\ProjectActivityLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Mail;
@@ -413,9 +414,9 @@ it('keeps a successfully sent email marked sent when audit logging fails afterwa
         'client_visible' => true,
     ]);
 
-    $logger = Mockery::mock(\\App\\Services\\ProjectActivityLogger::class);
+    $logger = Mockery::mock(ProjectActivityLogger::class);
     $logger->shouldReceive('record')->once()->andThrow(new RuntimeException('Audit database unavailable'));
-    $this->app->instance(\\App\\Services\\ProjectActivityLogger::class, $logger);
+    $this->app->instance(ProjectActivityLogger::class, $logger);
 
     $this->actingAs($admin)
         ->post(route('admin.project-updates.send', $update))
