@@ -25,3 +25,7 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Runtime uploads live outside public/ and must never be committed.
+/Bahnes_img/*
+!/Bahnes_img/.gitkeep
