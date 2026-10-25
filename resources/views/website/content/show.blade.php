@@ -12,7 +12,7 @@
                 @elseif ($section === 'insights' && $item->category)
                     <p class="site-eyebrow">{{ $item->category->nameFor($locale) }}</p>
                 @elseif ($section === 'projects')
-                    <p class="site-eyebrow">{{ $item->project_status === 'concept' ? ($isArabic ? 'تصور / Concept' : 'Concept') : ($isArabic ? 'مشروع منشور' : 'Published project') }}</p>
+                    <p class="site-eyebrow">{{ $item->project_status === 'concept' ? ($isArabic ? 'تصور توضيحي' : 'Concept') : ($isArabic ? 'مشروع منشور' : 'Published project') }}</p>
                 @else
                     <p class="site-eyebrow">{{ $config['singular'] }}</p>
                 @endif
