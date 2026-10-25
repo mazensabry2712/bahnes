@@ -428,3 +428,47 @@ it('keeps a successfully sent email marked sent when audit logging fails afterwa
         ->and($update->fresh()->email_sent_at)->not->toBeNull()
         ->and($update->fresh()->email_attempts)->toBe(1);
 });
+
+
+it('rejects invalid delivery-project status transitions without changing project state', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Transition Client',
+        'email' => 'transition-client@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Transition project',
+        'status' => 'completed',
+        'progress_percent' => 100,
+        'completed_at' => now(),
+    ]);
+    $completedAt = $project->completed_at->toDateTimeString();
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $project), [
+        'title' => 'Transition project',
+        'status' => 'blocked',
+        'progress_percent' => 50,
+    ])->assertSessionHasErrors(['status']);
+
+    expect($project->fresh()->status)->toBe('completed')
+        ->and($project->fresh()->progress_percent)->toBe(100)
+        ->and($project->fresh()->completed_at->toDateTimeString())->toBe($completedAt);
+
+    $cancelled = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Cancelled project',
+        'status' => 'cancelled',
+        'progress_percent' => 0,
+    ]);
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $cancelled), [
+        'title' => 'Cancelled project',
+        'status' => 'completed',
+        'progress_percent' => 100,
+    ])->assertSessionHasErrors(['status']);
+
+    expect($cancelled->fresh()->status)->toBe('cancelled')
+        ->and($cancelled->fresh()->completed_at)->toBeNull();
+});
