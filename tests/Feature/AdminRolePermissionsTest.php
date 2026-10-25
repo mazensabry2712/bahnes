@@ -14,7 +14,13 @@ it('allows staff only the modules and actions assigned to their role', function 
         'role_id' => $role->id,
     ]);
 
-    $this->actingAs($staff)->get(route('admin.clients.index'))->assertOk();
+    $this->post(route('admin.authenticate'), [
+        'email' => $staff->email,
+        'password' => 'password',
+    ])->assertRedirect(route('admin.dashboard'));
+
+    $this->assertAuthenticatedAs($staff);
+    $this->get(route('admin.clients.index'))->assertOk();
     $this->actingAs($staff)->get(route('admin.clients.create'))->assertForbidden();
     $this->actingAs($staff)->get(route('admin.access.index'))->assertForbidden();
 
