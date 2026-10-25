@@ -55,7 +55,7 @@ return new class extends Migration
             $table->timestamp('email_sent_at')->nullable();
             $table->text('email_error')->nullable();
             $table->timestamps();
-            $table->index(['delivery_project_id', 'client_visible', 'created_at']);
+            $table->index(['delivery_project_id', 'client_visible', 'created_at'], 'project_updates_visibility_created_idx');
         });
     }
 
