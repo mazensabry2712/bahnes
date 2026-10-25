@@ -25,6 +25,7 @@
             <a class="admin-button" href="{{ route('admin.insights.index') }}">Insights</a>
             <a class="admin-button" href="{{ route('admin.insight-categories.index') }}">Insight categories</a>
             <a class="admin-button" href="{{ route('admin.inquiries.index') }}">Customer inquiries</a>
+            <a class="admin-button" href="{{ route('admin.clients.index') }}">Clients & delivery</a>
         </div>
     </section>
 @endsection
