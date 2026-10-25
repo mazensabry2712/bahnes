@@ -36,7 +36,7 @@ Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::prefix('admin-panel')->name('admin.')->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('login');
     Route::post('/login', [AuthController::class, 'store'])->middleware('throttle:5,1')->name('authenticate');
-    Route::post('/logout', [AuthController::class, 'destroy'])->middleware('auth')->name('logout');
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
     Route::middleware('admin')->group(function (): void {
         Route::view('/', 'admin.dashboard')->name('dashboard');
