@@ -30,6 +30,28 @@ it('requires admin access to view customer inquiries', function () {
         ->assertForbidden();
 });
 
+it('returns validation errors in the visitor language on the localized contact route', function () {
+    $this->from(route('localized.contact.show', ['locale' => 'ar']))
+        ->post(route('localized.contact.store', ['locale' => 'ar']), [
+            'email' => 'not-an-email',
+            'type' => 'unknown',
+            'message' => 'قصير',
+            'preferred_locale' => 'ar',
+        ])
+        ->assertRedirect(route('localized.contact.show', ['locale' => 'ar']))
+        ->assertSessionHasErrors(['name', 'email', 'type', 'message']);
+
+    $errors = session('errors')->getBag('default')->all();
+
+    expect($errors)
+        ->toContain('حقل الاسم مطلوب.')
+        ->toContain('يرجى إدخال عنوان بريد إلكتروني صحيح في حقل البريد الإلكتروني.')
+        ->toContain('القيمة المحددة لحقل نوع الاستفسار غير صالحة.')
+        ->toContain('يجب أن يحتوي حقل الرسالة على 20 حرفًا على الأقل.');
+
+    expect(Inquiry::query()->count())->toBe(0);
+});
+
 it('stores a valid public contact inquiry as new', function () {
     $this->from('/')
         ->post(route('contact.store'), [
