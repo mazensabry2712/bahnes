@@ -201,7 +201,8 @@ it('revokes dashboard access immediately when an administrator removes a staff r
         'role_id' => null,
     ])->assertRedirect(route('admin.access.index'));
 
-    $this->actingAs($staff)->get(route('admin.dashboard'))->assertForbidden();
-    $this->actingAs($staff)->get(route('admin.clients.index'))->assertForbidden();
-    $this->actingAs($staff)->post(route('admin.logout'))->assertRedirect(route('admin.login'));
+    $revokedStaff = $staff->fresh();
+    $this->actingAs($revokedStaff)->get(route('admin.dashboard'))->assertForbidden();
+    $this->actingAs($revokedStaff)->get(route('admin.clients.index'))->assertForbidden();
+    $this->actingAs($revokedStaff)->post(route('admin.logout'))->assertRedirect(route('admin.login'));
 });
