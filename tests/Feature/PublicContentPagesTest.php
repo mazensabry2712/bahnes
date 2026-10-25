@@ -101,6 +101,38 @@ it('lists only published services with a complete translation and active service
         ->assertDontSee('Managed Network Support');
 });
 
+it('localizes pagination controls and direction for both public locales', function () {
+    $line = publicWebsiteServiceLine();
+
+    foreach (range(1, 13) as $number) {
+        Service::query()->create([
+            'service_line_id' => $line->id,
+            'title_en' => "Public Service {$number}",
+            'slug_en' => "public-service-{$number}",
+            'summary_en' => 'A published service for pagination coverage.',
+            'title_ar' => "خدمة منشورة {$number}",
+            'slug_ar' => "khidma-manshura-{$number}",
+            'summary_ar' => 'خدمة منشورة لاختبار تقسيم الصفحات.',
+            'status' => 'published',
+            'sort_order' => $number,
+        ]);
+    }
+
+    $this->get(route('public.content.index', ['locale' => 'ar', 'section' => 'services']))
+        ->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('التنقل بين الصفحات')
+        ->assertSee('السابق')
+        ->assertSee('التالي');
+
+    $this->get(route('public.content.index', ['locale' => 'en', 'section' => 'services']))
+        ->assertOk()
+        ->assertSee('dir="ltr"', false)
+        ->assertSee('Pagination Navigation')
+        ->assertSee('Previous')
+        ->assertSee('Next');
+});
+
 it('serves only public project details and clearly labels concepts', function () {
     Project::query()->create([
         'title_en' => 'Network Improvement Concept',
