@@ -21,6 +21,7 @@ class ProjectUpdate extends Model
         return [
             'target_date' => 'date',
             'client_visible' => 'boolean',
+            'email_attempts' => 'integer',
             'email_sent_at' => 'datetime',
         ];
     }
