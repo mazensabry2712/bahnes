@@ -26,6 +26,14 @@ This directory is the source of truth for planning, launching, operating, and gr
 
 ## Documentation rules
 
+## Git workflow (mandatory)
+
+- `main` is the only working branch for this repository.
+- All code, tests, fixes, and documentation are changed directly on `main`.
+- Do not create or switch to feature, development, release, or other branches.
+- Use focused commits and verify the resulting commit and CI status.
+- Never force-push or rewrite shared history. Do not deploy without explicit user approval.
+
 1. Update the canonical document when a decision changes; avoid conflicting copies.
 2. Mark information Proposed, Needs confirmation, Approved, Implemented, or Verified when status matters.
 3. Record major decisions with context, alternatives, reason, and review trigger.
