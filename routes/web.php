@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AccessManagementController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ClientProjectController;
+use App\Http\Controllers\Admin\ClientDocumentController;
+use App\Http\Controllers\Admin\ProjectTaskController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProjectController;
