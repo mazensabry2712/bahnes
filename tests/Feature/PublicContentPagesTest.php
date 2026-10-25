@@ -38,6 +38,8 @@ it('renders the contact page inside the shared bilingual public layout', functio
         ->assertOk()
         ->assertSee('Talk to BAHNES')
         ->assertSee('Services')
+        ->assertSee(route('public.content.index', ['locale' => 'en', 'section' => 'services']), false)
+        ->assertDontSee('robots.txt')
         ->assertSee('name="message"', false)
         ->assertSee('We use your details to respond to this inquiry.')
         ->assertDontSee('Review company privacy information before launch.')
