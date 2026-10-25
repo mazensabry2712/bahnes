@@ -18,11 +18,13 @@ class Client extends Model
         'internal_notes', 'account_manager_id',
     ];
 
+    /** @return BelongsTo<User, $this> */
     public function accountManager(): BelongsTo
     {
         return $this->belongsTo(User::class, 'account_manager_id');
     }
 
+    /** @return HasMany<DeliveryProject, $this> */
     public function projects(): HasMany
     {
         return $this->hasMany(DeliveryProject::class);
