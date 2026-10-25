@@ -228,9 +228,12 @@ class ClientProjectController extends Controller
             ->with('status', 'Progress update saved. Email has not been sent yet.');
     }
 
-    public function sendUpdate(ProjectUpdate $update): RedirectResponse
+    public function sendUpdate(Request $request, ProjectUpdate $update): RedirectResponse
     {
         $update->load('project.client');
+        $project = $update->project;
+        $client = $project?->client;
+        abort_unless($project && $client, 404);
 
         if (! $update->client_visible) {
             abort(403, 'Only updates explicitly marked client-visible can be emailed.');
@@ -270,16 +273,16 @@ class ClientProjectController extends Controller
         }
 
         try {
-            Mail::to($update->project->client->email)->send(new ClientProjectUpdateMail($update));
+            Mail::to($client->email)->send(new ClientProjectUpdateMail($update));
             $update->forceFill([
                 'email_status' => 'sent',
                 'email_sent_at' => now(),
                 'email_error' => null,
             ])->save();
             app(ProjectActivityLogger::class)->record(
-                request()->user(), 'project_update.email_sent', 'Client progress update emailed.',
-                $update->project->client, $update->project, null,
-                ['update_id' => $update->getKey(), 'recipient' => $update->project->client->email],
+                $request->user(), 'project_update.email_sent', 'Client progress update emailed.',
+                $client, $project, null,
+                ['update_id' => $update->getKey(), 'recipient' => $client->email],
             );
         } catch (Throwable $exception) {
             report($exception);
@@ -288,8 +291,8 @@ class ClientProjectController extends Controller
                 'email_error' => 'Email delivery failed. Check application logs before retrying.',
             ])->save();
             app(ProjectActivityLogger::class)->record(
-                request()->user(), 'project_update.email_failed', 'Client progress email failed.',
-                $update->project->client, $update->project, null,
+                $request->user(), 'project_update.email_failed', 'Client progress email failed.',
+                $client, $project, null,
                 ['update_id' => $update->getKey(), 'attempt' => $update->email_attempts],
             );
 
