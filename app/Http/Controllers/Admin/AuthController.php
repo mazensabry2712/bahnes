@@ -28,11 +28,18 @@ class AuthController extends Controller
         ]);
 
         $credentials['email'] = Str::lower($credentials['email']);
-        $credentials['is_admin'] = true;
 
         if (! Auth::attempt($credentials)) {
             return back()
                 ->withErrors(['email' => 'The provided credentials are incorrect.'])
+                ->onlyInput('email');
+        }
+
+        if (! Auth::user()->is_admin && ! Auth::user()->role_id) {
+            Auth::logout();
+
+            return back()
+                ->withErrors(['email' => 'This account has no administrator role assigned.'])
                 ->onlyInput('email');
         }
 
