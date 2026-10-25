@@ -103,6 +103,7 @@ it('emails only approved client-visible progress updates and records the send ti
     });
 
     expect($update->fresh()->email_sent_at)->not->toBeNull()
+        ->and($update->fresh()->email_status)->toBe('sent')
         ->and($update->fresh()->email_attempts)->toBe(1);
 });
 
@@ -200,6 +201,41 @@ it('records a failed client email attempt without marking the update as sent', f
         ->assertSessionHasErrors('email');
 
     expect($update->fresh()->email_attempts)->toBe(1)
+        ->and($update->fresh()->email_status)->toBe('failed')
         ->and($update->fresh()->email_sent_at)->toBeNull()
         ->and($update->fresh()->email_error)->not->toBeNull();
+});
+
+
+it('does not send an update that is already in the sending state', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Concurrent Client',
+        'email' => 'concurrent@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Concurrent project',
+        'status' => 'in_progress',
+        'progress_percent' => 35,
+    ]);
+    $update = ProjectUpdate::query()->create([
+        'delivery_project_id' => $project->id,
+        'author_id' => $admin->id,
+        'summary' => 'Already sending',
+        'client_visible' => true,
+        'email_status' => 'sending',
+        'updated_at' => now(),
+    ]);
+
+    Mail::fake();
+
+    $this->actingAs($admin)
+        ->post(route('admin.project-updates.send', $update))
+        ->assertRedirect()
+        ->assertSessionHasErrors('email');
+
+    Mail::assertNothingOutgoing();
+    expect($update->fresh()->email_attempts)->toBe(0);
 });
