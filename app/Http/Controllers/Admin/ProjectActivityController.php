@@ -26,7 +26,7 @@ class ProjectActivityController extends Controller
 
     public function client(Request $request, Client $client): JsonResponse
     {
-        $query = $client->activities()->with('actor:id,name');
+        $query = $client->activities()->getQuery()->with('actor:id,name');
         $this->applyVisibilityRules($query, $request);
 
         return response()->json($query->latest()->paginate(50));
@@ -34,7 +34,7 @@ class ProjectActivityController extends Controller
 
     public function project(Request $request, DeliveryProject $project): JsonResponse
     {
-        $query = $project->activities()->with('actor:id,name');
+        $query = $project->activities()->getQuery()->with('actor:id,name');
         $this->applyVisibilityRules($query, $request);
 
         return response()->json($query->latest()->paginate(50));
