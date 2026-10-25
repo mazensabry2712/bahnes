@@ -112,3 +112,26 @@ it('does not publish a template without required commercial terms', function () 
 
     expect(WebsiteTemplate::query()->count())->toBe(0);
 });
+
+
+it('rejects non-web protocols for product and template links', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    $this->actingAs($admin)->from(route('admin.products.create'))->post(route('admin.products.store'), [
+        'title_en' => 'Unsafe Product Link',
+        'slug_en' => 'unsafe-product-link',
+        'status' => 'draft',
+        'sort_order' => 0,
+        'demo_url' => 'ftp://example.com/demo',
+    ])->assertRedirect(route('admin.products.create'))->assertSessionHasErrors(['demo_url']);
+
+    $this->actingAs($admin)->from(route('admin.templates.create'))->post(route('admin.templates.store'), [
+        'title_en' => 'Unsafe Template Link',
+        'slug_en' => 'unsafe-template-link',
+        'status' => 'draft',
+        'sort_order' => 0,
+        'preview_url' => 'ftp://example.com/preview',
+    ])->assertRedirect(route('admin.templates.create'))->assertSessionHasErrors(['preview_url']);
+
+    expect(Product::query()->count())->toBe(0)->and(WebsiteTemplate::query()->count())->toBe(0);
+});
