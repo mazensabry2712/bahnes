@@ -15,13 +15,14 @@ class CreateAdmin extends Command
     public function handle(): int
     {
         $name = trim((string) $this->ask('Administrator name'));
-        $email = Str::lower(trim((string) $this->ask('Administrator email')));
 
         if ($name === '' || mb_strlen($name) > 255) {
             $this->error('Enter a name between 1 and 255 characters.');
 
             return self::FAILURE;
         }
+
+        $email = Str::lower(trim((string) $this->ask('Administrator email')));
 
         if (! filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 255) {
             $this->error('Enter a valid email address.');
