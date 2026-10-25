@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryProject;
 use App\Models\ProjectTask;
 use App\Services\ProjectActivityLogger;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -44,6 +45,7 @@ class ProjectTaskController extends Controller
 
     public function update(Request $request, ProjectTask $task): RedirectResponse
     {
+        abort_unless($task->project, 404);
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:10000'],
@@ -76,6 +78,7 @@ class ProjectTaskController extends Controller
 
     public function archive(Request $request, ProjectTask $task): RedirectResponse
     {
+        abort_unless($task->project, 404);
         $project = $task->project;
         app(ProjectActivityLogger::class)->record(
             $request->user(), 'project.task_archived',
