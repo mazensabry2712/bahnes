@@ -172,6 +172,23 @@ it('forces completed projects to 100 percent and preserves the original completi
 
     expect($project->fresh()->progress_percent)->toBe(100)
         ->and($project->fresh()->completed_at->toDateTimeString())->toBe($originalCompletion);
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $project), [
+        'title' => $project->title,
+        'status' => 'planning',
+        'progress_percent' => 10,
+    ])->assertSessionHasErrors(['status']);
+
+    expect($project->fresh()->status)->toBe('completed');
+
+    $this->actingAs($admin)->put(route('admin.delivery-projects.update', $project), [
+        'title' => $project->title,
+        'status' => 'in_progress',
+        'progress_percent' => 10,
+    ])->assertRedirect(route('admin.delivery-projects.show', $project));
+
+    expect($project->fresh()->status)->toBe('in_progress')
+        ->and($project->fresh()->completed_at)->toBeNull();
 });
 
 it('records a failed client email attempt without marking the update as sent', function () {
