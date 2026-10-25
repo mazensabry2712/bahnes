@@ -17,9 +17,9 @@ Route::get('/contact', function () {
     return redirect()->route('localized.contact.show', ['locale' => 'en']);
 })->name('contact.redirect');
 
-Route::get('/{locale}/contact', function (string $locale) {
-    return view('contact', ['locale' => $locale]);
-})->whereIn('locale', ['en', 'ar'])->name('localized.contact.show');
+Route::get('/{locale}/contact', [PublicWebsiteController::class, 'contact'])
+    ->whereIn('locale', ['en', 'ar'])
+    ->name('localized.contact.show');
 
 Route::post('/{locale}/contact', [ContactController::class, 'store'])
     ->whereIn('locale', ['en', 'ar'])
