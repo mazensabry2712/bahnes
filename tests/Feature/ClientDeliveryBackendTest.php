@@ -48,7 +48,7 @@ it('stores client documents privately and requires document permissions to downl
     $this->assertDatabaseMissing('client_documents', ['id' => $document->id]);
 });
 
-it('rejects executable and oversized private client documents', function () {
+it('rejects unsupported and oversized private client documents', function () {
     Storage::fake('local');
     $admin = User::factory()->create(['is_admin' => true]);
     $client = Client::query()->create([
@@ -59,6 +59,11 @@ it('rejects executable and oversized private client documents', function () {
 
     $this->actingAs($admin)->post(route('admin.clients.documents.store', $client), [
         'document' => UploadedFile::fake()->create('payload.php', 2, 'application/x-php'),
+        'category' => 'contract',
+    ])->assertSessionHasErrors(['document']);
+
+    $this->actingAs($admin)->post(route('admin.clients.documents.store', $client), [
+        'document' => UploadedFile::fake()->create('oversized-contract.pdf', 21000, 'application/pdf'),
         'category' => 'contract',
     ])->assertSessionHasErrors(['document']);
 
