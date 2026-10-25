@@ -20,7 +20,7 @@ class ClientProjectUpdateMail extends Mailable
     {
         $project = $this->update->project;
 
-        return $this->subject('Project update: '.$project->title)
+        return $this->subject(($project->client->preferred_locale === 'ar' ? 'تحديث المشروع: ' : 'Project update: ').$project->title)
             ->view('emails.client-project-update', [
                 'update' => $this->update,
                 'project' => $project,
