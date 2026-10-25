@@ -232,3 +232,23 @@ it('rejects staff emails that differ from an existing address only by letter cas
 
     expect(User::query()->whereRaw('LOWER(email) = ?', ['duplicate-staff@example.com'])->count())->toBe(1);
 });
+
+
+it('keeps route permission middleware and the editable permission catalog in sync', function () {
+    $defined = array_keys(config('admin-permissions'));
+    $used = [];
+
+    foreach (app('router')->getRoutes() as $route) {
+        foreach ($route->gatherMiddleware() as $middleware) {
+            if (str_starts_with($middleware, 'permission:')) {
+                $used[] = substr($middleware, strlen('permission:'));
+            }
+        }
+    }
+
+    $used = array_values(array_unique($used));
+    sort($used);
+    sort($defined);
+
+    expect($used)->toBe($defined);
+});
