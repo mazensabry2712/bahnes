@@ -102,7 +102,7 @@ it('emails only approved client-visible progress updates and records the send ti
             && ! str_contains($mail->render(), 'Never include this in the email');
     });
 
-    expect($update->fresh()->email_sent_at)->not->toBeNull();
+    expect($update->fresh()->email_sent_at)->not->toBeNull()\n        ->and($update->fresh()->email_attempts)->toBe(1);
 });
 
 it('prevents sending the same client update twice', function () {
