@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ClientProjectController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MediaFileController;
 use App\Http\Controllers\PublicWebsiteController;
@@ -58,6 +59,19 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
     Route::middleware('admin')->group(function (): void {
         Route::view('/', 'admin.dashboard')->name('dashboard');
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
+
+        Route::get('/clients', [ClientProjectController::class, 'clients'])->name('clients.index');
+        Route::get('/clients/create', [ClientProjectController::class, 'createClient'])->name('clients.create');
+        Route::post('/clients', [ClientProjectController::class, 'storeClient'])->name('clients.store');
+        Route::get('/clients/{client}', [ClientProjectController::class, 'showClient'])->name('clients.show');
+
+        Route::get('/clients/{client}/delivery-projects/create', [ClientProjectController::class, 'createProject'])->name('delivery-projects.create');
+        Route::post('/clients/{client}/delivery-projects', [ClientProjectController::class, 'storeProject'])->name('delivery-projects.store');
+        Route::get('/delivery-projects/{project}', [ClientProjectController::class, 'showProject'])->name('delivery-projects.show');
+        Route::put('/delivery-projects/{project}', [ClientProjectController::class, 'updateProject'])->name('delivery-projects.update');
+        Route::post('/delivery-projects/{project}/updates', [ClientProjectController::class, 'storeUpdate'])->name('delivery-projects.updates.store');
+        Route::post('/project-updates/{update}/send', [ClientProjectController::class, 'sendUpdate'])->name('project-updates.send');
+
         Route::get('/inquiries', [\App\Http\Controllers\Admin\InquiryController::class, 'index'])->name('inquiries.index');
         Route::get('/inquiries/{inquiry}/edit', [\App\Http\Controllers\Admin\InquiryController::class, 'edit'])->name('inquiries.edit');
         Route::put('/inquiries/{inquiry}', [\App\Http\Controllers\Admin\InquiryController::class, 'update'])->name('inquiries.update');
