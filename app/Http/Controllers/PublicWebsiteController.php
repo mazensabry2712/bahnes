@@ -58,6 +58,27 @@ class PublicWebsiteController extends Controller
         ]));
     }
 
+    public function contact(string $locale): View
+    {
+        $this->assertLocale($locale);
+
+        $copy = $this->contactCopy($locale);
+        $alternates = [
+            'en' => route('localized.contact.show', ['locale' => 'en']),
+            'ar' => route('localized.contact.show', ['locale' => 'ar']),
+        ];
+
+        return view('contact', array_merge($this->layoutData(
+            $locale,
+            $copy['title'],
+            $copy['description'],
+            route('localized.contact.show', ['locale' => $locale]),
+            $alternates,
+        ), [
+            'labels' => $copy,
+        ]));
+    }
+
     public function index(string $locale, string $section): View
     {
         $this->assertLocale($locale);
@@ -250,6 +271,68 @@ class PublicWebsiteController extends Controller
             'contact' => 'Talk to us',
             'empty' => 'This section is being prepared. Check back for updates.',
             'serviceLineServices' => 'Explore services',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function contactCopy(string $locale): array
+    {
+        return $locale === 'ar' ? [
+            'title' => 'تواصل مع BAHNES',
+            'description' => 'تواصل مع BAHNES IT SOLUTIONS لمناقشة احتياجاتك التقنية والبرمجية.',
+            'intro' => 'احكِ لنا عن احتياجك، وسنساعدك في تحديد الخطوة المناسبة.',
+            'name' => 'الاسم بالكامل',
+            'email' => 'البريد الإلكتروني',
+            'phone' => 'رقم الهاتف (اختياري)',
+            'company' => 'اسم الشركة (اختياري)',
+            'type' => 'نوع الاستفسار',
+            'subject' => 'الموضوع (اختياري)',
+            'message' => 'تفاصيل طلبك',
+            'send' => 'إرسال الرسالة',
+            'reference' => 'رقم المتابعة',
+            'choose' => 'اختر نوع الاستفسار',
+            'types' => [
+                'general' => 'استفسار عام',
+                'it_infrastructure' => 'البنية التحتية وأمن المعلومات',
+                'software' => 'الحلول البرمجية والرقمية',
+                'project_brief' => 'مناقشة مشروع جديد',
+                'product_demo' => 'طلب عرض منتج',
+                'template_customization' => 'تخصيص قالب موقع',
+                'support' => 'الدعم الفني',
+            ],
+            'kicker' => 'البنية التحتية · البرمجيات · الأمن',
+            'privacy' => 'وضح لنا نوع الخدمة والسياق والنتيجة التي تريد الوصول إليها. لا ترسل كلمات مرور أو بيانات سرية في النموذج.',
+            'validation' => 'راجع البيانات التالية:',
+            'privacyNote' => 'تُستخدم البيانات للرد على استفسارك فقط وفق إعدادات الاحتفاظ المعتمدة.',
+        ] : [
+            'title' => 'Talk to BAHNES',
+            'description' => 'Contact BAHNES IT SOLUTIONS to discuss your IT, security and software needs.',
+            'intro' => 'Tell us what you need. We will help you define the right next step.',
+            'name' => 'Full name',
+            'email' => 'Email address',
+            'phone' => 'Phone (optional)',
+            'company' => 'Company (optional)',
+            'type' => 'Inquiry type',
+            'subject' => 'Subject (optional)',
+            'message' => 'How can we help?',
+            'send' => 'Send inquiry',
+            'reference' => 'Reference',
+            'choose' => 'Choose an inquiry type',
+            'types' => [
+                'general' => 'General inquiry',
+                'it_infrastructure' => 'IT infrastructure & security',
+                'software' => 'Software & digital solutions',
+                'project_brief' => 'Discuss a project',
+                'product_demo' => 'Product demo',
+                'template_customization' => 'Website template customization',
+                'support' => 'Support',
+            ],
+            'kicker' => 'IT INFRASTRUCTURE · SOFTWARE · SECURITY',
+            'privacy' => 'Share the service you need and the outcome you are aiming for. Do not include passwords or confidential credentials in this form.',
+            'validation' => 'Please check the following fields:',
+            'privacyNote' => 'Your details are used to follow up on this inquiry. Review company privacy information before launch.',
         ];
     }
 
