@@ -75,6 +75,7 @@ The internal backend now includes:
 - GET /admin-panel/client-documents/{document}/download
 - DELETE /admin-panel/client-documents/{document}
 - GET /admin-panel/clients/{client}/activity
+- GET /admin-panel/access/activity (Super Admin only)
 - GET /admin-panel/delivery-projects/{project}/activity
 - GET /admin-panel/delivery-projects/{project}/tasks
 - POST /admin-panel/delivery-projects/{project}/tasks
