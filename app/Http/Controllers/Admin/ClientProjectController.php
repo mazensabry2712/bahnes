@@ -72,7 +72,10 @@ class ClientProjectController extends Controller
     {
         $client->load(['accountManager', 'projects' => fn ($query) => $query->with('owner')->latest()]);
 
-        return view('admin.clients.show', [\n            'client' => $client,\n            'users' => \\App\\Models\\User::query()->orderBy('name')->get(['id', 'name']),\n        ]);
+        return view('admin.clients.show', [
+            'client' => $client,
+            'users' => \App\Models\User::query()->orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function createProject(Client $client): View
