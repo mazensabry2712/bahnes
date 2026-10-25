@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([CreateAdmin::class, ResetAdminPassword::class])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'admin' => EnsureAdmin::class,
+            'admin' => EnsureAdmin::class,\n            'permission' => EnsurePermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
