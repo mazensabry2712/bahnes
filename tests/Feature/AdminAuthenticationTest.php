@@ -30,7 +30,14 @@ it('allows an administrator with valid credentials to sign in', function () {
 
     $this->get(route('admin.dashboard'))
         ->assertOk()
-        ->assertSee('Content management');
+        ->assertSee('Content management')
+        ->assertSee(route('admin.services.index'), false)
+        ->assertSee(route('admin.projects.index'), false)
+        ->assertSee(route('admin.products.index'), false)
+        ->assertSee(route('admin.templates.index'), false)
+        ->assertSee(route('admin.insights.index'), false)
+        ->assertSee(route('admin.insight-categories.index'), false)
+        ->assertSee(route('admin.inquiries.index'), false);
 });
 
 it('does not allow a regular user to sign in through the admin endpoint', function () {
