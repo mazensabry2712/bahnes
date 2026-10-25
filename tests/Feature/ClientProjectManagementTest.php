@@ -6,6 +6,7 @@ use App\Models\DeliveryProject;
 use App\Models\ProjectUpdate;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 it('allows an administrator to create a private client and delivery project', function () {
