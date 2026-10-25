@@ -33,6 +33,7 @@
                 <span>BAHNES<span class="site-wordmark-dot">.</span><small>IT SOLUTIONS</small></span>
             </a>
             <nav class="site-nav" aria-label="{{ $isArabic ? 'التنقل الرئيسي' : 'Main navigation' }}">
+                <a href="{{ route('localized.home', ['locale' => $locale]) }}">{{ $navLabels['home'] }}</a>
                 <a href="{{ route('public.content.index', ['locale' => $locale, 'section' => 'services']) }}">{{ $navLabels['services'] }}</a>
                 <a href="{{ route('public.content.index', ['locale' => $locale, 'section' => 'projects']) }}">{{ $navLabels['projects'] }}</a>
                 <a href="{{ route('public.content.index', ['locale' => $locale, 'section' => 'products']) }}">{{ $navLabels['products'] }}</a>
