@@ -1,8 +1,7 @@
 <?php
 
-use App\\Models\\Project;
-use App\\Models\\User;
-use Illuminate\\Http\\UploadedFile;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
 
 it('rejects a non-image upload for a project cover before saving the project', function () {
     $admin = User::factory()->create(['is_admin' => true]);
