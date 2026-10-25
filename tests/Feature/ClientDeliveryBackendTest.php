@@ -37,6 +37,11 @@ it('stores client documents privately and requires document permissions to downl
     $staff = User::factory()->create(['is_admin' => false, 'role_id' => $staffRole->id]);
 
     $this->actingAs($staff)->get(route('admin.client-documents.download', $document))->assertForbidden();
+    $this->actingAs($staff)->post(route('admin.clients.documents.store', $client), [
+        'document' => UploadedFile::fake()->create('unauthorized.pdf', 2, 'application/pdf'),
+        'category' => 'contract',
+    ])->assertForbidden();
+    expect(ClientDocument::query()->count())->toBe(1);
 
     $this->actingAs($admin)->get(route('admin.client-documents.download', $document))
         ->assertOk()
@@ -95,6 +100,18 @@ it('tracks project tasks and milestones with validated completion state', functi
     ])->assertRedirect();
 
     $task = ProjectTask::query()->where('title', 'Approve architecture')->firstOrFail();
+    $viewerRole = \\App\\Models\\Role::query()->create([
+        'name' => 'Task viewer only',
+        'slug' => 'task-viewer-only',
+        'permissions' => ['project_tasks.view'],
+    ]);
+    $viewer = User::factory()->create(['is_admin' => false, 'role_id' => $viewerRole->id]);
+    $this->actingAs($viewer)->post(route('admin.delivery-projects.tasks.store', $project), [
+        'title' => 'Unauthorized task',
+        'status' => 'todo',
+    ])->assertForbidden();
+    expect(ProjectTask::query()->where('title', 'Unauthorized task')->exists())->toBeFalse();
+
     expect($task->is_milestone)->toBeTrue()
         ->and($task->status)->toBe('completed')
         ->and($task->completed_at)->not->toBeNull();
