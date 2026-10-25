@@ -246,7 +246,7 @@ class ClientProjectController extends Controller
             abort(403, 'Only updates explicitly marked client-visible can be emailed.');
         }
 
-        if (app()->environment('production') && $this->usesNonDeliveringMailTransport()) {
+        if (! app()->environment('local', 'testing') && $this->usesNonDeliveringMailTransport()) {
             return back()->withErrors(['email' => 'Production mail is not configured for real delivery. Set MAIL_MAILER to a delivery transport before sending client updates.']);
         }
 
