@@ -40,7 +40,7 @@ it('stores client documents privately and requires document permissions to downl
 
     $this->actingAs($admin)->get(route('admin.client-documents.download', $document))
         ->assertOk()
-        ->assertHeader('Cache-Control', 'private, no-store')
+        ->assertHeader('Cache-Control', 'no-store, private')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 
     $this->actingAs($admin)->delete(route('admin.client-documents.destroy', $document))->assertRedirect();
