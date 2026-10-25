@@ -107,7 +107,7 @@ it('tracks project tasks and milestones with validated completion state', functi
     ])->assertSessionHasErrors(['status']);
 
     $this->actingAs($admin)->delete(route('admin.project-tasks.archive', $task))->assertRedirect();
-    expect($task->fresh())->toBeNull();
+    expect(ProjectTask::query()->whereKey($task->id)->exists())->toBeFalse();
 });
 
 it('records audit history for client project and task changes', function () {
