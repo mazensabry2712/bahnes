@@ -563,6 +563,10 @@ it('does not leak project, task, update, or document activity through a client-o
         ->assertDontSee('PRIVATE_UPDATE_DETAILS')
         ->assertDontSee('PRIVATE_DOCUMENT_DETAILS');
 
+    $this->actingAs($clientViewer)->get(route('admin.clients.show', $client))
+        ->assertOk()
+        ->assertDontSee('Activity isolation project');
+
     $projectViewerRole = Role::query()->create([
         'name' => 'Activity project viewer',
         'slug' => 'activity-project-viewer',
