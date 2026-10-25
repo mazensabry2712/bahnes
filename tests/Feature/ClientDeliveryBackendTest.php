@@ -319,3 +319,43 @@ it('rejects assigning clients projects and tasks to accounts without admin acces
         ->and($project->fresh()->owner_id)->toBeNull()
         ->and(ProjectTask::query()->where('title', 'Unauthorized assignee task')->exists())->toBeFalse();
 });
+
+
+it('preserves task completion timestamps and clears them when reopened', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+    $client = Client::query()->create([
+        'name' => 'Task completion client',
+        'email' => 'task-completion@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Task completion project',
+        'status' => 'in_progress',
+        'progress_percent' => 60,
+    ]);
+
+    $this->actingAs($admin)->post(route('admin.delivery-projects.tasks.store', $project), [
+        'title' => 'Completed task',
+        'status' => 'completed',
+    ])->assertRedirect();
+
+    $task = ProjectTask::query()->where('title', 'Completed task')->firstOrFail();
+    $completedAt = $task->completed_at->toDateTimeString();
+
+    $this->actingAs($admin)->put(route('admin.project-tasks.update', $task), [
+        'title' => 'Completed task updated',
+        'status' => 'completed',
+        'sort_order' => 1,
+    ])->assertRedirect();
+
+    expect($task->fresh()->completed_at->toDateTimeString())->toBe($completedAt);
+
+    $this->actingAs($admin)->put(route('admin.project-tasks.update', $task), [
+        'title' => 'Completed task updated',
+        'status' => 'todo',
+        'sort_order' => 1,
+    ])->assertRedirect();
+
+    expect($task->fresh()->completed_at)->toBeNull();
+});
