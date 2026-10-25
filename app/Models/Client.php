@@ -15,7 +15,7 @@ class Client extends Model
 
     protected $fillable = [
         'name', 'company', 'email', 'phone', 'preferred_locale',
-        'internal_notes', 'account_manager_id',
+        'internal_notes', 'account_manager_id', 'agreed_services', 'commercial_summary',
     ];
 
     /** @return BelongsTo<User, $this> */
@@ -28,6 +28,18 @@ class Client extends Model
     public function projects(): HasMany
     {
         return $this->hasMany(DeliveryProject::class);
+    }
+
+    /** @return HasMany<ClientDocument, $this> */
+    public function documents(): HasMany
+    {
+        return $this->hasMany(ClientDocument::class);
+    }
+
+    /** @return HasMany<ProjectActivity, $this> */
+    public function activities(): HasMany
+    {
+        return $this->hasMany(ProjectActivity::class);
     }
 
     public function scopeSearch(Builder $query, string $search): Builder
