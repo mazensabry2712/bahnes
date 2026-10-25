@@ -47,6 +47,7 @@ Route::prefix('admin-panel')->name('admin.')->group(function (): void {
         Route::get('/clients', [ClientProjectController::class, 'clients'])->middleware('permission:clients.view')->name('clients.index');
         Route::get('/clients/create', [ClientProjectController::class, 'createClient'])->middleware('permission:clients.create')->name('clients.create');
         Route::post('/clients', [ClientProjectController::class, 'storeClient'])->middleware('permission:clients.create')->name('clients.store');
+        Route::put('/clients/{client}', [ClientProjectController::class, 'updateClient'])->middleware('permission:clients.update')->name('clients.update');
         Route::get('/clients/{client}', [ClientProjectController::class, 'showClient'])->middleware('permission:clients.view')->name('clients.show');
         Route::get('/clients/{client}/delivery-projects/create', [ClientProjectController::class, 'createProject'])->middleware('permission:projects.create')->name('delivery-projects.create');
         Route::post('/clients/{client}/delivery-projects', [ClientProjectController::class, 'storeProject'])->middleware('permission:projects.create')->name('delivery-projects.store');
