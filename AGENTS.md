@@ -17,6 +17,14 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Conventions
 
+## Git workflow — mandatory
+
+- **Use `main` for all project work. This repository does not use feature branches.**
+- Before editing, confirm the target repository and current `main` state. Make changes directly on `main`; do not create, switch to, or propose a feature/development/release branch.
+- Keep commits focused and descriptive. Verify the resulting commit and relevant CI checks after changes.
+- Never rewrite shared history or force-push. Do not deploy to production unless the user explicitly asks.
+- If a task or tool cannot safely modify `main` directly, stop and explain the limitation instead of silently creating a branch.
+
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
