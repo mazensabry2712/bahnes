@@ -62,3 +62,64 @@ it('does not reset a regular account password through the admin recovery command
         ->expectsOutput('No administrator account was found for that email. No changes were made.')
         ->assertExitCode(1);
 });
+
+
+it('rejects weak or mismatched passwords when provisioning an administrator', function () {
+    $this->artisan('admin:create')
+        ->expectsQuestion('Administrator name', 'New Admin')
+        ->expectsQuestion('Administrator email', 'new-admin@example.com')
+        ->expectsQuestion('Password (minimum 12 characters)', 'short')
+        ->expectsOutput('The password must be at least 12 characters long.')
+        ->assertExitCode(1);
+
+    expect(User::query()->where('email', 'new-admin@example.com')->exists())->toBeFalse();
+
+    $this->artisan('admin:create')
+        ->expectsQuestion('Administrator name', 'New Admin')
+        ->expectsQuestion('Administrator email', 'new-admin@example.com')
+        ->expectsQuestion('Password (minimum 12 characters)', 'LongEnoughPassword-123')
+        ->expectsQuestion('Confirm password', 'DifferentLongPassword-123')
+        ->expectsOutput('The passwords do not match. No account was created.')
+        ->assertExitCode(1);
+
+    expect(User::query()->where('email', 'new-admin@example.com')->exists())->toBeFalse();
+});
+
+it('does not change an administrator password when the reset password is weak or mismatched', function () {
+    $admin = User::factory()->create([
+        'email' => 'safe-admin@example.com',
+        'is_admin' => true,
+        'password' => 'OriginalStrongPassword-123',
+    ]);
+    $originalHash = $admin->password;
+
+    $this->artisan('admin:password-reset', ['email' => $admin->email])
+        ->expectsQuestion('New password (minimum 12 characters)', 'short')
+        ->expectsOutput('The password must be at least 12 characters long.')
+        ->assertExitCode(1);
+
+    expect($admin->fresh()->password)->toBe($originalHash);
+
+    $this->artisan('admin:password-reset', ['email' => $admin->email])
+        ->expectsQuestion('New password (minimum 12 characters)', 'NewStrongPassword-123')
+        ->expectsQuestion('Confirm new password', 'NotTheSamePassword-123')
+        ->expectsOutput('The passwords do not match. No changes were made.')
+        ->assertExitCode(1);
+
+    expect($admin->fresh()->password)->toBe($originalHash);
+});
+
+it('rejects a malformed administrator email and blank administrator name', function () {
+    $this->artisan('admin:create')
+        ->expectsQuestion('Administrator name', '')
+        ->expectsOutput('Enter a name between 1 and 255 characters.')
+        ->assertExitCode(1);
+
+    $this->artisan('admin:create')
+        ->expectsQuestion('Administrator name', 'New Admin')
+        ->expectsQuestion('Administrator email', 'not-an-email')
+        ->expectsOutput('Enter a valid email address.')
+        ->assertExitCode(1);
+
+    expect(User::query()->count())->toBe(0);
+});
