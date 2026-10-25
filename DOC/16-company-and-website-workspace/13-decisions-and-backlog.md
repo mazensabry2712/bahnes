@@ -15,7 +15,7 @@ This document separates the established planning direction from proposals and de
 | Database | MySQL with Eloquent/migrations | Preferred plan; confirm hosting/environment |
 | CSS/build | Tailwind CSS `^4.1` + Vite `^8.0` + Laravel Vite plugin | Selected CSS/build constraints; lockfile and Vite build are verified by CI after manifest changes |
 | Client-side behavior | TypeScript modules for small browser interactions | Implemented in the asset pipeline; `tsc --noEmit` is part of the build |
-| PHP quality gates | Pest + Laravel Pint + Larastan | Latest CI: 59 tests / 234 assertions, static analysis and security audits pass, TypeScript and Vite build pass |
+| PHP quality gates | Pest + Laravel Pint + Larastan | Latest CI: 65 tests / 284 assertions, static analysis and security audits pass, TypeScript and Vite build pass |
 | Admin UI | Custom Laravel Blade admin and public site | Existing controllers, views, authentication and server-side authorization remain the baseline; improve through shared Blade components and tested features |
 | Inertia / React / Vue SPA | Not selected for initial website | Revisit only if requirements change |
 | Motion libraries | CSS/native features first; GSAP available for advanced sequences | Use only where approved motion requires timelines/scroll triggers; respect reduced-motion |
@@ -25,14 +25,21 @@ This document separates the established planning direction from proposals and de
 | Public service pages | Both service lines, with detailed pages for approved offers | Planned scope |
 | Work portfolio | Projects/case studies separate from products | Initial admin CRUD implemented; publication requires permissions for real work and excludes confidential cases |
 | Digital catalog | Products and website templates are separate types | Separate admin catalogs implemented and CI-tested; public catalog, final assets/terms and checkout remain pending |
-| Editorial | Insights/articles | Category and bilingual article admin implemented/CI-tested; public article pages and media pending |
+| Editorial | Insights/articles | Category and bilingual article admin implemented/CI-tested; public article pages implemented; final article assets and editorial content remain pending |
 | CMS | Manage core content, media, locales, SEO, and inquiries | Services, Projects/Case Studies, Products, Website Templates, Insights/categories and inquiry inbox implemented; media, public forms and notification delivery pending |
-| Sales flow | General contact plus guided project brief and simple pipeline | Contact submission/inbox/status/notes implemented; public contact UI, email recipient and guided brief pending |
+| Sales flow | General contact plus guided project brief and simple pipeline | Contact submission/inbox/status/notes implemented; public contact page now shares the public layout and localized SEO; email recipient and guided brief remain pending |
 | Company profile PDF | Bilingual, after company facts and identity are approved | Later deliverable |
 | Interactive system showcase | Lightweight, clearly illustrative | Optional after core site |
 | Client portal/full CRM | Defer until need is demonstrated | Deferred |
 | Automated checkout/subscriptions | Defer until commercial flow is defined and tested | Deferred |
 | Logo/colors/fonts/tagline | Proposed identity direction | Needs review/approval |
+
+## Recent implementation notes — 2026-10-25
+
+- The public contact page now uses the shared Blade website layout, including the common navigation, language switch, footer, canonical URL, and Arabic/English alternate metadata.
+- Contact-page labels and privacy/validation copy are provided by the locale-aware public controller instead of being duplicated in a standalone HTML document.
+- Added bilingual contact-layout coverage and explicit home breadcrumb assertions for localized content indexes.
+- GitHub Actions passed on `main` commit `b73f60488c181dc57b5b3657d9694dd6409db7ad`: 65 tests / 284 assertions, Larastan, dependency audits, and frontend production build. This verifies CI only; it does not confirm a live deployment.
 
 ## Package-first rule
 
