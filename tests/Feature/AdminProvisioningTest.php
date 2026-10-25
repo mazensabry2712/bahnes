@@ -123,3 +123,37 @@ it('rejects a malformed administrator email and blank administrator name', funct
 
     expect(User::query()->count())->toBe(0);
 });
+
+
+it('does not create a duplicate administrator for a case-variant existing email', function () {
+    $existing = User::factory()->create([
+        'email' => 'EXISTING-ACCOUNT@example.com',
+        'is_admin' => false,
+    ]);
+
+    $this->artisan('admin:create')
+        ->expectsQuestion('Administrator name', 'Attempted Promotion')
+        ->expectsQuestion('Administrator email', 'existing-account@example.com')
+        ->expectsOutput('An account with this email already exists. No changes were made.')
+        ->assertExitCode(1);
+
+    expect(User::query()->count())->toBe(1)
+        ->and($existing->fresh()->is_admin)->toBeFalse();
+});
+
+it('can reset the password of a legacy administrator with mixed-case email storage', function () {
+    $admin = User::factory()->create([
+        'email' => 'LEGACY-ADMIN@example.com',
+        'is_admin' => true,
+        'password' => 'OriginalLegacyPassword-123',
+    ]);
+    $newPassword = 'UpdatedLegacyAdminPassword-123';
+
+    $this->artisan('admin:password-reset', ['email' => 'legacy-admin@example.com'])
+        ->expectsQuestion('New password (minimum 12 characters)', $newPassword)
+        ->expectsQuestion('Confirm new password', $newPassword)
+        ->expectsOutput('Administrator password reset for legacy-admin@example.com.')
+        ->assertExitCode(0);
+
+    expect(Hash::check($newPassword, $admin->fresh()->password))->toBeTrue();
+});
