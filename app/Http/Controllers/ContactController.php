@@ -63,8 +63,8 @@ class ContactController extends Controller
                 'required' => 'حقل :attribute مطلوب.',
                 'string' => 'يجب أن يكون :attribute نصًا.',
                 'email' => 'يرجى إدخال عنوان بريد إلكتروني صحيح في حقل :attribute.',
-                'max.string' => 'يجب ألا يزيد :attribute عن :max حرفًا.',
-                'min.string' => 'يجب أن يحتوي حقل :attribute على :min حرفًا على الأقل.',
+                'max' => 'يجب ألا يزيد :attribute عن :max حرفًا.',
+                'min' => 'يجب أن يحتوي حقل :attribute على :min حرفًا على الأقل.',
                 'in' => 'القيمة المحددة لحقل :attribute غير صالحة.',
             ];
         }
@@ -73,8 +73,8 @@ class ContactController extends Controller
             'required' => 'The :attribute field is required.',
             'string' => 'The :attribute field must be text.',
             'email' => 'Enter a valid email address for :attribute.',
-            'max.string' => 'The :attribute field may not be greater than :max characters.',
-            'min.string' => 'The :attribute field must be at least :min characters.',
+            'max' => 'The :attribute field may not be greater than :max characters.',
+            'min' => 'The :attribute field must be at least :min characters.',
             'in' => 'The selected :attribute is invalid.',
         ];
     }
