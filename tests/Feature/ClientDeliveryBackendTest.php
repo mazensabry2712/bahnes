@@ -452,3 +452,67 @@ it('allows archiving a client after all delivery projects are completed or cance
         ->and($completed->fresh())->not->toBeNull()
         ->and($cancelled->fresh())->not->toBeNull();
 });
+
+
+it('separates task-read, task-write, and project-activity permissions', function () {
+    $client = Client::query()->create([
+        'name' => 'Permission Matrix Client',
+        'email' => 'permission-matrix@example.com',
+        'preferred_locale' => 'en',
+    ]);
+    $project = DeliveryProject::query()->create([
+        'client_id' => $client->id,
+        'title' => 'Permission matrix project',
+        'status' => 'in_progress',
+        'progress_percent' => 25,
+    ]);
+    $admin = User::factory()->create(['is_admin' => true]);
+    $task = ProjectTask::query()->create([
+        'delivery_project_id' => $project->id,
+        'title' => 'Permission matrix task',
+        'status' => 'todo',
+    ]);
+
+    $clientViewerRole = Role::query()->create([
+        'name' => 'Client-only viewer',
+        'slug' => 'client-only-viewer',
+        'permissions' => ['clients.view'],
+    ]);
+    $clientViewer = User::factory()->create(['is_admin' => false, 'role_id' => $clientViewerRole->id]);
+
+    $this->actingAs($clientViewer)
+        ->get(route('admin.clients.activity', $client))
+        ->assertOk();
+    $this->actingAs($clientViewer)
+        ->get(route('admin.delivery-projects.tasks.index', $project))
+        ->assertForbidden();
+    $this->actingAs($clientViewer)
+        ->get(route('admin.delivery-projects.activity', $project))
+        ->assertForbidden();
+
+    $taskViewerRole = Role::query()->create([
+        'name' => 'Task-only viewer',
+        'slug' => 'task-only-viewer',
+        'permissions' => ['project_tasks.view'],
+    ]);
+    $taskViewer = User::factory()->create(['is_admin' => false, 'role_id' => $taskViewerRole->id]);
+
+    $this->actingAs($taskViewer)
+        ->get(route('admin.delivery-projects.tasks.index', $project))
+        ->assertOk()
+        ->assertJsonFragment(['title' => 'Permission matrix task']);
+    $this->actingAs($taskViewer)
+        ->put(route('admin.project-tasks.update', $task), [
+            'title' => 'Unauthorized task update',
+            'status' => 'completed',
+            'sort_order' => 0,
+        ])
+        ->assertForbidden();
+
+    expect($task->fresh()->title)->toBe('Permission matrix task')
+        ->and($task->fresh()->status)->toBe('todo');
+
+    $this->actingAs($admin)
+        ->get(route('admin.delivery-projects.activity', $project))
+        ->assertOk();
+});
