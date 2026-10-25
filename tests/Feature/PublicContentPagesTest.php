@@ -147,7 +147,10 @@ it('serves only public project details and clearly labels concepts', function ()
     Project::query()->create([
         'title_en' => 'Network Improvement Concept',
         'slug_en' => 'network-improvement-concept',
+        'title_ar' => 'تصور تطوير الشبكة',
+        'slug_ar' => 'tasawor-tatweer-alshabaka',
         'summary_en' => 'A proposed improvement direction.',
+        'summary_ar' => 'تصور مبدئي لتحسين الشبكة.',
         'challenge_en' => 'A growing business needs a clear network plan.',
         'approach_en' => 'Review site layout, capacity and support needs.',
         'project_status' => 'concept',
@@ -181,6 +184,16 @@ it('serves only public project details and clearly labels concepts', function ()
         ->assertSee('Network Improvement Concept')
         ->assertSee('This is a concept, not a delivered client project.')
         ->assertSee('A growing business needs a clear network plan.');
+
+    $this->get(route('public.content.show', [
+        'locale' => 'ar',
+        'section' => 'projects',
+        'slug' => 'tasawor-tatweer-alshabaka',
+    ]))
+        ->assertOk()
+        ->assertSee('تصور تطوير الشبكة')
+        ->assertSee('تصور توضيحي')
+        ->assertDontSee('تصور / Concept');
 
     $this->get(route('public.content.show', [
         'locale' => 'en',
